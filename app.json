@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/shop/shop",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/commodity/commodity",
+    "pages/home/home"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -12,8 +14,14 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "selectedColor":"#d81e06",
+    "selectedColor": "#5076ab",
     "list": [
+      {
+        "pagePath": "pages/commodity/commodity",
+        "text": "商品",
+        "iconPath": "icon/commodity.png",
+        "selectedIconPath": "icon/hascommodity.png"
+      },
       {
         "pagePath": "pages/index/index",
         "text": "主页",
@@ -34,5 +42,6 @@
       }
     ]
   },
-  "style": "v2"
+  "style": "v2",
+  "sitemapLocation": "sitemap11.json"
 }

@@ -1,4 +1,16 @@
 /**index.wxss**/
+.banner {
+  width: 100%;
+}
+
+swiper {
+  height: 240rpx;
+}
+
+image {
+  width: 100%;
+  display: block;
+}
 .userinfo {
   display: flex;
   flex-direction: column;
