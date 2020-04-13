@@ -60,6 +60,13 @@
 					"id": -1,
 					"name": "pages/shop/shop",
 					"pathName": "pages/shop/shop",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/home/home",
+					"pathName": "pages/home/home",
 					"scene": null
 				}
 			]

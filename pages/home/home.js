@@ -1,11 +1,28 @@
 // pages/home/home.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
+  
   data: {
-
+    imgUrl: [
+      "/icon/swiper1.jpg",//存在云里的图片，可以改成你们的地址
+      "/icon/swiper2.png"
+      ],
+    indiicatorDots: true,
+    autoplay: true,
+    interval: 3000,
+    duration: 2000,
+    duration: 500,
+    current: 0,
+  },
+  indexChange(e) {
+    var that = this;
+    that.setData({
+      current: e.detail.current
+    })
   },
 
   /**
