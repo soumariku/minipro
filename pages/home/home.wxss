@@ -263,7 +263,7 @@ swiper {
   left:0;
   height:100%;
   z-index:-1;
-  filter: blur(15rpx);
+  filter: blur(10rpx);
 }
 
 .index-img{
