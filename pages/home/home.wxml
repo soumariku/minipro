@@ -13,15 +13,13 @@
     <!-- 判断是第几张图片显示 -->
       
   </view>
-  
-        <view class="img-class" wx:if='{{current == 0}}'>
-          <image class="index-img" src="/icon/swiper1.jpg"></image>
-        </view>
-      
-      
-        <view class="img-class" wx:elif='{{current == 1}}'>
-          <image class="index-img" src="/icon/swiper1.png"></image>
-        </view>
+  <!-- 虚化的背景 -->
+  <view class="img-class" wx:if='{{current == 0}}'>
+    <image class="index-img" src="/icon/swiper1.jpg"></image>
+  </view>
+  <view class="img-class" wx:elif='{{current == 1}}'>
+    <image class="index-img" src="/icon/swiper2.jpg"></image>
+  </view>
       
   <!-- 搜索 -->
   <view class='search-input'>
@@ -30,6 +28,28 @@
     </view>
     <view class='search-value'>
       <input class='sou-input' placeholder='店内搜索你想要的' bindtap='jumpSearchGood'></input>
+    </view>
+  </view>
+  <view style="background:#fff;margin:10px 5px"> 
+    <view class="k-box-row  bottompart" >
+        <view class="k-box-left" >
+          <view style="width:100%;height:100%">
+            <image class="order-icon" src="../../icon/obligation.png" mode="cover"></image> 
+            <text class="order-text">待付款</text>
+          </view>
+        </view>
+        <view class="k-box-inner" >
+          <view style="width:100%;height:100%" >
+            <image class="order-icon" src="../../icon/backOrder.png" mode="cover"></image> 
+            <text class="order-text">待发货</text>
+          </view>
+        </view>
+        <view class="k-box-right"  >
+          <view style="width:100%;height:100%" >
+            <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
+            <text class="order-text">已完成</text>
+          </view>
+      </view>       
     </view>
   </view>
 </scroll-view>

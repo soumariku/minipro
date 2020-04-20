@@ -9,7 +9,7 @@ Page({
   data: {
     imgUrl: [
       "/icon/swiper1.jpg",//存在云里的图片，可以改成你们的地址
-      "/icon/swiper2.png"
+      "/icon/swiper2.jpg"
       ],
     indiicatorDots: true,
     autoplay: true,
