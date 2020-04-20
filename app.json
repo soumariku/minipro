@@ -5,7 +5,8 @@
     "pages/shop/shop",
     "pages/my/my",
     "pages/commodity/commodity",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/details/details"
   ],
   "window": {
     "backgroundTextStyle": "light",

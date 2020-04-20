@@ -231,12 +231,12 @@ page{
   align-items: center;
 }
 .btn_sub{
-  width: 28rpx;
-  height: 28rpx;
+  width: 35rpx;
+  height: 35rpx;
 }
 .btn_add{
-  width: 28rpx;
-  height: 28rpx;
+  width: 35rpx;
+  height: 35rpx;
 }
 .goods_num{
   font-size:32rpx;

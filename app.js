@@ -5,7 +5,13 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+    if(!wx.cloud){
+      console.log('请使用2.2.3以上版本')
+    }else{
+      wx.cloud.init({
+        env:'minishop-kxw64'
+      })
+    }
     // 登录
     wx.login({
       success: res => {
