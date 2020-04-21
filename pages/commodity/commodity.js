@@ -5,9 +5,16 @@ const db = wx.cloud.database({
 const MAX_LIMIT = 2
 const app = getApp()
 Page({
-  onLoad:function(){
+  onLoad:function(option){
     this.getDate();
-    this.getgoods('0');
+    if(option.id==null){
+      this.getgoods('0');
+    }else{
+      this.getgoods(option.id);
+    }    
+    // this.setData({
+    //   id:option.id
+    // })
   },
   data:{
     pres: [],
@@ -25,7 +32,7 @@ Page({
       for(var i = 0;i<thelist.length;i++){
         let params = {id:String(tlength+i),preX: thelist[i].name}
         prelist.push(params)
-        console.log(prelist)
+        // console.log(prelist)
       }
       this.setData({
         pres:prelist

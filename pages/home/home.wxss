@@ -195,7 +195,7 @@ swiper {
 }
 
 .swiper-block {
-  height: 195rpx;
+  height: 250rpx;
   width: 100%;
 }
 

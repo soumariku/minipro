@@ -3,7 +3,7 @@
 
   <!-- 顶部轮播图 -->
   <view class='all-img'>
-    <swiper indicator-dots='{{indiicatorDots}}' autoplay='{{autoplay}} ' interval='{{interval}}' duration='{{duration}}' indicator-color="#67ac0e" indicator-active-color="green" circular="{{circular}}" bindchange="indexChange">
+    <swiper indicator-dots='{{indiicatorDots}}' autoplay='{{autoplay}} ' interval='{{interval}}' duration='{{duration}}' indicator-color="#91bef0" indicator-active-color="#5076ab" circular="{{circular}}" bindchange="indexChange">
       <view wx:for="{{imgUrl}}" wx:key="*this">
         <swiper-item>
           <image src='{{item}}' data-src='{{item}}' class='carousel-img'></image>
@@ -31,25 +31,24 @@
     </view>
   </view>
   <view style="background:#fff;margin:10px 5px"> 
-    <view class="k-box-row  bottompart" >
-        <view class="k-box-left" >
-          <view style="width:100%;height:100%">
-            <image class="order-icon" src="../../icon/obligation.png" mode="cover"></image> 
-            <text class="order-text">待付款</text>
-          </view>
+    <view class='img-back' wx:for='{{classList}}' wx:key='id'>
+      <view class='classify-input1'>
+        <image class='fruit' src='{{item.imgurl}}' mode='aspectFit' bindtap='fruitClassify' data-id='{{item.id}}'></image>
+        <!-- 字体分类 -->
+        <view class='classify-text'>
+          <text class='text-text'>{{item.title}}</text>
         </view>
-        <view class="k-box-inner" >
-          <view style="width:100%;height:100%" >
-            <image class="order-icon" src="../../icon/backOrder.png" mode="cover"></image> 
-            <text class="order-text">待发货</text>
-          </view>
-        </view>
-        <view class="k-box-right"  >
-          <view style="width:100%;height:100%" >
-            <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
-            <text class="order-text">已完成</text>
-          </view>
-      </view>       
+      </view>
     </view>
+  <view class='demo-page'>
+    <!-- 平移轮播 -->
+    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="{{centerItem}}" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
+      <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
+        <swiper-item class="swiper-item" bindtap='jumpCoupon'>
+          <image mode="aspectFit" src="{{item.src}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
   </view>
 </scroll-view>
