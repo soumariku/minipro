@@ -8,53 +8,89 @@
 </swiper>
 <scroll-view scroll-y="true">
   <view class="detail">
-    <text class="title">LANCOME兰蔻小黑瓶精华肌底液</text>
-    <text class="price">￥500</text>
+    <text class="title">{{goodmsg.name}}</text>
+    <view class="column">
+      <view class="sku-pricelist">
+        <text class="sku-price" style="left:10rpx;color:#bfbfbf;margin-right:30rpx;font-size:20rpx">价格</text>
+        <text class="sku-rule" style="left: 10rpx;color:#bfbfbf;margin-right:30rpx;font-size:20rpx">批价</text>
+      </view>
+      <view class="sku-pricelist" wx:for-items="{{rule}}">
+        <text class="sku-price" style="left: 0rpx;font-size:40rpx;margin-right:70rpx;">￥{{item.price}}</text>
+        <text class="sku-rule" style="left: 10rpx;margin-right:70rpx;">{{item.name}}</text>
+      </view>
+    </view>
+    
   </view>
-  <view class="separate"></view>
+  
+  <view class="separate" style="flex-direction:row;padding:10rpx 10rpx 10rpx 0rpx" bindtap="toggleDialog">
   <!-- sku选择 -->
-  <text bindtap="toggleDialog">请选择购买数量</text>
+    <text style="color:#bfbfbf;margin-right:30rpx;font-size:20rpx">选择</text>
+    <text>购买数量</text>
+    <text style="color:orange;margin-right:auto;">{{buysum}} 件</text>
+    <text style="color:red">￥{{pricesum}}</text>
+  </view>
   <view class="dialog {{ showDialog ? 'dialog--show' : '' }}">
     <view class="dialog__mask" bindtap="toggleDialog" />
     <view class="dialog__container">
       <view class="row">
-         <image bindtap="closeDialog" class="image-close" src="../../icon/close.png"></image>
-        <image class="image-sku" src="cloud://minishop-kxw64.6d69-minishop-kxw64-1301898931/pic1.jpg"></image>
+         <!-- <image bindtap="closeDialog" class="image-close" src="../../icon/close.png"></image> -->
+        <image class="image-sku" src='{{goodmsg.goodspic}}'></image>
         <view class="column">
-          <text class="sku-price">￥500</text>
-          <text class="sku-title">库存20件</text>
-           <text class="sku-title">商品编码：1456778788</text>
+          <view class="sku-pricelist" wx:for-items="{{rule}}">
+            <text class="sku-price" style="{{(item.price != singleprice||buysum==0)?'color:#bfbfbf':'color:#f57c00'}}">￥{{item.price}}</text>
+            <text class="sku-rule" style="{{(item.price != singleprice||buysum==0)?'color:#bfbfbf':'color:#f57c00'}}">{{item.name}}</text>
+          </view>
+          <!-- <view class="sku-pricelist">
+            <text class="sku-price" style="color:#bfbfbf">￥{{goodmsg.price2}}</text>
+            <text class="sku-rule" style="color:#bfbfbf">6-9箱</text>
+          </view>
+          <view class="sku-pricelist">
+            <text class="sku-price" style="color:#bfbfbf">￥{{goodmsg.price3}}</text>
+            <text class="sku-rule" style="color:#bfbfbf">>=10箱</text>
+          </view> -->
+           <!-- <text class="sku-title">商品编码：1456778788</text> -->
         </view>
       </view>
-      <text class="border-line"></text>
-      <view >
-        <text >分类</text>
+      <text wx:if="{{flavor.length>0}}" class="border-line"></text>
+      <view wx:if="{{flavor.length>0}}">
+        <text >口味分类</text>
         <view class="quantity-position">
-          <view> 
-            <button class="categorybtn" bindtap="addCar" formType="submit" style="min-width:50%">1箱购买(32元一箱)</button>
-          </view>
-          <view> 
-            <button class="categorybtn" bindtap="addCar" formType="submit" style="min-width:50%">6箱购买(31元一箱)</button>
-          </view>
-          <view> 
-            <button class="categorybtn" bindtap="addCar" formType="submit" style="min-width:50%">5箱购买(30元一箱)</button>
+          <view wx:for-items="{{flavor}}"> 
+            <button class="{{item == clickflavor?'clickcategorybtn':'categorybtn'}}" bindtap="toclickflavor" data-id="{{item}}" formType="submit" style="min-width:50%">{{item}}</button>
           </view>
         </view>
       </view>
       <text class="border-line"></text>
-
-      <button class="button-green" bindtap="addCar" formType="submit" style="min-width:50%">加入购物车</button>
+      <view style="display: flex">
+        <text >购物数量</text>
+        <view class="sku-goodsnum">
+          <image class='btn_sub' src='../../icon/detailsub.png' bindtap='subNum' data-index='{{index}}'></image>
+          <!-- <text class='goods_num'  >1</text> -->
+          <input class='goods_num' value="{{buysum}}" maxlength="3" type="number" bindinput="bindinput"></input>
+          <!-- 增加商品数量按钮 -->
+          <image class='btn_add' src='../../icon/detailplus.png' bindtap='addNum' data-index='{{index}}'></image>
+        </view>
+      </view>
+      <text class="border-line"></text>
+        <view style="display: flex">
+          <text >合计</text>
+          <text style="left:450rpx;position: relative;color:red">￥{{pricesum}}</text>
+        </view>
+      <text class="border-line"></text>
+      <button class="button-green" bindtap="tocalDialog" formType="submit" style="min-width:50%">加入购物车</button>
       <button class="button-red" formType="submit" style="min-width:50%">立即购买</button>
     </view>
   </view>
-  <view class="separate"></view>
-  <text>商品评价</text>
-  <text class="text-remark">东西还可以，好评~</text>
-  <view class="separate"></view>
+  <!-- <view class="separate">
+    <text>商品评价</text>
+    <text class="text-remark">东西还可以，好评~</text>
+  </view> -->
+  <view class="separate">
   <text>商品详情</text>
   <block wx:for-items="{{detailImg}}" wx:key="name">
     <image class="image_detail" src="{{item}}" />
   </block>
+  </view>
   <view class="temp"></view>
 </scroll-view>
 <!-- 底部悬浮栏 -->
@@ -62,6 +98,6 @@
   <image class="detail-bottom-img" bindtap="toCar" src="../../icon/shop.png" />
   <image class="detail-bottom-img" bindtap="addLike" src="{{isLike?'../../icon/goodscollection.png':'../../icon/uncollection.png'}}" />
   <!-- <view class="detail-bottom-tag">加入购物车|立即购买</view> -->
-  <button class="button-green" bindtap="addCar" formType="submit">加入购物车</button>
+  <button class="button-green" bindtap="tocalDialog" formType="submit">加入购物车</button>
   <button class="button-red" bindtap="immeBuy" formType="submit">立即购买</button>
 </view>
