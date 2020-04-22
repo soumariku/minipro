@@ -1,5 +1,6 @@
 // pages/shopcar/shopcar.js
 const API = require('../../utils/API.js');
+const app = getApp()
 Page({
 
   /**
@@ -242,39 +243,95 @@ Page({
   },
   //减少数量
   subNum: function(e) {
+    //获取规则
+    let rule = [];
     // 获取点击的索引
     const index = e.currentTarget.dataset.index;
     // 获取商品数据
     let list = this.data.goodsCar;
     // 获取商品数量
     let num = list[index].count;
-    // 点击递减
-    num = num - 1;
-    list[index].count = num;
-    console.log(list);
-    // 重新渲染 ---显示新的数量
-    this.setData({
-      goodsCar: list
-    });
-    this.totalPrice();
+    // 获取当前商品单价
+    let newprice = list[index].npriceGood;
+    app.globalData.db.collection('rule').where({
+      goodsid: e.currentTarget.dataset.id
+    }).get().then((res) => {
+      rule = res.data
+      console.log(rule)
+      // 点击递减
+      num = num - 1;
+      //根据规则改变价格
+      console.log(rule)
+      for(var i=0;i<rule.length;i++){
+        if (Number(rule[i].maxnum)!=0){
+          if (Number(rule[i].minnum) <= Number(num)){
+            if (Number(num)<=Number(rule[i].maxnum)){
+              newprice = rule[i].price
+              console.log(newprice)
+              break;
+            }
+          }
+        }else{
+          newprice = this.data.rule[i].price
+          console.log(newprice)
+          break;
+        }
+      }
+      list[index].count = num;
+      list[index].npriceGood = newprice;
+      console.log(list);
+      // 重新渲染 ---显示新的数量
+      this.setData({
+        goodsCar: list
+      });
+      this.totalPrice();
+    })
   },
   //增加数量
   addNum: function(e) {
+    //获取规则
+    let rule = [];
     // 获取点击的索引
     const index = e.currentTarget.dataset.index;
     // 获取商品数据
     let list = this.data.goodsCar;
     // 获取商品数量
     let num = list[index].count;
-    // 点击递增
+    // 获取当前商品单价
+    let newprice = list[index].npriceGood;
+    app.globalData.db.collection('rule').where({
+      goodsid: e.currentTarget.dataset.id
+    }).get().then((res) => {
+      rule = res.data
+      console.log(rule)
+      // 点击递增
     num = num + 1;
+    //根据规则改变价格
+    console.log(rule)
+    for(var i=0;i<rule.length;i++){
+      if (Number(rule[i].maxnum)!=0){
+        if (Number(rule[i].minnum) <= Number(num)){
+          if (Number(num)<=Number(rule[i].maxnum)){
+            newprice = rule[i].price
+            console.log(newprice)
+            break;
+          }
+        }
+      }else{
+        newprice = this.data.rule[i].price
+        console.log(newprice)
+        break;
+      }
+    }
     list[index].count = num;
+    list[index].npriceGood = newprice;
     console.log(list);
     // 重新渲染 ---显示新的数量
     this.setData({
       goodsCar: list
     });
     this.totalPrice();
+    })
   },
   // 计算金额
   totalPrice: function() {
@@ -363,6 +420,17 @@ Page({
       }
     })
   },
+  checklist(){
+    if (!API.orderinfo.length) {
+      this.setData({
+        carisShow: true
+      });
+    }else{
+      this.setData({
+        carisShow: false
+      });
+    }
+  },
   // 结算生成订单
   goOrder:function(){
     let _this = this;
@@ -389,18 +457,20 @@ Page({
       }
     })
   },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
 
   },
-
+  
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
     this.data.goodsCar = API.orderinfo;
+    this.checklist();
     this.totalPrice();
   }
 })

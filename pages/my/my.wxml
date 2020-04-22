@@ -11,43 +11,19 @@
       <text class="part" style="color: rgb(115, 115, 115);margin: 10px 0 10px 10px;font-size:14px">我的订单</text> 
     </view>
     <view>
-      <view class="order-item">
-        <image class="order-icon" src="../../icon/obligation.png" mode="cover"></image> 
-        <text class="order-text">待付款</text>
-      </view>
-      <view class="order-item">
+      <view class="order-item" style="width: 33.3%;">
         <image class="order-icon" src="../../icon/backOrder.png" mode="cover"></image> 
         <text class="order-text">待发货</text>
       </view>
-      <view class="order-item">
+      <view class="order-item" style="width: 33.3%;">
         <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
         <text class="order-text">已完成</text>
       </view>
-      <view class="order-item">
+      <view class="order-item" style="width: 33.3%;">
         <image class="order-icon" src="../../icon/after-sale.png" mode="cover"></image> 
         <text class="order-text">售后</text>
       </view>
     </view>  
-    <!-- <view class="k-box-row  bottompart" >
-        <view class="k-box-left" >
-          <view style="width:100%;height:100%">
-            <image class="order-icon" src="../../icon/obligation.png" mode="cover"></image> 
-            <text class="order-text">待付款</text>
-          </view>
-        </view>
-        <view class="k-box-inner" >
-          <view style="width:100%;height:100%" >
-            <image class="order-icon" src="../../icon/backOrder.png" mode="cover"></image> 
-            <text class="order-text">待发货</text>
-          </view>
-        </view>
-        <view class="k-box-right"  >
-          <view style="width:100%;height:100%" >
-            <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
-            <text class="order-text">已完成</text>
-          </view>
-      </view>       
-    </view>-->
   </view>
   <view style="background:#fff;margin:5px" class="bottompart">
     <view class="order-item">
@@ -81,6 +57,12 @@
     <view class="order-item">
       <image class="order-icon" src="../../icon/clean.png" mode="cover"></image> 
       <text class="order-text">清理缓存</text>
+    </view>
+  </view>
+  <view style="background:#fff;margin:5px;margin-top:10px" class="bottompart">
+    <view class="order-item">
+      <image class="order-icon" src="../../icon/administrator.png" mode="cover"></image> 
+      <text class="order-text">管理模式</text>
     </view>
   </view>
 </view>

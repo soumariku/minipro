@@ -26,6 +26,24 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
+          // wx.login({
+          //   complete: (res) => {
+          //     console.log(res)
+          //     var code = res.code; //返回code
+          //     console.log(code);
+          //     wx.request({
+          //         url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx32372f6ba81791b7&&secret=e50ac757af25dbc20b42f9e92a157f51&js_code=' + code + '&grant_type=authorization_code',
+          //         data: {},
+          //         header: {
+          //           'content-type': 'json'
+          //         },
+          //         success: function (res) {
+          //           var openid = res.data.openid //返回openid
+          //           console.log('openid为' + openid);
+          //         }
+          //       })
+          //   },
+          // })
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
@@ -45,6 +63,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    db:null
+    db:null,
+    role:''
   }
 })

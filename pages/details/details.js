@@ -1,4 +1,5 @@
 const app = getApp()
+const API = require('../../utils/API.js');
 Page({
   onLoad:function(option){
     this.setData({
@@ -54,6 +55,7 @@ Page({
         showDialog: !this.data.showDialog
       });
     }else{
+      this.tocal()
       wx.showToast({
         title: '添加购物车成功',
         icon: 'success',
@@ -61,11 +63,40 @@ Page({
       });
     }
   },
+  //点击口味
   toclickflavor(e){
     // console.log(e.currentTarget.dataset.id)
     this.setData({
       clickflavor: e.currentTarget.dataset.id
     });
+  },
+  //添加购物车
+  tocal(){
+    // app.globalData.db.collection('orders').add({
+    //   // data 字段表示需新增的 JSON 数据
+    //   data: {
+    //     goodsid: this.data.goodsID,
+    //     buyer: app.globalData.userInfo.nickName,
+    //     singleprice: this.data.singleprice,
+    //     buysum: this.data.buysum,
+    //     clickflavor:this.data.clickflavor
+    //   }
+    // })
+    // .then(res => {
+    //   console.log(res)
+    // })
+    let orderlist = []
+    orderlist = {
+      imgGood:this.data.imgUrls[0],
+      nameGood:this.data.goodmsg.name,
+      npriceGood:Number(this.data.singleprice),
+      opriceGood:this.data.goodmsg.price1,
+      count:Number(this.data.buysum),
+      id:this.data.goodsID,
+      selected: true,
+      clickflavor: this.data.clickflavor
+    }
+    API.orderinfo.push(orderlist)
   },
   closeDialog:function(){
     this.setData({
@@ -81,7 +112,7 @@ Page({
   // 跳到购物车
   toCar() {
     wx.switchTab({
-      url: '/pages/cart/cart'
+      url: './../shop/shop'
     })
   },
   // 立即购买
@@ -109,6 +140,7 @@ Page({
         detailImg: detailspic
       })
       console.log(this.data.flavor)
+     console.log(this.data.goodmsg)
     })
   },
   getRule:function(){

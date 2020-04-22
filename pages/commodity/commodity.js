@@ -70,44 +70,6 @@ Page({
       url: './../details/details?id='+theTurnID
     })
   },
- // 单击改变样式
- click: function (e) {
-   var ids = e.currentTarget.dataset.id;  //获取自定义的id 
-   var good = "";  
-   if(ids == '0'){
-     good = [
-       { id: 0, name: "苹果",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-       { id: 1, name: "香蕉",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-
-     ];
-   } else if (ids == 1){
-     good = [
-       { id: 0, name: "芒果",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-       { id: 1, name: "葡萄", goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-
-     ];
-     } else if (ids == 2) {
-     good = [
-       { id: 0, name: "火龙果",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-       { id: 1, name: "猕猴桃",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-
-     ]; 
-     }else if (ids == 3) {
-       good = [
-         { id: 0, name: "黑加仑",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-         { id: 1, name: "牛油果",  goodspic: "/icon/nopic.png",price1:"32",price2:"31",count:"0"},
-
-       ];
-   }else if(ids == 4){
-     good = [
-        { id: 0, name: "苹果", url: "/icon/nopic.png" },
-       { id: 1, name: "芒果", url: "/icon/nopic.png" },
-
-     ];
-   }
-   this.setData({
-     id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
-     goods: good
-   })
- }
+ 
+ 
 })

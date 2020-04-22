@@ -81,6 +81,13 @@
 					"id": -1,
 					"name": "pages/details/details",
 					"pathName": "pages/details/details",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "search",
+					"pathName": "pages/search/search",
 					"scene": null
 				}
 			]

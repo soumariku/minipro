@@ -1,10 +1,18 @@
-<view class='tab-container'>
-     <view class='tab-list'>
-        <block wx:for="{{pres}}" wx:key="id">
-        <view class="{{item.id == id?'click':'noclick'}}" bindtap='getgoods' data-id="{{item.id}}" >{{item.preX}}</view>
-        </block>
-     </view>
+<view>
      <view>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+            <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="getgoods" value="{{searchmsg}}"/>
+                </view>
+            </view>
+            <!-- 取消搜索 -->
+            <view class="weui-search-bar__cancel-btn" bindtap='hideInput'>取消</view>
+        </view>
+    </view>
+    <view>
         <view class='tab-detail clear'>
         <block wx:for="{{goods}}" wx:key="*this">
            <!-- <view class='tab-item'>
@@ -42,5 +50,4 @@
          </block>
         </view>
      </view>
-  </view>
-
+</view>

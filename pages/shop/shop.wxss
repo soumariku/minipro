@@ -163,6 +163,12 @@ page{
   font-size:28rpx;
   font-family:PingFangSC-Regular;
   font-weight:400;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   color:rgba(51,51,51,1);
 }
 .menu_right_lable{

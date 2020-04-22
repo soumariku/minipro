@@ -46,6 +46,7 @@
               <view class='menu_right_txt'>
                 <!-- 商品名称和描述 -->
                 <text class='menu_right_name'>{{item.nameGood}}</text>
+                <text class='menu_right_name' style="color:#666;margin-left:300rpx">{{item.clickflavor}}</text>
                 <view class='menu_right_down'>
                   <!-- 商品最新价格 -->
                   <text class='menu_right_nprice'>¥{{item.npriceGood}}</text>
@@ -53,10 +54,10 @@
                   <text class='menu_right_oprice'>{{item.opriceGood}}</text>
                   <view class='has_shop_num'>
                     <!-- 商品数量减少按钮 -->
-                    <image class='btn_sub' src='../../icon/sub.png' bindtap='subNum' data-index='{{index}}'></image>
+                    <image class='btn_sub' src='../../icon/sub.png' bindtap='subNum' data-index='{{index}}' data-id="{{item.id}}"></image>
                     <text class='goods_num'>{{item.count}}</text>
                     <!-- 增加商品数量按钮 -->
-                    <image class='btn_add' src='../../icon/plus.png' bindtap='addNum' data-index='{{index}}'></image>
+                    <image class='btn_add' src='../../icon/plus.png' bindtap='addNum' data-index='{{index}}' data-id="{{item.id}}"></image>
                   </view>
                 </view>
               </view>
