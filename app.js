@@ -16,6 +16,10 @@ App({
         env: 'minishop-kxw64'
       })
     }
+    this.getOpenid();
+    this.getAccessToken();
+    // this.sendmsg();
+    // this.testSubmit();
     // 登录
     wx.login({
       success: res => {
@@ -26,24 +30,6 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          // wx.login({
-          //   complete: (res) => {
-          //     console.log(res)
-          //     var code = res.code; //返回code
-          //     console.log(code);
-          //     wx.request({
-          //         url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx32372f6ba81791b7&&secret=e50ac757af25dbc20b42f9e92a157f51&js_code=' + code + '&grant_type=authorization_code',
-          //         data: {},
-          //         header: {
-          //           'content-type': 'json'
-          //         },
-          //         success: function (res) {
-          //           var openid = res.data.openid //返回openid
-          //           console.log('openid为' + openid);
-          //         }
-          //       })
-          //   },
-          // })
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
@@ -61,6 +47,86 @@ App({
       }
     })
   },
+  // 获取用户openid
+  getOpenid() {
+    let that = this;
+    wx.cloud.callFunction({
+      name: 'getOpenid',
+      complete: res => {
+        console.log('云函数获取到的openid: ', res.result.openId)
+        var openid = res.result.openId;
+        // that.setData({
+        //   openid: openid
+        // })
+        console.log(openid)
+      }
+    })
+  },
+  getAccessToken() {
+    let that = this;
+    wx.cloud.callFunction({
+      name: 'getAccessToken',
+      complete: res => {
+        console.log('云函数获取到的AccessToken: ', res.result)
+        var accesstoken = JSON.parse(res.result);
+        console.log(accesstoken.access_token)
+      }
+    })
+  },
+  sendmsg(){
+    wx.cloud.callFunction({
+      name:'sendUserMsg',
+      complete: res => {
+        console.log(res.result)
+      }
+    })
+  },
+  testSubmit(){
+    // var self = this;
+    // let _access_token = '32_5djAykw_jQF5Hp2XeiSkLkTjF8hfzAUsMY1RPlnlSCIPQLPzCB86sG_2hCSHRnpsNb9qvnqze0lpUlAwOGDZbjXkSHlVXFj1ffAN-HDbxGB_Ow3KAIVXpS4SO0D3265-botjV_DFGwGSXd_QZSLiAIAVOH';
+    // let url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + _access_token;
+    // let _jsonData = {
+    //     access_token: _access_token,
+    //     touser: 'o6HCI5NR8UKfn6CBFAELDgL51ZwA',
+    //     template_id: 'DHyPxxxYk-x_1_tsWCSliKOUZ8A808IzPc6-r0yO0gI',
+    //     data: {
+    //       "keyword1": { "value": "测试数据一", "color": "#173177" },
+    //       "keyword2": { "value": "测试数据二", "color": "#173177" },
+    //       "keyword3": { "value": "测试数据三", "color": "#173177" },
+    //       "keyword4": { "value": "测试数据四", "color": "#173177" },
+    //     }
+    //   }
+    // wx.request({
+    //   url: url,
+    //   data: _jsonData,
+    //   method: 'POST',
+    //   success: function (res) {
+    //     console.log(res)
+    //   },
+    //   fail: function (err) {
+    //     console.log('request fail ', err);
+    //   },
+    //   complete: function (res) {
+    //     console.log("request completed!");
+    //   }
+
+    // })
+    
+    wx.cloud.callFunction({
+      name: "pushMsg",
+      data: {
+        openid: 'o6HCI5NR8UKfn6CBFAELDgL51ZwA'
+      }
+    }).then(res => {
+      console.log("推送消息成功", res)
+    }).catch(res => {
+      console.log("推送消息失败", res)
+    })
+  },
+  toSubscribe(){
+    
+  },
+  
   globalData: {
     userInfo: null,
     db:null,

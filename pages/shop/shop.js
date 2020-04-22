@@ -259,7 +259,12 @@ Page({
       rule = res.data
       console.log(rule)
       // 点击递减
-      num = num - 1;
+      if (num <= 0) {
+
+      } else {
+        num = num - 1;
+      }
+      
       //根据规则改变价格
       console.log(rule)
       for(var i=0;i<rule.length;i++){
@@ -272,7 +277,7 @@ Page({
             }
           }
         }else{
-          newprice = this.data.rule[i].price
+          newprice = rule[i].price
           console.log(newprice)
           break;
         }
@@ -305,9 +310,14 @@ Page({
       rule = res.data
       console.log(rule)
       // 点击递增
-    num = num + 1;
+      if(num<0){
+
+      }else{
+        num = num + 1;
+      }
+    
     //根据规则改变价格
-    console.log(rule)
+    // console.log(rule[1])
     for(var i=0;i<rule.length;i++){
       if (Number(rule[i].maxnum)!=0){
         if (Number(rule[i].minnum) <= Number(num)){
@@ -318,7 +328,7 @@ Page({
           }
         }
       }else{
-        newprice = this.data.rule[i].price
+        newprice = rule[i].price
         console.log(newprice)
         break;
       }

@@ -43,6 +43,19 @@ Page({
       })
     }
   },
+  toSubscribe(){
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['DHyPxxxYk-x_1_tsWCSliKOUZ8A808IzPc6-r0yO0gI'],
+    //   success(res) {
+    //     console.log('授权成功')
+    //     app.testSubmit()
+    //   },
+    //   fail(res) {
+    //     console.log('授权失败', res)
+    //   }
+    // })
+    app.testSubmit()
+  },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
