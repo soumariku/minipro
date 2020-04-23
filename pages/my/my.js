@@ -84,6 +84,13 @@ Page({
     //   })
     
   },
+  tosetting(e){
+    let id = e.currentTarget.dataset.id
+    console.log(id)
+    wx.navigateTo({
+      url: './../customersetting/customersetting?id='+id,
+    })
+  },
   toSubscribe(){
     // wx.requestSubscribeMessage({
     //   tmplIds: ['DHyPxxxYk-x_1_tsWCSliKOUZ8A808IzPc6-r0yO0gI'],

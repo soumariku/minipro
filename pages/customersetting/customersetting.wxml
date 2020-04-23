@@ -1,0 +1,31 @@
+<!--pages/customersetting/customersetting.wxml-->
+<view class="weui-search-bar" wx:if="{{addressSetting}}">
+<view class="itemView">收货地址：
+  <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+  bindinput="userNameInput"/> -->
+  <form bindsubmit="bindFormSubmit">
+    <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入收货地址" name="textarea" auto-height maxlength="-1" value="{{address}}" disabled="{{!addressChange}}"/>
+    <view class="thebtn">
+      <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" wx:if="{{!addressChange}}"> 更改 </button>
+      <button form-type="submit" style="display:inline-block;background-color:#5076ab;color:#fff;margin:10rpx;float:right" wx:else> 提交 </button>
+    </view>
+  </form>
+</view>
+</view>
+<view class="weui-search-bar" wx:else>
+<view class="itemView">绑定手机：
+  <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+  bindinput="userNameInput"/> -->
+  <form bindsubmit="bindFormSubmit">
+    <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入绑定手机" name="textarea" auto-height maxlength="-1" value="{{telephone}}" disabled="{{!teleChange}}"/>
+    <view class="thebtn">
+      <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" wx:if="{{!teleChange}}"> 更改 </button>
+      <button form-type="submit" style="display:inline-block;background-color:#5076ab;color:#fff;margin:10rpx;float:right" wx:else> 提交 </button>
+    </view>
+  </form>
+</view>
+</view>
+
+
+
+

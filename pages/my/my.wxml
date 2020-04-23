@@ -46,11 +46,11 @@
       <image class="order-icon" src="../../icon/about.png" mode="cover"></image> 
       <text class="order-text">关于我们</text>
     </view>
-    <view class="order-item">
+    <view class="order-item" bindtap="tosetting" data-id="1">
       <image class="order-icon" src="../../icon/getAddress.png" mode="cover"></image> 
       <text class="order-text">收货地址</text>
     </view>
-    <view class="order-item">
+    <view class="order-item" bindtap="tosetting" data-id="2">
       <image class="order-icon" src="../../icon/bindingtel.png" mode="cover"></image> 
       <text class="order-text">绑定手机</text>
     </view>

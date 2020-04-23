@@ -9,7 +9,8 @@
     "pages/details/details",
     "pages/search/search",
     "pages/collection/collection",
-    "pages/administrator/administrator"
+    "pages/administrator/administrator",
+    "pages/customersetting/customersetting"
   ],
   "window": {
     "backgroundTextStyle": "light",
