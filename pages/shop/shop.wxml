@@ -7,7 +7,7 @@
       <navigator url="/pages/index/index" open-type='switchTab' hover-class="none">
         <view class='btn_return'>
 
-          <text class='txt_btn_return'>去首页逛逛吧</text>
+          <text class='txt_btn_return' bindtap="tocommodity">去逛逛吧</text>
         </view>
       </navigator>
     </view>

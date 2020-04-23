@@ -7,7 +7,9 @@
     "pages/commodity/commodity",
     "pages/home/home",
     "pages/details/details",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/collection/collection",
+    "pages/administrator/administrator"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,6 +45,10 @@
         "selectedIconPath": "icon/hasmy.png"
       }
     ]
+  },
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
   },
   "style": "v2",
   "sitemapLocation": "sitemap11.json"

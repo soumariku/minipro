@@ -1,0 +1,9 @@
+<!--pages/administrator/administrator.wxml-->
+<view style="margin-top:350rpx" wx:if="{{begin}}">
+  <button class="thebtn" bindtap="updateCategory">分类管理</button>
+  <button class="thebtn">商品管理</button>
+  <button class="thebtn">订单管理</button>
+</view>
+<view wx:if="{{category}}">
+  
+</view>

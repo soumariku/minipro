@@ -259,7 +259,7 @@ Page({
       rule = res.data
       console.log(rule)
       // 点击递减
-      if (num <= 0) {
+      if (num <= 1) {
 
       } else {
         num = num - 1;
@@ -467,7 +467,11 @@ Page({
       }
     })
   },
-  
+  tocommodity(){
+    wx.switchTab({
+      url: '../commodity/commodity'   
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

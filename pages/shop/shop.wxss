@@ -22,7 +22,7 @@ page{
   align-items: center;
 }
 .shop_show_only{
-  width: 300rpx;
+  width: 280rpx;
   height: 333rpx;
 }
 .on_shop_txt{

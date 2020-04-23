@@ -8,9 +8,10 @@ Page({
     console.log(this.data.goodsID);
     this.getDate();
     this.getRule();
+    this.getLike();
   },
   data: {
-    isLike: false,
+    isLike: false,//收藏
     showDialog:false,
     goodsID:'',
     goodmsg:[],
@@ -72,19 +73,6 @@ Page({
   },
   //添加购物车
   tocal(){
-    // app.globalData.db.collection('orders').add({
-    //   // data 字段表示需新增的 JSON 数据
-    //   data: {
-    //     goodsid: this.data.goodsID,
-    //     buyer: app.globalData.userInfo.nickName,
-    //     singleprice: this.data.singleprice,
-    //     buysum: this.data.buysum,
-    //     clickflavor:this.data.clickflavor
-    //   }
-    // })
-    // .then(res => {
-    //   console.log(res)
-    // })
     let orderlist = []
     orderlist = {
       imgGood:this.data.imgUrls[0],
@@ -105,9 +93,63 @@ Page({
   },
   // 收藏
   addLike() {
-    this.setData({
-      isLike: !this.data.isLike
-    });
+    app.globalData.db.collection('collection').where({
+      goodsid:this.data.goodsID,
+      collector:app.globalData.userInfo.nickName
+    }).get().then((res)=>{
+      let id = ''
+      if(res.data.length>0){
+        id = res.data[0]._id
+        wx.cloud.callFunction({
+          name:'deleteData',
+          data: {
+            id: id,
+            collection:'collection'
+          },
+          complete: res => {
+            this.setData({
+              isLike: false
+            });
+          }
+        })
+      }else{
+        app.globalData.db.collection('collection').add({
+          // data 字段表示需新增的 JSON 数据
+          data: {
+            goodsid: this.data.goodsID,
+            collector:app.globalData.userInfo.nickName
+          }
+        })
+        .then(res => {
+          this.setData({
+            isLike: true
+          });
+          wx.showToast({
+            title: '添加收藏成功',
+            icon: 'success',
+            duration: 3000
+          });
+        })
+        
+      }  
+    }) 
+  },
+  // 收藏
+  getLike() {
+    app.globalData.db.collection('collection').where({
+      goodsid:this.data.goodsID,
+      collector:app.globalData.userInfo.nickName
+    }).get().then((res)=>{
+      if(res.data.length>0){
+        this.setData({
+          isLike: true
+        });
+      }else{
+        this.setData({
+          isLike: false
+        });
+      }  
+    }) 
   },
   // 跳到购物车
   toCar() {

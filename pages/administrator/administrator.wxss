@@ -1,0 +1,6 @@
+/* pages/administrator/administrator.wxss */
+.thebtn{
+  margin-bottom:30rpx;
+  background-color:#5076ab;
+  color:#fff
+}

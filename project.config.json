@@ -90,6 +90,20 @@
 					"id": -1,
 					"name": "search",
 					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/collection/collection",
+					"pathName": "pages/collection/collection",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "adimin",
+					"pathName": "pages/administrator/administrator",
 					"scene": null
 				}
 			]

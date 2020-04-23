@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
     touser: 'o6HCI5NR8UKfn6CBFAELDgL51ZwA',
     msgtype: 'text',
     text: {
-      content: '您收到个订单，请上小程序上查看，谢谢！',
+      content: event.msg,
     },
   })
   return 'success'

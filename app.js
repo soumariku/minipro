@@ -18,7 +18,7 @@ App({
     }
     this.getOpenid();
     this.getAccessToken();
-    // this.sendmsg();
+    this.sendmsg();
     // this.testSubmit();
     // 登录
     wx.login({
@@ -76,6 +76,9 @@ App({
   sendmsg(){
     wx.cloud.callFunction({
       name:'sendUserMsg',
+      data: {
+        msg: '试试就逝世'
+      },
       complete: res => {
         console.log(res.result)
       }
