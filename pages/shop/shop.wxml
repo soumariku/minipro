@@ -92,4 +92,11 @@
       </view>
     </view>
   </view>
+  <form>
+  <mp-dialog title="预约时间" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}" mask-closable="false">
+    <view style="min-width:500rpx">
+      <textarea style="width:100%;background-color:#eee;margin-top:20rpx;text-align:left" placeholder="请输入收货时间和备注" focus="true" value="{{remarks}}" bindinput="getremarks"></textarea>
+    </view>  
+  </mp-dialog>
+  </form>
 </view>

@@ -120,6 +120,13 @@
 					"id": -1,
 					"name": "pages/customersetting/customersetting",
 					"pathName": "pages/customersetting/customersetting",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bereceived",
+					"pathName": "pages/bereceived/bereceived",
 					"scene": null
 				}
 			]

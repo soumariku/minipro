@@ -16,9 +16,9 @@ App({
         env: 'minishop-kxw64'
       })
     }
-    this.getOpenid();
-    this.getAccessToken();
-    this.sendmsg();
+    // this.getOpenid();
+    // this.getAccessToken();
+    // this.sendmsg();
     // this.testSubmit();
     // 登录
     wx.login({
@@ -79,8 +79,16 @@ App({
       data: {
         msg: '试试就逝世'
       },
+      success: res => {
+        // output: res.result === 3
+        console.log("推送消息成功",res)
+      },
+      fail: err => {
+        // handle error
+        console.log("失败",err)
+      },
       complete: res => {
-        console.log(res.result)
+        console.log(res)
       }
     })
   },

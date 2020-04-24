@@ -10,7 +10,11 @@
     "pages/search/search",
     "pages/collection/collection",
     "pages/administrator/administrator",
-    "pages/customersetting/customersetting"
+    "pages/customersetting/customersetting",
+    "pages/bereceived/bereceived",
+    "pages/orderdetail/orderdetail",
+    "pages/appointment/appointment",
+    "pages/complete/complete"
   ],
   "window": {
     "backgroundTextStyle": "light",

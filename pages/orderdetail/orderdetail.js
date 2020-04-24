@@ -1,9 +1,5 @@
-// pages/shopcar/shopcar.js
 const API = require('../../utils/API.js');
-const app = getApp()
-const util = require('../../utils/util.js')
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -17,16 +13,12 @@ Page({
     idDetel: false, //灰色删除按钮
     isSelect: false, //是否为编辑状态
     goodsCar: [],//用来接收接口返回数据
-    buttons: [{text: '取消'}, {text: '确定'}],
-    dialogShow: false,
-    remarks:''
+    
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getUserMsg()
   },
   // 编辑事件
   editGood: function() {
@@ -132,7 +124,6 @@ Page({
         })
       }
     }
-
     this.totalPrice();
   },
   checkAll: function() {
@@ -246,105 +237,39 @@ Page({
   },
   //减少数量
   subNum: function(e) {
-    //获取规则
-    let rule = [];
     // 获取点击的索引
     const index = e.currentTarget.dataset.index;
     // 获取商品数据
     let list = this.data.goodsCar;
     // 获取商品数量
     let num = list[index].count;
-    // 获取当前商品单价
-    let newprice = list[index].npriceGood;
-    app.globalData.db.collection('rule').where({
-      goodsid: e.currentTarget.dataset.id
-    }).get().then((res) => {
-      rule = res.data
-      console.log(rule)
-      // 点击递减
-      if (num <= 1) {
-
-      } else {
-        num = num - 1;
-      }
-      
-      //根据规则改变价格
-      console.log(rule)
-      for(var i=0;i<rule.length;i++){
-        if (Number(rule[i].maxnum)!=0){
-          if (Number(rule[i].minnum) <= Number(num)){
-            if (Number(num)<=Number(rule[i].maxnum)){
-              newprice = rule[i].price
-              console.log(newprice)
-              break;
-            }
-          }
-        }else{
-          newprice = rule[i].price
-          console.log(newprice)
-          break;
-        }
-      }
-      list[index].count = num;
-      list[index].npriceGood = newprice;
-      console.log(list);
-      // 重新渲染 ---显示新的数量
-      this.setData({
-        goodsCar: list
-      });
-      this.totalPrice();
-    })
-  },
-  //增加数量
-  addNum: function(e) {
-    //获取规则
-    let rule = [];
-    // 获取点击的索引
-    const index = e.currentTarget.dataset.index;
-    // 获取商品数据
-    let list = this.data.goodsCar;
-    // 获取商品数量
-    let num = list[index].count;
-    // 获取当前商品单价
-    let newprice = list[index].npriceGood;
-    app.globalData.db.collection('rule').where({
-      goodsid: e.currentTarget.dataset.id
-    }).get().then((res) => {
-      rule = res.data
-      console.log(rule)
-      // 点击递增
-      if(num<0){
-
-      }else{
-        num = num + 1;
-      }
-    
-    //根据规则改变价格
-    // console.log(rule[1])
-    for(var i=0;i<rule.length;i++){
-      if (Number(rule[i].maxnum)!=0){
-        if (Number(rule[i].minnum) <= Number(num)){
-          if (Number(num)<=Number(rule[i].maxnum)){
-            newprice = rule[i].price
-            console.log(newprice)
-            break;
-          }
-        }
-      }else{
-        newprice = rule[i].price
-        console.log(newprice)
-        break;
-      }
-    }
+    // 点击递减
+    num = num - 1;
     list[index].count = num;
-    list[index].npriceGood = newprice;
     console.log(list);
     // 重新渲染 ---显示新的数量
     this.setData({
       goodsCar: list
     });
     this.totalPrice();
-    })
+  },
+  //增加数量
+  addNum: function(e) {
+    // 获取点击的索引
+    const index = e.currentTarget.dataset.index;
+    // 获取商品数据
+    let list = this.data.goodsCar;
+    // 获取商品数量
+    let num = list[index].count;
+    // 点击递增
+    num = num + 1;
+    list[index].count = num;
+    console.log(list);
+    // 重新渲染 ---显示新的数量
+    this.setData({
+      goodsCar: list
+    });
+    this.totalPrice();
   },
   // 计算金额
   totalPrice: function() {
@@ -395,7 +320,6 @@ Page({
         }
       }
     })
-
   },
   //删除单个商品
   deteleGood: function(e) {
@@ -433,137 +357,42 @@ Page({
       }
     })
   },
-  checklist(){
-    if (!API.orderinfo.length) {
-      this.setData({
-        carisShow: true
-      });
-    }else{
-      this.setData({
-        carisShow: false
-      });
-    }
-  },
   // 结算生成订单
   goOrder:function(){
     let _this = this;
-    let list = _this.data.goodsCar;
-    let nlist = [];
-    let time = util.formatTime(new Date())
-    // 携带订单信息生成订单
-    for(let i=0;i<list.length;i++){
-      if(list[i].selected){
-        let goodsmsg = ''
-        let sumprice = (Number(list[i].npriceGood)*Number(list[i].count)).toFixed(2);
-        goodsmsg = '商品：'+list[i].nameGood+'\n口味'+list[i].clickflavor+'\n数量：'+list[i].count+'\n批发单价：'+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
-        console.log(goodsmsg)
-        nlist.push(goodsmsg);
-      }
-    }
-    _this.setData({
-      time:time,
-      realOrderMsg:nlist
-    })
-    //状态：A-预约配送、B-商品自取、C-订单完成
-    // console.log('A')
     wx.showModal({
       title: '提示',
-      content: '选择配送方式',
-      cancelText:'预约配送',
-      confirmText:'商品自取',
-      cancelColor:'#D6463C',
+      content: '确认生成订单？',
       success: function(res){
         if(res.confirm){
-          app.globalData.db.collection('orders').add({
-            data: {
-              buyer: app.globalData.userInfo.nickName,
-              orderTime: time,
-              orderState:'B',
-              goodsmsg: nlist,
-              location: _this.data.userAddress,
-              telephone:_this.data.userTel,
-              sumprice:_this.data.totalPrice,
-              remarks:''
+          // 携带订单信息生成订单
+          let list = _this.data.goodsCar;
+          let nlist = [];
+          for(let i=0;i<list.length;i++){
+            if(list[i].selected){
+              nlist.push(list[i]);
             }
-          }).then((res)=>{
-            API.orderinfo =[]
-            wx.showToast({
-              title: '提交成功',
-              icon: 'success',
-              duration: 3000
-            });
-            _this.checklist()
+          }
+          API.orderinfo = nlist;//将订单的信息传给API.js
+          wx.navigateTo({
+            url: '../order/order'
           })
         }else{
-          _this.setData({
-              dialogShow: true
-          })
+          console.log(res);
         }
       }
-    })
-  },
-  //获取用户地址和联系方式
-  getUserMsg(){
-    app.globalData.db.collection('customer').where({
-      name:app.globalData.userInfo.nickName
-    }).get().then((res)=>{
-      this.setData({
-        userTel:res.data[0].address,
-        userAddress:res.data[0].telephone
-      })
-    })
-  },
-  tocommodity(){
-    wx.switchTab({
-      url: '../commodity/commodity'   
-    })
-  },
-  tapDialogButton(e){
-    let _this = this
-    if(e.detail.item.text = '确定'){
-      app.globalData.db.collection('orders').add({
-        data: {
-          buyer: app.globalData.userInfo.nickName,
-          orderTime: _this.data.time,
-          orderState:'A',
-          goodsmsg: _this.data.realOrderMsg,
-          location: _this.data.userAddress,
-          telephone:_this.data.userTel,
-          sumprice:_this.data.totalPrice,
-          remarks:_this.data.remarks
-        }
-      }).then((res)=>{
-        API.orderinfo =[]
-        wx.showToast({
-          title: '提交成功',
-          icon: 'success',
-          duration: 3000
-        });
-        _this.checklist()
-      })
-    }
-    this.setData({
-      dialogShow: false
-    })
-  },
-  getremarks(e){
-    this.setData({
-      remarks:e.detail.value
     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
   },
-  
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
     this.data.goodsCar = API.orderinfo;
-    this.checklist();
     this.totalPrice();
   }
 })

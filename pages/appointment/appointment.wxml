@@ -1,0 +1,57 @@
+<view class="containers"> 
+  <view class='no_shop' wx:if="{{carisShow}}"> 
+    <view class='no_shop_only'> 
+      <image class='shop_show_only' src='../../icon/error.png'></image> 
+      <text class='on_shop_txt'>无产生订单</text> 
+      <navigator url="/pages/index/index" open-type='switchTab' hover-class="none"> 
+        <view class='btn_return'> 
+          <text class='txt_btn_return'>去首页逛逛吧</text> 
+        </view> 
+      </navigator> 
+    </view> 
+  </view> 
+  <view class='has_shop' wx:else> 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'> 
+      <view class='position_title' style="margin-left:20rpx"> 
+        <image class='has_shop_icon1' src='../../icon/isshop.png'></image> 
+        <text class='has_shop_smalltxt'>我的预定(配送)</text> 
+      </view> 
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{orders}}"> 
+        <view class='has_shop_item'> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+              <view class='menu_right_txt'> 
+                <!-- 商品名称和描述 --> 
+                <text class='menu_right_name'>
+                  <text class='total_name' style="display:block">订单编号:</text> 
+                  <text class='total_name_num' style="margin-left:20rpx">{{item._id}}</text> 
+                </text>
+                <text class='menu_right_name'>
+                  <text class='total_name' style="display:block">下单时间:</text> 
+                  <text class='total_name_num' style="margin-left:20rpx">{{item.orderTime}}</text> 
+                </text>  
+                <view class='menu_right_down'> 
+                  <!-- 商品最新价格 --> 
+                  <text class='menu_right_nprice'>
+                    <text class='total_name' style="display:block">配送方式:</text> 
+                    <text class='total_name_num' style="margin-left:20rpx">{{item.orderState}}</text> 
+                  </text> 
+                  <view class='position_total'> 
+                    <text class='total_name'>共花费:</text> 
+                    <text class='total_name_num' style="font-size:35rpx;color: #f44336;line-height:50rpx;">￥{{item.sumprice}}</text> 
+                  </view> 
+                </view> 
+              </view> 
+              <view class='btn_delete_shop'  bindtap='deteleGood' data-index='{{index}}'><text>确认\n收货</text></view> 
+            </view> 
+          </view> 
+        </view> 
+      </block> 
+    </view> 
+  </view> 
+</view> 
