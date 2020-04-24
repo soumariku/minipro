@@ -19,7 +19,7 @@
         <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
         <text class="order-text">已完成</text>
       </view>
-      <view class="order-item" style="width: 33.3%;">
+      <view class="order-item" style="width: 33.3%;" bindtap="customerBtnDialog">
         <image class="order-icon" src="../../icon/after-sale.png" mode="cover"></image> 
         <text class="order-text">售后</text>
       </view>
@@ -74,17 +74,18 @@
   <mp-dialog title="联系我们" show="{{showtelBtnDialog}}" buttons="{{oneButton}}">
     <view style="min-width:500rpx">
       <text style="display:block;text-align: left;color:#bfbfbf">联系方式：</text>
-      <text space="nbsp" style="display:block;text-align: left" > 0759-6798606,</text>
+      <text space="nbsp" style="display:block;text-align: left" > 0759-6798606</text>
       <text space="nbsp" style="display:block;text-align: left"> 18922071070</text>
     </view>
   </mp-dialog>
   <mp-dialog title="关于我们" show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
     <view style="min-width:500rpx">
-      <text style="display:block;text-align: left;color:#bfbfbf">店铺:</text>
+      <text style="display:block;text-align: left;color:#bfbfbf">店铺名称:</text>
       <text space="nbsp" style="display:block;text-align: left"> 自来批发部</text>
-      <text style="display:block;text-align: left;color:#bfbfbf">联系方式：</text>
-      <text space="nbsp" style="display:block;text-align: left" > 0759-6798606,</text>
-      <text space="nbsp" style="display:block;text-align: left"> 18922071070</text>
+      <text style="display:block;text-align: left;color:#bfbfbf">店铺地址：</text>
+      <text space="nbsp" style="display:block;text-align: left" > 湛江市霞山区莲塘村三禾市场</text>
+      <text space="nbsp" style="display:block;text-align: left;color:#bfbfbf"> \n</text>
+      <text space="nbsp" style="display:block;text-align: left;color:#bfbfbf"> ---一切为了方便更好的我们---</text>
     </view>
   </mp-dialog>
 </view>

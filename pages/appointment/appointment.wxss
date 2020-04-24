@@ -293,15 +293,15 @@ page{
   justify-content: center; 
 } 
 .total_name{ 
-  font-size: 28rpx; 
-  color:#5076ab; 
+  font-size: 27rpx; 
+  color: #757575; 
 } 
 .total_name_num{ 
-  font-size:28rpx; 
+  font-size:27rpx; 
   font-family:PingFangSC-Medium; 
   font-weight:500;   
   line-height:40rpx; 
-  color: #757575 ; 
+  color: #D6463C; 
 } 
 .total_freight{ 
   font-size:24rpx; 

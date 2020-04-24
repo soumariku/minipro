@@ -28,26 +28,26 @@
               <view class='menu_right_txt'> 
                 <!-- 商品名称和描述 --> 
                 <text class='menu_right_name'>
-                  <text class='total_name' style="display:block">订单编号:</text> 
-                  <text class='total_name_num' style="margin-left:20rpx">{{item._id}}</text> 
+                  <text class='total_name' >订单编号:</text> 
+                  <text class='total_name_num' >{{item._id}}</text> 
                 </text>
                 <text class='menu_right_name'>
-                  <text class='total_name' style="display:block">下单时间:</text> 
-                  <text class='total_name_num' style="margin-left:20rpx">{{item.orderTime}}</text> 
+                  <text class='total_name' >下单时间:</text> 
+                  <text class='total_name_num' >{{item.orderTime}}</text> 
                 </text>  
                 <view class='menu_right_down'> 
                   <!-- 商品最新价格 --> 
                   <text class='menu_right_nprice'>
-                    <text class='total_name' style="display:block">配送方式:</text> 
-                    <text class='total_name_num' style="margin-left:20rpx">{{item.orderState}}</text> 
+                    <text class='total_name' >配送方式:</text> 
+                    <text class='total_name_num' >{{item.orderState}}</text> 
                   </text> 
                   <view class='position_total'> 
                     <text class='total_name'>共花费:</text> 
-                    <text class='total_name_num' style="font-size:35rpx;color: #f44336;line-height:50rpx;">￥{{item.sumprice}}</text> 
+                    <text class='total_name_num'>￥{{item.sumprice}}</text> 
                   </view> 
                 </view> 
               </view> 
-              <view class='btn_delete_shop'  bindtap='deteleGood' data-index='{{index}}'><text>确认\n收货</text></view> 
+              <view class='btn_delete_shop' bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view> 
             </view> 
           </view> 
         </view> 

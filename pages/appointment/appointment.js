@@ -36,6 +36,12 @@ Page({
       this.checklist();
     })
   },
+  toOrderDetail(e){
+    console.log(e)
+    wx.navigateTo({
+      url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
+    })
+  },
   // 计算金额
   totalPrice: function() {
     let list = this.data.goodsCar;

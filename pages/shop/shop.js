@@ -449,20 +449,24 @@ Page({
     let _this = this;
     let list = _this.data.goodsCar;
     let nlist = [];
+    let piclist = [];
     let time = util.formatTime(new Date())
     // 携带订单信息生成订单
     for(let i=0;i<list.length;i++){
       if(list[i].selected){
         let goodsmsg = ''
+        let pic = list[i].imgGood
         let sumprice = (Number(list[i].npriceGood)*Number(list[i].count)).toFixed(2);
-        goodsmsg = '商品：'+list[i].nameGood+'\n口味'+list[i].clickflavor+'\n数量：'+list[i].count+'\n批发单价：'+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
+        goodsmsg = '商品：'+list[i].nameGood+'\n口味：'+list[i].clickflavor+'\n数量：'+list[i].count+'\n批发单价：'+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
         console.log(goodsmsg)
         nlist.push(goodsmsg);
+        piclist.push(pic);
       }
     }
     _this.setData({
       time:time,
-      realOrderMsg:nlist
+      realOrderMsg:nlist,
+      orderPic:piclist
     })
     //状态：A-预约配送、B-商品自取、C-订单完成
     // console.log('A')
@@ -480,6 +484,7 @@ Page({
               orderTime: time,
               orderState:'B',
               goodsmsg: nlist,
+              goodspic:piclist,
               location: _this.data.userAddress,
               telephone:_this.data.userTel,
               sumprice:_this.data.totalPrice,
@@ -508,8 +513,8 @@ Page({
       name:app.globalData.userInfo.nickName
     }).get().then((res)=>{
       this.setData({
-        userTel:res.data[0].address,
-        userAddress:res.data[0].telephone
+        userTel:res.data[0].telephone,
+        userAddress:res.data[0].address
       })
     })
   },
@@ -527,10 +532,11 @@ Page({
           orderTime: _this.data.time,
           orderState:'A',
           goodsmsg: _this.data.realOrderMsg,
+          goodspic: _this.data.orderPic,
           location: _this.data.userAddress,
-          telephone:_this.data.userTel,
-          sumprice:_this.data.totalPrice,
-          remarks:_this.data.remarks
+          telephone: _this.data.userTel,
+          sumprice: _this.data.totalPrice,
+          remarks: _this.data.remarks
         }
       }).then((res)=>{
         API.orderinfo =[]

@@ -54,7 +54,12 @@ Page({
       totalPrice: total.toFixed(2)
     });
   },
-  
+  toOrderDetail(e){
+    console.log(e)
+    wx.navigateTo({
+      url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
+    })
+  },
   // 结算生成订单
   goOrder:function(){
     let _this = this;

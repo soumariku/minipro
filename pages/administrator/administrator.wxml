@@ -1,9 +1,80 @@
 <!--pages/administrator/administrator.wxml-->
 <view style="margin-top:350rpx" wx:if="{{begin}}">
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
-  <button class="thebtn">商品管理</button>
+  <button class="thebtn" bindtap="updategoods">商品管理</button>
   <button class="thebtn">订单管理</button>
 </view>
+<!-- 商品分类管理 -->
 <view wx:if="{{category}}">
-  
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      <view class='position_title'> 
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品分类</text> 
+      </view>
+      <text class='btn_shop_change' bindtap='editGood' style="color:red">返回</text> 
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{catagoryList}}"> 
+        <view class='has_shop_item' style="height: 115rpx; "> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+              <view class='position_hasshop_img' style="width: 100rpx;height: 100rpx;padding: 7rpx; "> 
+                <!-- 图片 --> 
+                <image class='shop_img' style="width: 100rpx;height: 100rpx; " src='{{item.pic}}'></image> 
+              </view> 
+              <view class='menu_right_txt' style="height: 100rpx "> 
+                <!-- 描述 --> 
+                <text class='menu_right_name'>{{item.name}}</text> 
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view> 
+</view>
+<!-- 商品管理 -->
+<view wx:if="{{goods}}">
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      <view class='position_title'> 
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品</text> 
+      </view> 
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{catagoryList}}"> 
+        <view class='has_shop_item' style="height: 115rpx; "> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+              <view class='position_hasshop_img' style="width: 100rpx;height: 100rpx;padding: 7rpx; "> 
+                <!-- 图片 --> 
+                <image class='shop_img' style="width: 100rpx;height: 100rpx; " src='{{item.goodspic}}'></image> 
+              </view> 
+              <view class='menu_right_txt' style="height: 100rpx "> 
+                <!-- 描述 --> 
+                <text class='menu_right_name'>{{item.name}}</text> 
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view> 
+
 </view>

@@ -293,11 +293,11 @@ page{
   justify-content: center; 
 } 
 .total_name{ 
-  font-size: 28rpx; 
-  color:rgba(51,51,51,1); 
+  font-size: 27rpx; 
+  color: #757575; 
 } 
 .total_name_num{ 
-  font-size:28rpx; 
+  font-size:27rpx; 
   font-family:PingFangSC-Medium; 
   font-weight:500;   
   line-height:40rpx; 

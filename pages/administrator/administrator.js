@@ -1,4 +1,5 @@
 // pages/administrator/administrator.js
+const app = getApp()
 Page({
 
   /**
@@ -6,6 +7,7 @@ Page({
    */
   data: {
     category:false,
+    gooods:false,
     begin:true,
   },
 
@@ -14,13 +16,29 @@ Page({
       category:true,
       begin:false
     })
+    app.globalData.db.collection('CATEGORY').get().then((res)=>{
+      console.log(res.data)
+      this.setData({
+        catagoryList:res.data
+      })
+    })
   },
-
+  updategoods(){
+    this.setData({
+      goods:true,
+      begin:false
+    })
+    app.globalData.db.collection('goods').get().then((res)=>{
+      console.log(res.data)
+      this.setData({
+        catagoryList:res.data
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**

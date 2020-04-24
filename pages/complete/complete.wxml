@@ -38,7 +38,7 @@
                 <view class='menu_right_down'> 
                   <!-- 商品最新价格 --> 
                   <text class='menu_right_nprice'>
-                    <text class='total_name'>配送方式:</text> 
+                    <text class='total_name'>订单状态:</text> 
                     <text class='total_name_num'>{{item.orderState}}</text> 
                   </text> 
                   <view class='position_total'> 
@@ -47,7 +47,7 @@
                   </view> 
                 </view> 
               </view> 
-              <view class='btn_delete_shop'  bindtap='deteleGood' data-index='{{index}}'><text>查看\n详情</text></view> 
+              <view class='btn_delete_shop'  bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>查看\n详情</text></view> 
             </view> 
           </view> 
         </view> 
