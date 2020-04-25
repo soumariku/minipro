@@ -2,7 +2,7 @@
 <view style="margin-top:350rpx" wx:if="{{begin}}">
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
   <button class="thebtn" bindtap="updategoods">商品管理</button>
-  <button class="thebtn">订单管理</button>
+  <button class="thebtn" bindtap="updateorders">订单管理</button>
 </view>
 <!-- 商品分类管理 -->
 <view wx:if="{{category}}">
@@ -14,7 +14,7 @@
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品分类</text> 
       </view>
-      <text class='btn_shop_change' bindtap='editGood' style="color:red">返回</text> 
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
     </view> 
     <!-- 循环的商品列表 --> 
     <view class='has_shop_list'> 
@@ -51,11 +51,12 @@
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品</text> 
       </view> 
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
     </view> 
     <!-- 循环的商品列表 --> 
     <view class='has_shop_list'> 
       <!-- 循环商品列表 --> 
-      <block wx:key="goods_car_index" wx:for="{{catagoryList}}"> 
+      <block wx:key="goods_car_index" wx:for="{{goodsList}}"> 
         <view class='has_shop_item' style="height: 115rpx; "> 
           <view class='btn_ischeck'> 
             <view class='position_hasshop_item'> 
@@ -75,6 +76,69 @@
     </view> 
     <!-- 底部选择栏 --> 
   </view> 
-</view> 
+</view>
+</view>
+
+<!-- 订单管理 -->
+<view wx:if="{{orders}}">
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      <view class='position_title'> 
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text> 
+      </view> 
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{ordersList}}"> 
+        <view class='has_shop_item'> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+             
+              
+              <view class='menu_right_txt' > 
+                <!-- 描述 --> 
+                 <text class='menu_right_name'>
+                  <text class='total_name' >客户：</text> 
+                  <text class='total_name_num' >{{item.buyer}}</text> 
+                </text>
+                <text class='menu_right_name'>
+                  <text class='total_name' >下单时间：</text> 
+                  <text class='total_name_num' >{{item.orderTime}}</text> 
+                </text>
+                <text class='menu_right_name'>
+                  <text class='total_name' >备注：</text> 
+                  <text class='total_name_num' >{{item.remarks}}</text> 
+                </text>    
+                <view class='menu_right_down'> 
+                  <!-- 商品最新价格 --> 
+                  <text class='menu_right_nprice'>
+                    <text class='total_name' >配送方式：</text> 
+                    <text class='total_name_num' >{{item.orderState}}</text> 
+                  </text> 
+                  <view class='position_total'> 
+                    <text class='total_name'>共花费:</text> 
+                    <text class='total_name_num'>￥{{item.sumprice}}</text> 
+                  </view> 
+                  </view>
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style=" background:#fff;flex-flow: column">
+            <view class="btn_delete_shop" style="background:orange;width: 100rpx;height: 115rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
+            <view class="btn_delete_shop" wx:if="{{item.orderState!='订单完成'}}" style="background:#5076ab;width: 100rpx;height: 115rpx; " bindtap="updateCompleteState" data-id="{{item._id}}"><text>确认\n收货</text></view>
+            <view class='btn_detele_all' wx:else style="width: 100rpx;height: 115rpx; " data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view> 
+          </view> 
+          
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view>
 
 </view>

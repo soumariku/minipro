@@ -1,0 +1,31 @@
+<!--pages/updatecategory/updatecategory.wxml-->
+<view class="thepage">
+  <view class="inputblock">
+    <text class="inputTitle">分类名称:</text>
+    <input class="inputname" value="{{categoryName}}" placeholder="请输入分类名称" bindinput="getcategory"></input>
+  </view>
+  <view class="inputblock" bindtap='uploadPic'>
+    <text class="inputTitle">选取图片:</text>
+    <input class="inputname" value="{{hasimg}}" placeholder="请放入图片" disabled="true"></input>
+  </view>
+  <view class="inputblock">
+    <text class="inputTitle">样式预览:</text>
+        <view class='img-back' wx:key='id'>
+          <view class='classify-input1'>
+              <image class='fruit' src='{{imgUrl}}' mode='aspectFit' bindtap='fruitClassify' data-id='{{item.id}}'></image>
+              <!-- 字体分类 -->
+              <view class='classify-text'>
+                <text class='text-text'>{{categoryName}}</text>
+              </view>
+          </view>
+        </view>
+    
+  </view>  
+  <view class="shop_car_total">
+    <view class='shop_total_right'> 
+        <!-- 一个都没选择，展示灰色结算按钮 --> 
+        <view class='btn_result_all_red' style="background:#5076ab" bindtap='updateCompleteState' >提交</view> 
+        <view class='btn_result_all_red' bindtap='updateCompleteState'>取消</view> 
+    </view>
+  </view>
+</view>

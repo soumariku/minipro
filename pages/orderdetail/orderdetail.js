@@ -58,7 +58,7 @@ Page({
     let id = this.data.id
     wx.showModal({
       title: '提示',
-      content: '选择配送方式',
+      content: '请确定是否收货',
       cancelText:'确定',
       confirmText:'取消',
       cancelColor:'#D6463C',
@@ -74,7 +74,11 @@ Page({
               wx.navigateBack({
                 delta: 1,  // 返回上一级页面。
                 success: function() {
-                    console.log('成功！')
+                  wx.showToast({
+                    title: '已完成！',
+                    icon: 'success',
+                    duration: 3000
+                  });
                 }
               })
             }

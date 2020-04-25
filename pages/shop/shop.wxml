@@ -4,7 +4,7 @@
     <view class='no_shop_only'>
       <image class='shop_show_only' src='../../icon/error.png'></image>
       <text class='on_shop_txt'>购物车空空如也</text>
-      <navigator url="/pages/index/index" open-type='switchTab' hover-class="none">
+      <navigator url="./../commodity/commodity" open-type='switchTab' hover-class="none">
         <view class='btn_return'>
 
           <text class='txt_btn_return' bindtap="tocommodity">去逛逛吧</text>
