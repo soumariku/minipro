@@ -58,6 +58,8 @@ App({
         // that.setData({
         //   openid: openid
         // })
+        wx.setStorageSync("openid", res.result.openId)
+        this.globalData.show = true 
         console.log(openid)
       }
     })
@@ -142,6 +144,7 @@ App({
     openId:'o6HCI5NR8UKfn6CBFAELDgL51ZwA',
     userInfo: null,
     db:null,
-    role:''
+    role:'',
+    show: null
   }
 })

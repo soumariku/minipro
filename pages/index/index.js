@@ -18,6 +18,12 @@ Page({
   password: '',
   success: false,
   },
+  cancel:function(){
+    wx.showModal({
+       title: '警告',
+       content: '您点击了拒绝授权,为保障您的利益请进行授权',
+       })
+   },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -75,8 +81,85 @@ Page({
       })
     }
   },
-
+  confirm: function () {
+    var that = this
+    wx.getUserInfo({
+    //获取头像昵称等仅需要调用wx.getUserInfo方法，但要注意button的open-type="getUserInfo"
+      success: function (res) {
+        console.log(res);
+        //var avatarUrl = 'userInfo.avatarUrl';
+        //var nickName = 'userInfo.nickName';
+        // that.setData({
+        //   avatarUrl: res.userInfo.avatarUrl,
+        //   nickName: res.userInfo.nickName,
+        // })
+        // wx.setStorageSync("avatarUrl", res.userInfo.avatarUrl),//将头像放入缓存，
+        // wx.setStorageSync("nickName", res.userInfo.nickName)
+        app.globalData.userInfo = res.userInfo
+      }
+    })
+    wx.login({
+    //获取code需要wx.login方法，发送code到后台换取用户的openID，code是变化的而openID唯一
+      success: function (res) {
+        console.log(res.code)
+        console.log(res)
+        //发送请求
+        // app.getOpenId()
+        wx.cloud.callFunction({
+          name: 'getOpenid',
+          complete: res => {
+            console.log('云函数获取到的openid: ', res.result.openId)
+            var openid = res.result.openId;
+            // that.setData({
+            //   openid: openid
+            // })
+            wx.setStorageSync("openid", res.result.openId)
+            app.globalData.show = true
+            that.setData({
+              show:app.globalData
+            }) 
+            console.log(openid)
+          }
+        })
+        // wx.request({
+        //   url: API.getOpenId, //你解析用户openID的接口地址
+        //   data: {
+        //     code: res.code,
+        //     headImage: that.data.avatarUrl,
+        //     nickName: that.data.nickName,
+        //   },
+        //   method: "POST",
+        //   header: {
+        //     //'content-type': 'application/json' //默认值
+        //     "Content-Type": "application/json;charset=UTF-8",
+        //   },
+        //   success: function (res) {
+        //     console.log(res.data)
+        //     console.log("获取到的数据为：" + res.data)
+        //     wx.setStorageSync("openid", res.data)
+        //     that.setData({
+        //       show: true
+        //     })
+        //   }
+        // })
+      }
+    })
+  },
   onLoad: function () {
+    let openid = wx.getStorageSync('openid')
+    console.log(openid)
+    if (openid.length <= 0) {
+      //查看用户之前是否已经授权登录过，如果没有就让授权弹框显示，并让用户按指示授权
+          app.globalData.show = false
+          this.setData({
+            show:app.globalData.show
+          })
+      } else {
+          app.globalData.show = false
+          this.setData({
+            show:app.globalData.show
+          })
+      }
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
