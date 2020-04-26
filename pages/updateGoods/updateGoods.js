@@ -254,19 +254,24 @@ Page({
     console.log(_this.data.rule2.price)
     console.log(_this.data.rule3.price)
     console.log(!!this.data.rule1.name)
-    app.globalData.db.collection('goods').doc(theid).set({
-      data:{
-        catgory: _this.data.catgory,
-        flavor: _this.data.flavor,
-        goodspic: _this.data.goodspic,
-        gdetailspic:_this.data.gdetailspic,
-        name: _this.data.name,
-        price1: _this.data.rule1.price,
-        price2: _this.data.rule2.price,
-        price3: _this.data.rule3.price
-      },
-      success(res){
-        console.log(res)
+    wx.cloud.callFunction({
+      name: "setMsg",
+      data: {
+        id:theid,
+        collection:'goods',
+        data:{
+              catgory: _this.data.catgory,
+              flavor: _this.data.flavor,
+              goodspic: _this.data.goodspic,
+              gdetailspic:_this.data.gdetailspic,
+              name: _this.data.name,
+              price1: _this.data.rule1.price,
+              price2: _this.data.rule2.price,
+              price3: _this.data.rule3.price
+            }
+      }
+    }).then((res)=>{
+      console.log(res)
         _this.updaterule(_this.data.rule1._id,_this.data.rule1);
         _this.updaterule(_this.data.rule2._id,_this.data.rule2);
         _this.updaterule(_this.data.rule3._id,_this.data.rule3);
@@ -282,22 +287,67 @@ Page({
             beforePage.updategoods()
           },
         })
-      }
     })
+    // app.globalData.db.collection('goods').doc(theid).set({
+    //   data:{
+    //     catgory: _this.data.catgory,
+    //     flavor: _this.data.flavor,
+    //     goodspic: _this.data.goodspic,
+    //     gdetailspic:_this.data.gdetailspic,
+    //     name: _this.data.name,
+    //     price1: _this.data.rule1.price,
+    //     price2: _this.data.rule2.price,
+    //     price3: _this.data.rule3.price
+    //   },
+    //   success(res){
+    //     console.log(res)
+    //     _this.updaterule(_this.data.rule1._id,_this.data.rule1);
+    //     _this.updaterule(_this.data.rule2._id,_this.data.rule2);
+    //     _this.updaterule(_this.data.rule3._id,_this.data.rule3);
+    //     wx.showToast({
+    //       title: '更新完成！',
+    //     })
+    //     var pages = getCurrentPages(); // 当前页面
+    //     var beforePage = pages[pages.length - 2]; // 前一个页面
+    //     wx.navigateBack({
+    //       // delta: 1,  // 返回上一级页面。
+    //       complete: (res) => {
+    //         console.log(res)
+    //         beforePage.updategoods()
+    //       },
+    //     })
+    //   }
+    // })
   },
   updaterule(id,rule){
-    app.globalData.db.collection('rule').doc(id).set({
-      data:{
-        goodsid:this.data.goodsid,
-        maxnum:rule.maxnum,
-        minnum:rule.minnum,
-        name:rule.name,
-        price:rule.price
-      },
-      success(res){
-        console.log(res)
+    wx.cloud.callFunction({
+      name: "setMsg",
+      data: {
+        id:id,
+        collection:'rule',
+        data:{
+          goodsid:this.data.goodsid,
+          maxnum:rule.maxnum,
+          minnum:rule.minnum,
+          name:rule.name,
+          price:rule.price
+        }
       }
+    }).then((res)=>{
+      console.log(res)
     })
+    // app.globalData.db.collection('rule').doc(id).set({
+    //   data:{
+    //     goodsid:this.data.goodsid,
+    //     maxnum:rule.maxnum,
+    //     minnum:rule.minnum,
+    //     name:rule.name,
+    //     price:rule.price
+    //   },
+    //   success(res){
+    //     console.log(res)
+    //   }
+    // })
   },
   changepic1(){
     let that = this;

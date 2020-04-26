@@ -114,23 +114,44 @@ Page({
           if (res.fileID) {
             let newpic = res.fileID
             console.log(theid)
-            app.globalData.db.collection('CATEGORY').doc(theid).set({
-              data:{
-                name: _this.data.categoryName,
-                pic : newpic
-              },
-              success(res){
-                wx.showToast({
-                  title: '上传图片成功',
-                })
-                wx.navigateBack({
-                  delta: 1,  // 返回上一级页面。
-                  complete: (res) => {
-                    console.log(res)
-                  },
-                })
-              },
+            wx.cloud.callFunction({
+              name: "setMsg",
+              data: {
+                id:theid,
+                collection:'CATEGORY',
+                data:{
+                  name: _this.data.categoryName,
+                  pic : newpic
+                }
+              }
+            }).then((res)=>{
+              wx.showToast({
+                title: '上传图片成功',
+              })
+              wx.navigateBack({
+                delta: 1,  // 返回上一级页面。
+                complete: (res) => {
+                  console.log(res)
+                },
+              })
             })
+            // app.globalData.db.collection('CATEGORY').doc(theid).set({
+            //   data:{
+            //     name: _this.data.categoryName,
+            //     pic : newpic
+            //   },
+            //   success(res){
+            //     wx.showToast({
+            //       title: '上传图片成功',
+            //     })
+            //     wx.navigateBack({
+            //       delta: 1,  // 返回上一级页面。
+            //       complete: (res) => {
+            //         console.log(res)
+            //       },
+            //     })
+            //   },
+            // })
           }
         },
         fail:res =>{
@@ -140,25 +161,48 @@ Page({
         }
         })
       }else{
-        app.globalData.db.collection('CATEGORY').doc(theid).set({
-          data:{
-            name: _this.data.categoryName,
-            pic : _this.data.pathImgUrl
-          },
-          success(res){
-            wx.showToast({
-              title: '上传图片成功',
-            })
-            var pages = getCurrentPages(); // 当前页面
-            var beforePage = pages[pages.length - 2]; // 前一个页面
-            wx.navigateBack({
-              delta: 1,  // 返回上一级页面。
-              complete: (res) => {
-                beforePage.updateCategory()
-              },
-            })
-          },
+        wx.cloud.callFunction({
+          name: "setMsg",
+          data: {
+            id:theid,
+            collection:'CATEGORY',
+            data:{
+              name: _this.data.categoryName,
+              pic : _this.data.pathImgUrl
+            }
+          }
+        }).then((res)=>{
+          wx.showToast({
+            title: '上传图片成功',
+          })
+          var pages = getCurrentPages(); // 当前页面
+          var beforePage = pages[pages.length - 2]; // 前一个页面
+          wx.navigateBack({
+            delta: 1,  // 返回上一级页面。
+            complete: (res) => {
+              beforePage.updateCategory()
+            },
+          })
         })
+        // app.globalData.db.collection('CATEGORY').doc(theid).set({
+        //   data:{
+        //     name: _this.data.categoryName,
+        //     pic : _this.data.pathImgUrl
+        //   },
+        //   success(res){
+        //     wx.showToast({
+        //       title: '上传图片成功',
+        //     })
+        //     var pages = getCurrentPages(); // 当前页面
+        //     var beforePage = pages[pages.length - 2]; // 前一个页面
+        //     wx.navigateBack({
+        //       delta: 1,  // 返回上一级页面。
+        //       complete: (res) => {
+        //         beforePage.updateCategory()
+        //       },
+        //     })
+        //   },
+        // })
       }
    },
    deleteCategory(e){

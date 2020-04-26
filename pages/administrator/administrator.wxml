@@ -2,7 +2,7 @@
 <view style="margin-top:350rpx" wx:if="{{begin}}">
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
   <button class="thebtn" bindtap="updategoods">商品管理</button>
-  <button class="thebtn" bindtap="updateorders">订单管理</button>
+  <button class="thebtn" bindtap="getOrders">订单管理</button>
 </view>
 <!-- 商品分类管理 -->
 <view wx:if="{{category}}">

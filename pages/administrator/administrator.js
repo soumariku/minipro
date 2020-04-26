@@ -54,7 +54,7 @@ Page({
       })
     })
   },
-  updateorders(){
+  getOrders(){
     this.setData({
       orders:true,
       begin:false,
@@ -90,20 +90,38 @@ Page({
         if(res.confirm){
           console.log('按了取消')
         }else{
-          app.globalData.db.collection('orders').doc(id).update({
-            data:{
-              orderState:'C'
-            },
-            success: function(res) {
-              console.log(res)
+          wx.cloud.callFunction({
+            name: "updateData",
+            data: {
+              id:id,
+              collection:'orders',
+              data:{
+                orderState:'C'
+              }
+            }
+          }).then((res)=>{
+            console.log(res)
               wx.showToast({
                 title: '已完成！',
                 icon: 'success',
                 duration: 3000
               });
-              _this.updateorders()
-            }
+              _this.getOrders()
           })
+          // app.globalData.db.collection('orders').doc(id).update({
+          //   data:{
+          //     orderState:'C'
+          //   },
+          //   success: function(res) {
+          //     console.log(res)
+          //     wx.showToast({
+          //       title: '已完成！',
+          //       icon: 'success',
+          //       duration: 3000
+          //     });
+          //     _this.getOrders()
+          //   }
+          // })
         }
       }
     })

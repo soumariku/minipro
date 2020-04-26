@@ -66,23 +66,43 @@ Page({
         if(res.confirm){
           console.log('按了取消')
         }else{
-          app.globalData.db.collection('orders').doc(id).update({
-            data:{
-              orderState:'C'
-            },
-            success: function(res) {
-              wx.navigateBack({
-                delta: 1,  // 返回上一级页面。
-                success: function() {
-                  wx.showToast({
-                    title: '已完成！',
-                    icon: 'success',
-                    duration: 3000
-                  });
-                }
-              })
+          wx.cloud.callFunction({
+            name: "updateData",
+            data: {
+              id:id,
+              collection:'orders',
+              data:{
+                orderState:'C'
+              }
             }
+          }).then((res)=>{
+            var pages = getCurrentPages(); // 当前页面
+            var beforePage = pages[pages.length - 2]; // 前一个页面
+            wx.navigateBack({
+              // delta: 1,  // 返回上一级页面。
+              complete: (res) => {
+                console.log(res)
+                beforePage.getOrders()
+              },
+            })
           })
+          // app.globalData.db.collection('orders').doc(id).update({
+          //   data:{
+          //     orderState:'C'
+          //   },
+          //   success: function(res) {
+          //     wx.navigateBack({
+          //       delta: 1,  // 返回上一级页面。
+          //       success: function() {
+          //         wx.showToast({
+          //           title: '已完成！',
+          //           icon: 'success',
+          //           duration: 3000
+          //         });
+          //       }
+          //     })
+          //   }
+          // })
         }
       }
     })
