@@ -15,7 +15,8 @@
     "pages/orderdetail/orderdetail",
     "pages/appointment/appointment",
     "pages/complete/complete",
-    "pages/updatecategory/updatecategory"
+    "pages/updatecategory/updatecategory",
+    "pages/updateGoods/updateGoods"
   ],
   "window": {
     "backgroundTextStyle": "light",

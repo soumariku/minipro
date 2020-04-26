@@ -109,6 +109,16 @@ Page({
     })
     
   },
+  toUpdateCategory(e){
+    wx.navigateTo({
+      url: './../updatecategory/updatecategory?id='+e.currentTarget.dataset.id,
+    })
+  },
+  toUpdateGoods(e){
+    wx.navigateTo({
+      url: './../updateGoods/updateGoods?id='+e.currentTarget.dataset.id,
+    })
+  },
   toOrderDetail(e){
     console.log(e)
     wx.navigateTo({

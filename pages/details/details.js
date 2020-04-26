@@ -51,17 +51,60 @@ Page({
     });
   },
   tocalDialog: function () {
-    if (Number(this.data.buysum)==0){
-      this.setData({
-        showDialog: !this.data.showDialog
+    let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
+    if(!!theMsg.length){
+      wx.showToast({
+        title: '购物车存在该商品',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 2000
       });
     }else{
-      this.tocal()
-      wx.showToast({
-        title: '添加购物车成功',
-        icon: 'success',
-        duration: 3000
-      });
+      if (Number(this.data.buysum)==0){
+        if(this.data.showDialog){
+          wx.showToast({
+            title: '请添加数量',
+            icon: 'none',
+            image:'../../icon/close.png',
+            duration: 1000
+          });
+        }else{
+          this.setData({
+            showDialog: !this.data.showDialog
+          });
+        }
+      }else{
+        if(this.data.flavor.length){
+          if(!!this.data.clickflavor){
+            this.tocal()
+            wx.showToast({
+              title: '添加购物车成功',
+              icon: 'success',
+              duration: 3000
+            });
+            this.setData({
+              showDialog: false
+            });
+          }else{
+            wx.showToast({
+              title: '未选择口味',
+              icon: 'none',
+              image:'../../icon/close.png',
+              duration: 1000
+            });
+          }
+        }else{
+          this.tocal()
+          wx.showToast({
+            title: '添加购物车成功',
+            icon: 'success',
+            duration: 3000
+          });
+          this.setData({
+            showDialog: false
+          });
+        } 
+      }
     }
   },
   //点击口味
@@ -159,11 +202,51 @@ Page({
   },
   // 立即购买
   immeBuy() {
-    wx.showToast({
-      title: '添加购物车成功',
-      icon: 'success',
-      duration: 3000
-    });
+    let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
+    if(!!theMsg.length){
+      wx.showToast({
+        title: '购物车存在该商品',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 2000
+      });
+    }else{
+      if (Number(this.data.buysum)==0){
+        if(this.data.showDialog){
+          wx.showToast({
+            title: '请添加数量',
+            icon: 'none',
+            image:'../../icon/close.png',
+            duration: 1000
+          });
+        }else{
+          this.setData({
+            showDialog: !this.data.showDialog
+          });
+        }
+      }else{
+        if(this.data.flavor.length){
+          if(!!this.data.clickflavor){
+            this.tocal()
+            wx.reLaunch({
+              url: '../shop/shop',
+            })
+          }else{
+            wx.showToast({
+              title: '未选择口味',
+              icon: 'none',
+              image:'../../icon/close.png',
+              duration: 1000
+            });
+          }
+        }else{
+          this.tocal()
+          wx.reLaunch({
+            url: '../shop/shop',
+          })
+        }  
+      }
+    }
   },
   getDate:function() {
     // console.log(app.globalData.db)

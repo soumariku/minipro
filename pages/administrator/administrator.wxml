@@ -10,7 +10,7 @@
   <view class='has_shop' > 
     <!-- 第一排 --> 
     <view class='has_shop_title'  > 
-      <view class='position_title'> 
+      <view class='position_title' bindtap="toUpdateCategory"> 
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品分类</text> 
       </view>
@@ -33,7 +33,7 @@
               </view> 
             </view> 
           </view>
-          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateCategory' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
         </view> 
       </block> 
     </view> 
@@ -47,7 +47,7 @@
   <view class='has_shop' > 
     <!-- 第一排 --> 
     <view class='has_shop_title'  > 
-      <view class='position_title'> 
+      <view class='position_title' bindtap="toUpdateGoods"> 
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品</text> 
       </view> 
@@ -70,7 +70,7 @@
               </view> 
             </view> 
           </view>
-          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateGoods' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
         </view> 
       </block> 
     </view> 

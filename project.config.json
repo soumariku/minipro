@@ -141,6 +141,20 @@
 					"id": -1,
 					"name": "upcategory",
 					"pathName": "pages/updatecategory/updatecategory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "updatecategory",
+					"pathName": "pages/updatecategory/updatecategory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/updateGoods/updateGoods",
+					"pathName": "pages/updateGoods/updateGoods",
 					"scene": null
 				}
 			]

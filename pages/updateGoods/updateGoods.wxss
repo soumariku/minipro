@@ -1,0 +1,107 @@
+/* pages/updateGoods/updateGoods.wxss */
+/* pages/updatecategory/updatecategory.wxss */
+.inputblock{
+  display: flex;
+  padding:25rpx;
+  border-bottom: 3rpx dashed  #444;
+}
+.inputTitle{
+  font-size:30rpx;
+  padding: 10rpx;
+  color:#585757;
+  margin-right: 15rpx;
+}
+.inputname{
+  background:#fff;
+  border: 3rpx solid #000;
+  font-size:30rpx;
+  padding: 10rpx;
+  z-index: 0;
+}
+
+.img-back {
+  border:3rpx solid #000;
+  background-color: white;
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  margin-right: 30rpx;
+}
+.classify-input1 {
+  margin-top: 20rpx;
+}
+.fruit {
+  width: 100%;
+  height: 130rpx;
+}
+.classify-text {
+  margin-bottom: 20rpx;
+}
+.text-text {
+  font-size: 26rpx;
+}
+.has_shop_title{ 
+  position: fixed; 
+  width: 100%; 
+  height: 100rpx; 
+  display: flex; 
+  align-items: center; 
+  border-bottom: 3rpx solid rgba(248,248,248,1); 
+  z-index: 99; 
+  background-color: #fff; 
+} 
+.position_title{ 
+  width: 650rpx; 
+  height: 100rpx; 
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+} 
+.has_shop_icon1{ 
+  margin:10rpx 20rpx;
+  width: 45rpx; 
+  height: 45rpx; 
+} 
+.has_shop_smalltxt{ 
+  font-size:28rpx; 
+  font-family:PingFangSC-Regular; 
+  font-weight:400; 
+  color:rgba(51,51,51,1); 
+  line-height:40rpx; 
+} 
+.shop_total_right{ 
+  height: 100rpx; 
+  display: flex; 
+  justify-content: flex-end; 
+} 
+.thepage{
+  width: 100%; 
+  min-height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  margin-bottom: 100rpx; 
+  background:rgba(255,255,255,1); 
+}
+.btn_result_all_red{ 
+  width: 380rpx; 
+ height: 100rpx; 
+ background:#f57c00; 
+ display: flex; 
+ justify-content: center; 
+ align-items: center; 
+ font-size:40rpx; 
+ font-family:PingFangSC-Medium; 
+ font-weight:500; 
+ color:rgba(255,255,255,1); 
+ line-height:42rpx; 
+} 
+.shop_car_total{ 
+  width: 100%; 
+  height: 100rpx; 
+  position: fixed; 
+  bottom: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  background:rgba(255,255,255,1); 
+} 

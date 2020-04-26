@@ -191,7 +191,7 @@ page{
   font-size:30rpx; 
   font-family:PingFangSC-Regular; 
   font-weight:400; 
-  color:rgba(214,70,60,1); 
+  color:rgb(214, 70, 60); 
 } 
 .menu_right_oprice{ 
   font-size:20rpx; 

@@ -45,7 +45,7 @@
 }
 
 .demo-page {
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
 }
 
 .special-img {
@@ -195,7 +195,7 @@ swiper {
 }
 
 .swiper-block {
-  height: 250rpx;
+  height: 300rpx;
   width: 100%;
 }
 

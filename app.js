@@ -139,6 +139,7 @@ App({
   },
   
   globalData: {
+    openId:'o6HCI5NR8UKfn6CBFAELDgL51ZwA',
     userInfo: null,
     db:null,
     role:''
