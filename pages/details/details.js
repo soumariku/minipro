@@ -280,11 +280,20 @@ Page({
   },
   //点-
   subNum(){
-    let newsum = Number(this.data.buysum)-1
-    this.setData({
-      buysum: newsum
-    })
-    this.calculateprice()
+    if(this.data.buysum==0){
+      wx.showToast({
+        title: '商品数量为0',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 1000
+      });
+    }else{
+      let newsum = Number(this.data.buysum)-1
+      this.setData({
+        buysum: newsum
+      })
+      this.calculateprice()
+    }
   },
   //点+
   addNum(){
