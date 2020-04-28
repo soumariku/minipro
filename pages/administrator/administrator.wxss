@@ -356,3 +356,76 @@ page{
   height: 32rpx; 
   margin:0 30rpx 0 30rpx; 
 }
+
+/* 用户 */
+.weui-search-bar {
+  position: relative;
+  padding: 8px 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  background-color: #EFEFF4;
+  border-top: 1rpx solid #D7D6DC;
+  border-bottom: 1rpx solid #D7D6DC;
+}
+.weui-icon-search_in-box {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+}
+.weui-search-bar__form {
+  position: relative;
+  
+  -webkit-flex: auto;
+          flex: auto;
+  border-radius: 5px;
+  background: #FFFFFF;
+  border: 1rpx solid #E6E6EA;
+}
+.weui-search-bar__box {
+  position: relative;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.weui-search-bar__input {
+  height: 28px;
+  /* line-height: 28px; */
+  font-size: 14px;
+}
+.weui-search-bar__cancel-btn {
+  margin-left: 10px;
+  line-height: 28px;
+  color: #09BB07;
+  white-space: nowrap;
+}
+.thebtn{
+  position: relative;
+}
+.itemView{
+  background-color: #fff;
+  padding:10rpx
+}
+.swiper-tab{
+	width: 100%;
+	border-bottom: 2rpx solid #777777;
+	text-align: center;
+  line-height: 80rpx;
+  z-index: 99;
+}
+.swiper-tab-list{  font-size: 30rpx;
+    display: inline-block;
+	width: 50%;
+  color: #777777;
+  min-height: 100;
+}
+.on{ color: #5076ab;
+	border-bottom: 5rpx solid #5076ab;}
+ 
+.swiper-box{ display: flex; min-height: 100%; width: 100%; overflow: scroll ; }
+.swiper-box view{
+	/* text-align: center; */
+}

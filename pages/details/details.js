@@ -125,7 +125,9 @@ Page({
       count:Number(this.data.buysum),
       id:this.data.goodsID,
       selected: true,
-      clickflavor: this.data.clickflavor
+      clickflavor: this.data.clickflavor,
+      levelname:this.data.levelname,
+      buyingprice:this.data.buyingprice
     }
     API.orderinfo.push(orderlist)
   },
@@ -262,7 +264,8 @@ Page({
         goodmsg: res.data[0],
         flavor: res.data[0].flavor,
         imgUrls: pic,
-        detailImg: detailspic
+        detailImg: detailspic,
+        buyingprice:res.data[0].buyingprice
       })
       console.log(this.data.flavor)
      console.log(this.data.goodmsg)
@@ -320,25 +323,42 @@ Page({
   calculateprice(){
     let newsum = 0;
     let newsingleprice = '';
+    let thelevel = ''
     for(var i=0;i<this.data.rule.length;i++){
       if (Number(this.data.rule[i].maxnum)!=0){
         if (Number(this.data.rule[i].minnum) <= Number(this.data.buysum)){
           if (Number(this.data.buysum)<=Number(this.data.rule[i].maxnum)){
             newsum = Number(this.data.rule[i].price) * Number(this.data.buysum)
             newsingleprice = this.data.rule[i].price
+            thelevel = i
             break;
           }
         }
       }else{
         newsum = Number(this.data.rule[i].price) * Number(this.data.buysum)
         newsingleprice = this.data.rule[i].price
+        thelevel = i
         break;
       }
     }
+    this.setlevel(thelevel)
     this.setData({
       singleprice: newsingleprice,
       pricesum: newsum
     })
     // console.log(newsum)
+  },
+  setlevel(thelevel){
+    let name = ''
+    if(thelevel=='0'){
+      name = '商品单价：'
+    }else if(thelevel=='1'){
+      name = '批发单价：'
+    }else{
+      name = '二批单价：'
+    }
+    this.setData({
+      levelname:name
+    })
   }
 })

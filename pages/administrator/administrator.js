@@ -6,11 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    user:false,
     category:false,
     gooods:false,
     orders:false,
     begin:true,
-    email_nums:20
+    email_nums:20,
+    currentTab: 0,
   },
   previewReturn(){
     if(this.data.category==true){
@@ -30,6 +32,18 @@ Page({
       })
     }
     
+  },
+  updateUser(){
+    this.setData({
+      user:true,
+      begin:false
+    })
+    app.globalData.db.collection('CATEGORY').get().then((res)=>{
+      console.log(res.data)
+      this.setData({
+        catagoryList:res.data
+      })
+    })
   },
   updateCategory(){
     this.setData({
@@ -61,7 +75,7 @@ Page({
       begin:false,
       ordersList:[]
     })
-    app.globalData.db.collection('orders').get().then((res)=>{
+    app.globalData.db.collection('orders').orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
       console.log(res.data)
       for(var i=0;i<res.data.length;i++){
         //状态：A-预约配送、B-商品自取、C-订单完成
@@ -78,6 +92,11 @@ Page({
       })
     })
   },
+  getpal(){
+    wx.navigateTo({
+      url: '../profitAndLoss/profitAndLoss',
+    })
+  },
   onReachBottom: function () {
     console.log('YES')
     wx.showLoading({
@@ -88,7 +107,7 @@ Page({
     let x = this.data.email_nums + 20
     console.log(x)
     let old_data = this.data.email
-    db.collection('orders').skip(x) // 限制返回数量为 20 条
+    app.globalData.db.collection('orders') .orderBy('orderTime', 'desc').skip(x) // 限制返回数量为 20 条
       .get()
       .then(res => {
       //  // 这里是从数据库获取文字进行转换 变换显示（换行符转换） 
@@ -187,6 +206,27 @@ Page({
       url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
     })
   },
+  bindChange: function( e ) {
+ 
+    var that = this;
+    that.setData( { currentTab: e.detail.current });
+ 
+  },
+  /**
+   * 点击tab切换
+   */
+  swichNav: function( e ) {
+ 
+    var that = this;
+ 
+    if( this.data.currentTab === e.target.dataset.current ) {
+      return false;
+    } else {
+      that.setData( {
+        currentTab: e.target.dataset.current
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -231,9 +271,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  
 
   /**
    * 用户点击右上角分享

@@ -451,22 +451,29 @@ Page({
     let nlist = [];
     let piclist = [];
     let time = util.formatTime(new Date())
+    let profitPrice = 0
     // 携带订单信息生成订单
     for(let i=0;i<list.length;i++){
       if(list[i].selected){
         let goodsmsg = ''
         let pic = list[i].imgGood
         let sumprice = (Number(list[i].npriceGood)*Number(list[i].count)).toFixed(2);
-        goodsmsg = '商品：'+list[i].nameGood+'\n口味：'+list[i].clickflavor+'\n数量：'+list[i].count+'\n批发单价：'+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
+        console.log('buyingprice',list[i].buyingprice)
+        profitPrice = Number(profitPrice)+(Number(list[i].count)*Number(list[i].buyingprice))
+        goodsmsg = '商品：'+list[i].nameGood+'\n口味：'+list[i].clickflavor+'\n数量：'+list[i].count+'\n'+list[i].levelname+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
         console.log(goodsmsg)
         nlist.push(goodsmsg);
         piclist.push(pic);
       }
     }
+    profitPrice = Number(_this.data.totalPrice)-Number(profitPrice)
+    console.log('profitPrice',profitPrice)
+    console.log('totalPrice',_this.data.totalPrice)
     _this.setData({
       time:time,
       realOrderMsg:nlist,
-      orderPic:piclist
+      orderPic:piclist,
+      profitPrice:profitPrice
     })
     //状态：A-预约配送、B-商品自取、C-订单完成
     // console.log('A')
@@ -488,6 +495,7 @@ Page({
               location: _this.data.userAddress,
               telephone:_this.data.userTel,
               sumprice:_this.data.totalPrice,
+              profitPrice:_this.data.profitPrice,
               remarks:''
             }
           }).then((res)=>{
@@ -497,6 +505,7 @@ Page({
               icon: 'success',
               duration: 3000
             });
+            
             _this.checklist()
           })
         }else{
@@ -536,6 +545,7 @@ Page({
           location: _this.data.userAddress,
           telephone: _this.data.userTel,
           sumprice: _this.data.totalPrice,
+          profitPrice:_this.data.profitPrice,
           remarks: _this.data.remarks
         }
       }).then((res)=>{

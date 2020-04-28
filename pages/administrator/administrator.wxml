@@ -1,9 +1,77 @@
 <!--pages/administrator/administrator.wxml-->
 <view style="margin-top:350rpx" wx:if="{{begin}}">
+  <button class="thebtn" bindtap="updateUser">用户管理</button>
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
   <button class="thebtn" bindtap="updategoods">商品管理</button>
   <button class="thebtn" bindtap="getOrders">订单管理</button>
+  <button class="thebtn" bindtap="getpal">盈亏查看</button>
 </view>
+
+<view wx:if="{{user}}">
+  <view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">管理员</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">普通用户</view>
+  </view>
+  
+  <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="min-height:500px" bindchange="bindChange">
+    <!-- 订单盈亏 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+        <view class="weui-search-bar" >
+          <view class="itemView">新管理员账号：
+            <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+            bindinput="userNameInput"/> -->
+            <form bindsubmit="bindFormSubmit">
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员账号" name="textarea" auto-height maxlength="-1" value="{{address}}" />
+
+            </form>
+          </view>
+          </view>
+          <view class="weui-search-bar" >
+          <view class="itemView">新管理员密码：
+            <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+            bindinput="userNameInput"/> -->
+            <form bindsubmit="bindFormSubmit">
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员密码" name="textarea" auto-height maxlength="-1" value="{{telephone}}" />
+              <view class="thebtn">
+                <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" > 更改 </button>
+              </view>
+            </form>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+    <!-- 订单盈亏 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+        <view class="weui-search-bar" >
+          <view class="itemView">新普通用户账号：
+            <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+            bindinput="userNameInput"/> -->
+            <form bindsubmit="bindFormSubmit">
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新普通用户账号" name="textarea" auto-height maxlength="-1" value="{{address}}" />
+
+            </form>
+          </view>
+          </view>
+          <view class="weui-search-bar" >
+          <view class="itemView">新普通用户密码：
+            <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
+            bindinput="userNameInput"/> -->
+            <form bindsubmit="bindFormSubmit">
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新普通用户密码" name="textarea" auto-height maxlength="-1" value="{{telephone}}" />
+              <view class="thebtn">
+                <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" > 更改 </button>
+              </view>
+            </form>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+</view>
+
 <!-- 商品分类管理 -->
 <view wx:if="{{category}}">
   <view class="containers"> 
@@ -140,5 +208,6 @@
     <!-- 底部选择栏 --> 
   </view> 
 </view>
+
 
 </view>

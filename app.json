@@ -16,7 +16,8 @@
     "pages/appointment/appointment",
     "pages/complete/complete",
     "pages/updatecategory/updatecategory",
-    "pages/updateGoods/updateGoods"
+    "pages/updateGoods/updateGoods",
+    "pages/profitAndLoss/profitAndLoss"
   ],
   "window": {
     "backgroundTextStyle": "light",

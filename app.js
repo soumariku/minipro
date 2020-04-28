@@ -75,11 +75,11 @@ App({
       }
     })
   },
-  sendmsg(){
+  sendmsg(msg){
     wx.cloud.callFunction({
       name:'sendUserMsg',
       data: {
-        msg: '试试就逝世'
+        msg: msg
       },
       success: res => {
         // output: res.result === 3

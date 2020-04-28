@@ -1,0 +1,136 @@
+<!--pages/profitAndLoss/profitAndLoss.wxml-->
+<view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">订单盈亏</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">月份盈亏</view>
+</view>
+ 
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="min-height:{{winHeight - 51}}px" bindchange="bindChange">
+    
+    <!-- 订单盈亏 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+    <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+      <view class="containers"> 
+        <view class='has_shop' > 
+          <view class='has_shop_list'> 
+            <!-- 循环商品列表 --> 
+            <block wx:key="goods_car_index" wx:for="{{ordersList}}"> 
+              <view class='has_shop_item'> 
+                <view class='btn_ischeck'> 
+                  <view class='position_hasshop_item'> 
+                  
+                    
+                    <view class='menu_right_txt' > 
+                      <!-- 描述 --> 
+                      <text class='menu_right_name'>
+                        <text class='total_name' >客户：</text> 
+                        <text class='total_name_num' >{{item.buyer}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >下单时间：</text> 
+                        <text class='total_name_num' >{{item.orderTime}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >备注：</text> 
+                        <text class='total_name_num' >{{item.remarks}}</text> 
+                      </text>    
+                      <view class='menu_right_down'> 
+                        <!-- 商品最新价格 --> 
+                        <text class='menu_right_nprice'>
+                          <text class='total_name' >配送方式：</text> 
+                          <text class='total_name_num' >{{item.orderState}}</text> 
+                        </text> 
+                        <view class='position_total'> 
+                          <text class='total_name'>共花费:</text> 
+                          <text class='total_name_num'>￥{{item.sumprice}}</text> 
+                        </view>
+                        <view class='position_total'> 
+                          <text class='total_name'>盈亏:</text> 
+                          <text class='total_name_num'>￥{{item.profitPrice}}</text> 
+                        </view>  
+                        </view>
+                    </view> 
+                  </view> 
+                </view>
+                <view class='btn_delete_shop' style=" background:#fff;flex-flow: column">
+                  <view class="btn_delete_shop" style="background:#5076ab;width: 100rpx;height: 230rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
+                </view> 
+                
+              </view> 
+            </block> 
+          </view> 
+          <!-- 底部选择栏 --> 
+        </view>
+      </view>
+      </scroll-view> 
+    </swiper-item>
+
+
+
+    <!-- 月份盈亏 -->
+    <swiper-item>
+     
+      <view class="containers"> 
+        <view class='has_shop' > 
+          <view class='has_shop_title'  > 
+            <view class='position_title'> 
+              <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/picker.png'></image> 
+              <text class='has_shop_smalltxt' style="margin-left:20rpx">{{years}}年{{months}}月</text>
+            </view> 
+            <!-- <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> -->
+             <picker mode="date" fields="month" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="getDateTime">
+              <view class="selectDate">
+                <text class='btn_shop_change'>选择年月</text>
+              </view>
+            </picker> 
+          </view> 
+          <view class='has_shop_list' style="margin-top:100rpx"> 
+            <!-- 循环商品列表 --> 
+            <block wx:key="goods_car_index" > 
+              <view class='has_shop_item'> 
+                <view class='btn_ischeck'> 
+                  <view class='position_hasshop_item'> 
+                    <view class='menu_right_txt' > 
+                      <!-- 描述 --> 
+                      <text class='menu_right_name'>
+                        <text class='total_name' >完成订单数：</text> 
+                        <text class='total_name_num' >{{ordernum}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >盈亏：</text> 
+                        <text class='total_name_num' >￥{{monthprofit}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >总销售额：</text> 
+                        <text class='total_name_num' >￥{{monthget}}</text> 
+                      </text>    
+                      <!-- <view class='menu_right_down'> 
+                        
+                        <text class='menu_right_nprice'>
+                          <text class='total_name' >配送方式：</text> 
+                          <text class='total_name_num' >{{ordernum}}</text> 
+                        </text> 
+                        <view class='position_total'> 
+                          <text class='total_name'>共花费:</text> 
+                          <text class='total_name_num'>￥{{monthget}}</text> 
+                        </view>
+                        <view class='position_total'> 
+                          <text class='total_name'>盈亏:</text> 
+                          <text class='total_name_num'>￥{{monthprofit}}</text> 
+                        </view>  
+                        </view> -->
+                    </view> 
+                  </view> 
+                </view>
+                <!-- <view class='btn_delete_shop' style=" background:#fff;flex-flow: column">
+                  <view class="btn_delete_shop" style="background:#5076ab;width: 100rpx;height: 230rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
+                </view>  -->
+                
+              </view> 
+            </block> 
+          </view> 
+          <!-- 底部选择栏 --> 
+        </view>
+      </view>
+    </swiper-item>
+</swiper>
+
