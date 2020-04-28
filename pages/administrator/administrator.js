@@ -10,6 +10,7 @@ Page({
     gooods:false,
     orders:false,
     begin:true,
+    email_nums:20
   },
   previewReturn(){
     if(this.data.category==true){
@@ -76,6 +77,49 @@ Page({
         ordersList:res.data
       })
     })
+  },
+  onReachBottom: function () {
+    console.log('YES')
+    wx.showLoading({
+      title: '刷新中！',
+      duration: 1000
+    })
+    
+    let x = this.data.email_nums + 20
+    console.log(x)
+    let old_data = this.data.email
+    db.collection('orders').skip(x) // 限制返回数量为 20 条
+      .get()
+      .then(res => {
+      //  // 这里是从数据库获取文字进行转换 变换显示（换行符转换） 
+      //   res.data.forEach((item, i) => {
+      //     res.data[i].content = res.data[i].content.split('*hy*').join('\n');
+      //   })
+      let newlist = this.data.ordersList
+      for(var i=0;i<res.data.length;i++){
+        //状态：A-预约配送、B-商品自取、C-订单完成
+        if(res.data[i].orderState == 'A'){
+          res.data[i].orderState = '预约配送'
+        }else if(res.data[i].orderState == 'B'){
+          res.data[i].orderState = '商品自取'
+        }else{
+          res.data[i].orderState = '订单完成'
+        }
+        newlist.push(res.data[i])
+      }
+      // 利用concat函数连接新数据与旧数据
+      // 并更新emial_nums  
+        this.setData({
+          email: newlist,
+          email_nums: x
+        })
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    console.log('circle 下一页');
+  
   },
   updateCompleteState(e){
     let id = e.currentTarget.dataset.id

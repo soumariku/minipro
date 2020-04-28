@@ -182,6 +182,6 @@ page{
 }
  
 .confirm {
-  border-left: 1px solid #ebebec;
+  /* border-left: 1px solid #ebebec; */
   color: #60d048;
 }

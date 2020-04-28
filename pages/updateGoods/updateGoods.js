@@ -61,6 +61,7 @@ Page({
         flavor:res.data[0].flavor,
         gdetailspic:res.data[0].gdetailspic,
         goodspic:res.data[0].goodspic,
+        buyingprice:res.data[0].buyingprice,
       })
       this.getCategory()
       console.log(allprice)
@@ -208,7 +209,8 @@ Page({
         name: _this.data.name,
         price1: _this.data.rule1.price,
         price2: _this.data.rule2.price,
-        price3: _this.data.rule3.price
+        price3: _this.data.rule3.price,
+        buyingprice:_this.data.buyingprice
       }
     }).then((res)=>{
       console.log(res._id)
@@ -267,7 +269,8 @@ Page({
               name: _this.data.name,
               price1: _this.data.rule1.price,
               price2: _this.data.rule2.price,
-              price3: _this.data.rule3.price
+              price3: _this.data.rule3.price,
+              buyingprice:_this.data.buyingprice
             }
       }
     }).then((res)=>{
@@ -429,6 +432,11 @@ Page({
   changeName(e){
     this.setData({
       name:e.detail.value
+    })
+  },
+  changebuyingprice(e){
+    this.setData({
+      buyingprice:e.detail.value
     })
   },
   //rule1

@@ -28,7 +28,7 @@
   </view>
   <view style="display:flex;flex-flow: column;">
     <view class="inputblock" style="border-bottom:0">
-      <text class="inputTitle">商品次价:</text>
+      <text class="inputTitle">商品批价:</text>
       <input class="inputname" value="{{rule2.price}}" style="width:100rpx" bindinput="changerule2price"></input>
       <text class="inputTitle">规则名称:</text>
       <input class="inputname" value="{{rule2.name}}" style="width:100rpx" bindinput="changerule2name"></input>
@@ -42,7 +42,7 @@
   </view>
   <view style="display:flex;flex-flow: column;">
     <view class="inputblock" style="border-bottom:0">
-      <text class="inputTitle">商品批价:</text>
+      <text class="inputTitle">商品二批:</text>
       <input class="inputname" value="{{rule3.price}}" style="width:100rpx" bindinput="changerule3price"></input>
       <text class="inputTitle">规则名称:</text>
       <input class="inputname" value="{{rule3.name}}" style="width:100rpx" bindinput="changerule3name"></input>
@@ -52,7 +52,12 @@
       <input class="inputname" value="{{rule3.minnum}}" style="width:100rpx" bindinput="changerule3min"></input>
     </view>
   </view>
-  
+  <view style="display:flex;flex-flow: column;border-bottom: 3rpx dashed  #444;">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle">商品进货价:</text>
+      <input class="inputname" value="{{buyingprice}}" style="width:100rpx" bindinput="changebuyingprice"></input>
+    </view>
+  </view>
   <view style="display:flex;flex-flow: column;border-bottom: 3rpx dashed  #444;" wx:if="{{flavor.length}}">
     <view class="inputblock" style="border-bottom:0" wx:for="{{flavor}}">
       <text class="inputTitle">商品口味:</text>
