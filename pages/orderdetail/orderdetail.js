@@ -50,9 +50,30 @@ Page({
         orderState:res.data[0].orderState,
         sumprice:res.data[0].sumprice,
         remarks:res.data[0].remarks,
-        orderTime:res.data[0].orderTime
+        orderTime:res.data[0].orderTime,
+        sendmsg:res.data[0].sendmsg
       })
     })
+  },
+  copyTBL:function(e){
+    var self=this;
+    wx.setClipboardData({
+    data: self.data.sendmsg,
+    success: function(res) {
+      // self.setData({copyTip:true}),
+      wx.showModal({
+        title: '提示',
+        content: '复制成功',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('确定')
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  });
   },
   updateCompleteState(){
     let id = this.data.id

@@ -26,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getUserMsg()
+    
   },
   // 编辑事件
   editGood: function() {
@@ -452,6 +452,7 @@ Page({
     let piclist = [];
     let time = util.formatTime(new Date())
     let profitPrice = 0
+    let sendmsg = ''
     // 携带订单信息生成订单
     for(let i=0;i<list.length;i++){
       if(list[i].selected){
@@ -461,11 +462,14 @@ Page({
         console.log('buyingprice',list[i].buyingprice)
         profitPrice = Number(profitPrice)+(Number(list[i].count)*Number(list[i].buyingprice))
         goodsmsg = '商品：'+list[i].nameGood+'\n口味：'+list[i].clickflavor+'\n数量：'+list[i].count+'\n'+list[i].levelname+String(list[i].npriceGood)+'\n原价：'+list[i].opriceGood+'\n总价：'+String(sumprice);
+        sendmsg = sendmsg+String(i+1)+'、'+list[i].nameGood+'\t'+list[i].clickflavor+'\n数量：'+list[i].count+'\t'+list[i].levelname+String(list[i].npriceGood)+'\t总价：'+String(sumprice)+'\n'
         console.log(goodsmsg)
         nlist.push(goodsmsg);
         piclist.push(pic);
       }
     }
+    sendmsg = sendmsg +'应收：'+_this.data.totalPrice+'\n客户：'+app.globalData.userInfo.nickName+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress
+    console.log(sendmsg)
     profitPrice = Number(_this.data.totalPrice)-Number(profitPrice)
     console.log('profitPrice',profitPrice)
     console.log('totalPrice',_this.data.totalPrice)
@@ -473,7 +477,8 @@ Page({
       time:time,
       realOrderMsg:nlist,
       orderPic:piclist,
-      profitPrice:profitPrice
+      profitPrice:profitPrice,
+      sendmsg:sendmsg
     })
     //状态：A-预约配送、B-商品自取、C-订单完成
     // console.log('A')
@@ -496,9 +501,11 @@ Page({
               telephone:_this.data.userTel,
               sumprice:_this.data.totalPrice,
               profitPrice:_this.data.profitPrice,
-              remarks:''
+              remarks:'',
+              sendmsg:sendmsg
             }
           }).then((res)=>{
+            app.sendmsg(_this.data.sendmsg)
             API.orderinfo =[]
             wx.showToast({
               title: '提交成功',
@@ -521,10 +528,36 @@ Page({
     app.globalData.db.collection('customer').where({
       name:app.globalData.userInfo.nickName
     }).get().then((res)=>{
-      this.setData({
-        userTel:res.data[0].telephone,
-        userAddress:res.data[0].address
-      })
+      if(!!res.data[0].telephone&&!!res.data[0].address){
+        this.setData({
+          userTel:res.data[0].telephone,
+          userAddress:res.data[0].address
+        })
+      }else{
+        console.log('???')
+        wx.showModal({
+          title: '提示',
+          content: '请先添加您的联系方式和地址',
+          confirmText:'确定',
+          cancelText:'取消',
+          cancelColor:'#D6463C',
+          success: function(res){
+            if(res.confirm){
+              wx.switchTab({
+                url: './../my/my'
+              })
+            }else{
+              wx.switchTab({
+                url: './../commodity/commodity'
+              })
+            }
+          }
+        })
+      }
+      // this.setData({
+      //   userTel:res.data[0].telephone,
+      //   userAddress:res.data[0].address
+      // })
     })
   },
   tocommodity(){
@@ -535,6 +568,7 @@ Page({
   tapDialogButton(e){
     let _this = this
     if(e.detail.item.text = '确定'){
+      let newsendmsg = _this.data.sendmsg+'\n预约送货：'+_this.data.remarks
       app.globalData.db.collection('orders').add({
         data: {
           buyer: app.globalData.userInfo.nickName,
@@ -546,9 +580,11 @@ Page({
           telephone: _this.data.userTel,
           sumprice: _this.data.totalPrice,
           profitPrice:_this.data.profitPrice,
-          remarks: _this.data.remarks
+          remarks: _this.data.remarks,
+          sendmsg:newsendmsg
         }
       }).then((res)=>{
+        app.sendmsg(newsendmsg)
         API.orderinfo =[]
         wx.showToast({
           title: '提交成功',
@@ -578,6 +614,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.getUserMsg();
     this.data.goodsCar = API.orderinfo;
     this.checklist();
     this.totalPrice();

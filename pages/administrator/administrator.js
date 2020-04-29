@@ -35,6 +35,100 @@ Page({
     }
     
   },
+  adminNameInput(e){
+    console.log(e.detail.value)
+    this.setData({
+      adminName:e.detail.value
+    })
+  },
+  adminPasswordInput(e){
+    console.log(e.detail.value)
+    this.setData({
+      adminPassword:e.detail.value
+    })
+  },
+  adminChange(){
+    let id = ''
+    let _this = this
+    if(!!_this.data.adminName&&!!_this.data.adminPassword){
+      app.globalData.db.collection('user').where({role:'administrator'}).get().then((res)=>{
+        console.log(res)
+        id = res.data[0]._id
+      wx.cloud.callFunction({
+        name: "updateData",
+        data: {
+          id:id,
+          collection:'user',
+          data:{
+            name:_this.data.adminName,
+            password:_this.data.adminPassword
+          }
+        }
+      }).then((res)=>{
+        console.log(res)
+          wx.showToast({
+            title: '已完成！',
+            icon: 'success',
+            duration: 3000
+          });
+      })
+    })
+    }else{
+      wx.showLoading({
+        title: '密码或账号为空',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 2000
+      })
+    }
+  },
+  userNameInput(e){
+    console.log(e.detail.value)
+    this.setData({
+      userName:e.detail.value
+    })
+  },
+  userPasswordInput(e){
+    console.log(e.detail.value)
+    this.setData({
+      userPassword:e.detail.value
+    })
+  },
+  userChange(){
+    let id = ''
+    let _this = this
+    if(!!_this.data.userName&&!!_this.data.userPassword){
+      app.globalData.db.collection('user').where({role:'user'}).get().then((res)=>{
+        console.log(res)
+        id = res.data[0]._id
+      wx.cloud.callFunction({
+        name: "updateData",
+        data: {
+          id:id,
+          collection:'user',
+          data:{
+            name:_this.data.userName,
+            password:_this.data.userPassword
+          }
+        }
+      }).then((res)=>{
+        console.log(res)
+          wx.showToast({
+            title: '已完成！',
+            icon: 'success',
+            duration: 3000
+          });
+      })
+    })
+    }else{
+      wx.showLoading({
+        title: '密码或账号为空',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 2000
+      })
+    }
+  },
   updateUser(){
     this.setData({
       user:true,
@@ -195,9 +289,6 @@ Page({
       }
     })
     
-  },
-  adminChange(e){
-    console.log(e)
   },
   bindFormSubmit: function(e) {
     console.log(e)
