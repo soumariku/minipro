@@ -13,6 +13,8 @@ Page({
     begin:true,
     email_nums:20,
     currentTab: 0,
+    adminname:'',
+    adminpassword:''
   },
   previewReturn(){
     if(this.data.category==true){
@@ -73,6 +75,7 @@ Page({
     this.setData({
       orders:true,
       begin:false,
+      email_nums:0,
       ordersList:[]
     })
     app.globalData.db.collection('orders').orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
@@ -98,6 +101,9 @@ Page({
     })
   },
   onReachBottom: function () {
+    if(this.data.orders == true){
+
+    
     console.log('YES')
     wx.showLoading({
       title: '刷新中！',
@@ -138,7 +144,7 @@ Page({
         console.error(err)
       })
     console.log('circle 下一页');
-  
+  }
   },
   updateCompleteState(e){
     let id = e.currentTarget.dataset.id
@@ -189,6 +195,12 @@ Page({
       }
     })
     
+  },
+  adminChange(e){
+    console.log(e)
+  },
+  bindFormSubmit: function(e) {
+    console.log(e)
   },
   toUpdateCategory(e){
     wx.navigateTo({

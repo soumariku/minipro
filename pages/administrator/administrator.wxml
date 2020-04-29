@@ -22,7 +22,7 @@
             <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
             bindinput="userNameInput"/> -->
             <form bindsubmit="bindFormSubmit">
-              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员账号" name="textarea" auto-height maxlength="-1" value="{{address}}" />
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员账号" name="textarea" auto-height maxlength="-1" value="{{adminname}}" />
 
             </form>
           </view>
@@ -32,9 +32,9 @@
             <!-- <input class="input" name="userName" placeholder="请输入收货地址" 
             bindinput="userNameInput"/> -->
             <form bindsubmit="bindFormSubmit">
-              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员密码" name="textarea" auto-height maxlength="-1" value="{{telephone}}" />
+              <textarea style="width:700rpx;margin-top:10rpx" placeholder="请输入新管理员密码" name="textarea" auto-height maxlength="-1" value="{{adminpassword}}" />
               <view class="thebtn">
-                <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" > 更改 </button>
+                <button bindtap="adminChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" > 更改 </button>
               </view>
             </form>
           </view>
