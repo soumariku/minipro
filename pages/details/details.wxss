@@ -255,7 +255,8 @@ text {
   position: relative;
 }
 .sku-goodsnum{
-  left:400rpx;
+  margin-left: auto;
+  margin-right: 50rpx;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -289,6 +290,7 @@ text {
   height: 60rpx;
   line-height: 25rpx;
   border-radius:10rpx;
+  flex-direction: row;
 }
 .clickcategorybtn{
   background-color: #f57c00;
@@ -300,4 +302,8 @@ text {
   height: 60rpx;
   line-height: 25rpx;
   border-radius:10rpx;
+  flex-direction: row;
+}
+.flavorList{
+  display: flex;
 }

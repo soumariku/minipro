@@ -263,17 +263,22 @@ Page({
       console.log(rule)
       // 点击递减
       if (num <= 1) {
-
+        this.deteleGood(e)
       } else {
         num = num - 1;
       }
-      
+      let samegoods = API.orderinfo.filter(s=>{return s.nameGood==list[index].nameGood})
+      let samegoodsnum = 0;
+      for(var k=0;k<samegoods.length;k++){
+        samegoodsnum = Number(samegoodsnum)+Number(samegoods[k].count)
+      }
+      samegoodsnum = samegoodsnum+-1
       //根据规则改变价格
       console.log(rule)
       for(var i=0;i<rule.length;i++){
         if (Number(rule[i].maxnum)!=0){
-          if (Number(rule[i].minnum) <= Number(num)){
-            if (Number(num)<=Number(rule[i].maxnum)){
+          if (Number(rule[i].minnum) <= Number(samegoodsnum)){
+            if (Number(samegoodsnum)<=Number(rule[i].maxnum)){
               newprice = rule[i].price
               console.log(newprice)
               break;
@@ -281,13 +286,18 @@ Page({
           }
         }else{
           newprice = rule[i].price
-          console.log(newprice)
+          // console.log(newprice)
           break;
         }
       }
+      for(var i =0;i<list.length;i++){
+        if(list[i].nameGood == list[index].nameGood){
+          list[i].npriceGood = newprice
+        }
+      }
       list[index].count = num;
-      list[index].npriceGood = newprice;
-      console.log(list);
+      // list[index].npriceGood = newprice;
+      // console.log(list);
       // 重新渲染 ---显示新的数量
       this.setData({
         goodsCar: list
@@ -314,31 +324,41 @@ Page({
       console.log(rule)
       // 点击递增
       if(num<0){
-
+        
       }else{
         num = num + 1;
       }
-    
+      let samegoods = API.orderinfo.filter(s=>{return s.nameGood==list[index].nameGood})
+      let samegoodsnum = 0;
+      for(var k=0;k<samegoods.length;k++){
+        samegoodsnum = Number(samegoodsnum)+Number(samegoods[k].count)
+      }
+      samegoodsnum = samegoodsnum+1
     //根据规则改变价格
     // console.log(rule[1])
     for(var i=0;i<rule.length;i++){
       if (Number(rule[i].maxnum)!=0){
-        if (Number(rule[i].minnum) <= Number(num)){
-          if (Number(num)<=Number(rule[i].maxnum)){
+        if (Number(rule[i].minnum) <= Number(samegoodsnum)){
+          if (Number(samegoodsnum)<=Number(rule[i].maxnum)){
             newprice = rule[i].price
-            console.log(newprice)
+            // console.log(newprice)
             break;
           }
         }
       }else{
         newprice = rule[i].price
-        console.log(newprice)
+        // console.log(newprice)
         break;
       }
     }
+    for(var i =0;i<list.length;i++){
+      if(list[i].nameGood == list[index].nameGood){
+        list[i].npriceGood = newprice
+      }
+    }
     list[index].count = num;
-    list[index].npriceGood = newprice;
-    console.log(list);
+    // list[index].npriceGood = newprice;
+    // console.log(list);
     // 重新渲染 ---显示新的数量
     this.setData({
       goodsCar: list
@@ -404,29 +424,64 @@ Page({
     const index = e.currentTarget.dataset.index;
     // 获取商品列表数据
     let list = this.data.goodsCar;
+    let rule = [];
     wx.showModal({
       title: '提示',
       content: '确认删除吗',
       success: function(res) {
         if (res.confirm) {
-          // 删除索引从1
-          list.splice(index, 1);
-          // 页面渲染数据
-          that.setData({
-            goodsCar: list
-          });
-          // 如果数据为空
-          if (!list.length) {
+          app.globalData.db.collection('rule').where({
+            goodsid: e.currentTarget.dataset.id
+          }).get().then((res) => {
+            rule = res.data
+            let deletename = list[index].nameGood
+            let newprice = 0
+            // 删除索引从1
+            list.splice(index, 1);
+            let samegoodsnum = 0
+            for(var k=0;k<list.length;k++){
+              if(deletename==list[k].nameGood){
+                samegoodsnum = Number(samegoodsnum)+Number(list[k].count)
+              }
+            }
+            for(var i=0;i<rule.length;i++){
+              if (Number(rule[i].maxnum)!=0){
+                if (Number(rule[i].minnum) <= Number(samegoodsnum)){
+                  if (Number(samegoodsnum)<=Number(rule[i].maxnum)){
+                    newprice = rule[i].price
+                    // console.log(newprice)
+                    break;
+                  }
+                }
+              }else{
+                newprice = rule[i].price
+                // console.log(newprice)
+                break;
+              }
+            }
+            for(var i =0;i<list.length;i++){
+              if(list[i].nameGood == deletename){
+                list[i].npriceGood = newprice
+              }
+            }
+            // 页面渲染数据
             that.setData({
-              carisShow: true
+              goodsCar: list
             });
-          } else {
-            // 调用金额渲染数据
-            that.totalPrice();
-          }
+            // 如果数据为空
+            if (!list.length) {
+              that.setData({
+                carisShow: true
+              });
+            } else {
+              // 调用金额渲染数据
+              that.totalPrice();
+            }
+        })
         } else {
           console.log(res);
         }
+        
       },
       fail: function(res) {
         console.log(res);
@@ -528,13 +583,33 @@ Page({
     app.globalData.db.collection('customer').where({
       name:app.globalData.userInfo.nickName
     }).get().then((res)=>{
-      if(!!res.data[0].telephone&&!!res.data[0].address){
-        this.setData({
-          userTel:res.data[0].telephone,
-          userAddress:res.data[0].address
-        })
+      if(res.data.length>0){
+        if(!!res.data[0].telephone&&!!res.data[0].address){
+          this.setData({
+            userTel:res.data[0].telephone,
+            userAddress:res.data[0].address
+          })
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: '请先添加您的联系方式和地址',
+            confirmText:'确定',
+            cancelText:'取消',
+            cancelColor:'#D6463C',
+            success: function(res){
+              if(res.confirm){
+                wx.switchTab({
+                  url: './../my/my'
+                })
+              }else{
+                wx.switchTab({
+                  url: './../commodity/commodity'
+                })
+              }
+            }
+          })
+        }
       }else{
-        console.log('???')
         wx.showModal({
           title: '提示',
           content: '请先添加您的联系方式和地址',
@@ -554,15 +629,18 @@ Page({
           }
         })
       }
-      // this.setData({
-      //   userTel:res.data[0].telephone,
-      //   userAddress:res.data[0].address
-      // })
     })
   },
   tocommodity(){
     wx.switchTab({
       url: '../commodity/commodity'   
+    })
+  },
+  turnmsg:function(e){
+    // console.log(e.currentTarget.dataset.id)
+    let theTurnID = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: './../details/details?id='+theTurnID
     })
   },
   tapDialogButton(e){
@@ -603,6 +681,13 @@ Page({
       remarks:e.detail.value
     })
   },
+  getgoodsCar(){
+    let goodsCar = API.orderinfo;
+    console.log(goodsCar)
+    this.setData({
+      goodsCar:goodsCar
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -615,7 +700,7 @@ Page({
    */
   onShow: function() {
     this.getUserMsg();
-    this.data.goodsCar = API.orderinfo;
+    this.getgoodsCar();
     this.checklist();
     this.totalPrice();
   }

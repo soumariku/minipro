@@ -17,7 +17,8 @@
     "pages/complete/complete",
     "pages/updatecategory/updatecategory",
     "pages/updateGoods/updateGoods",
-    "pages/profitAndLoss/profitAndLoss"
+    "pages/profitAndLoss/profitAndLoss",
+    "pages/newSearch/newSearch"
   ],
   "window": {
     "backgroundTextStyle": "light",

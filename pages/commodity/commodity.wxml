@@ -6,14 +6,14 @@
      </view>
      <view>
         <view class='tab-detail clear'>
-        <block wx:for="{{goods}}" wx:key="*this">
+        <block wx:for="{{goods}}" wx:key="*this" >
            <!-- <view class='tab-item'>
               <image src='{{item.url}}'></image>
               <view>{{item.name}}</view>
            </view> -->
         
         
-         <view class='position_hasshop_item'>
+         <view class='position_hasshop_item' bindtap="turnmsg"  data-id="{{item._id}}">
               <view class='position_hasshop_img'>
                 <!-- 商品图片 -->
                 <image class='shop_img' src='{{item.goodspic}}'></image>
@@ -34,7 +34,7 @@
                      增加商品数量按钮 
                     <image class='btn_add' src='../../icon/plus.png' bindtap='addNum' data-index='{{index}}'></image>
                     -->
-                    <text class='goods_num' bindtap="turnmsg" data-id="{{item._id}}">购买</text>
+                    <text class='goods_num' >购买</text>
                   </view>
                 </view>
               </view>

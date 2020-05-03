@@ -131,12 +131,24 @@
   <view class='has_shop' > 
     <!-- 第一排 --> 
     <view class='has_shop_title'  > 
-      <view class='position_title'> 
+      
+      <view class='position_title'>
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
-        <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text> 
+        <view class='select_box'>
+        <view class='select' catchtap='selectTap'>
+            <text class='select_text'>{{selectData[index]}}</text>
+            <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
+        </view>
+        <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
+            <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+        </view>
+    </view>  
+        <!-- <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text>  -->
       </view> 
       <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
-    </view> 
+    </view>
+    
     <!-- 循环的商品列表 --> 
     <view class='has_shop_list'> 
       <!-- 循环商品列表 --> 

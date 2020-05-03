@@ -48,7 +48,7 @@
     <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="{{centerItem}}" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
       <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
         <swiper-item class="swiper-item" bindtap='jumpCoupon'>
-          <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" />
+          <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" bindtap="turnmsg"  data-id="{{item._id}}"/>
           
         </swiper-item>
       </block>

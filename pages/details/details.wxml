@@ -55,20 +55,30 @@
       <view wx:if="{{flavor.length>0}}">
         <text >口味分类</text>
         <view class="quantity-position">
-          <view wx:for-items="{{flavor}}"> 
-            <button class="{{item == clickflavor?'clickcategorybtn':'categorybtn'}}" bindtap="toclickflavor" data-id="{{item}}" formType="submit" style="min-width:50%">{{item}}</button>
+          <view wx:for-items="{{flavor}}" class="flavorList"> 
+            <!-- <button class="{{item == clickflavor?'clickcategorybtn':'categorybtn'}}" bindtap="toclickflavor" data-id="{{item}}" formType="submit" style="min-width:50%">{{item}}</button> -->
+            <text>{{item.flavor}}</text>
+            <view class="sku-goodsnum">
+              <image class='btn_sub' src='../../icon/detailsub.png' bindtap='flavorSub' data-index='{{index}}'></image>
+              <!-- <text class='goods_num'  >1</text> -->
+              <text class='goods_num' >{{item.flavornum}}</text>
+              <!-- 增加商品数量按钮 -->
+              <image class='btn_add' src='../../icon/detailplus.png' bindtap='flavorAdd' data-index='{{index}}'></image>
+            </view>
           </view>
         </view>
       </view>
-      <text class="border-line"></text>
-      <view style="display: flex">
-        <text >购物数量</text>
-        <view class="sku-goodsnum">
-          <image class='btn_sub' src='../../icon/detailsub.png' bindtap='subNum' data-index='{{index}}'></image>
-          <!-- <text class='goods_num'  >1</text> -->
-          <input class='goods_num' value="{{buysum}}" maxlength="3" type="number" bindinput="bindinput"></input>
-          <!-- 增加商品数量按钮 -->
-          <image class='btn_add' src='../../icon/detailplus.png' bindtap='addNum' data-index='{{index}}'></image>
+      <view wx:else>
+        <text class="border-line"></text>
+        <view style="display: flex">
+          <text >购物数量</text>
+          <view class="sku-goodsnum">
+            <image class='btn_sub' src='../../icon/detailsub.png' bindtap='subNum' data-index='{{index}}'></image>
+            <!-- <text class='goods_num'  >1</text> -->
+            <input class='goods_num' value="{{buysum}}" maxlength="3" type="number" bindinput="bindinput"></input>
+            <!-- 增加商品数量按钮 -->
+            <image class='btn_add' src='../../icon/detailplus.png' bindtap='addNum' data-index='{{index}}'></image>
+          </view>
         </view>
       </view>
       <text class="border-line"></text>

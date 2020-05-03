@@ -38,7 +38,7 @@
               <image class='has_shop_circlechecked1' src='../../icon/chose.png'></image>
             </view>
             <view class='position_hasshop_item'>
-              <view class='position_hasshop_img'>
+              <view class='position_hasshop_img' bindtap="turnmsg"  data-id="{{item.id}}">
                 <!-- 商品图片 -->
                 <image class='shop_img' src='{{item.imgGood}}'></image>
                 
@@ -61,7 +61,7 @@
                   </view>
                 </view>
               </view>
-              <view class='btn_delete_shop' wx:if="{{!isEdit}}" bindtap='deteleGood' data-index='{{index}}'>删除</view>
+              <view class='btn_delete_shop' wx:if="{{!isEdit}}" bindtap='deteleGood' data-index='{{index}}' data-id="{{item.id}}">删除</view>
             </view>
           </view>
         </view>

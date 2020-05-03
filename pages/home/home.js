@@ -48,6 +48,13 @@ Page({
     current: 0,
     swiperIndex: 0,
   },
+  turnmsg:function(e){
+    // console.log(e.currentTarget.dataset.id)
+    let theTurnID = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: './../details/details?id='+theTurnID
+    })
+  },
   indexChange(e) {
     var that = this;
     that.setData({
@@ -100,7 +107,7 @@ Page({
   },
   jumpSearchGood(){
     wx.navigateTo({
-      url: '../search/search'
+      url: '../newSearch/newSearch'
     })
   },
   /**

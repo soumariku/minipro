@@ -11,10 +11,29 @@ Page({
     gooods:false,
     orders:false,
     begin:true,
-    email_nums:20,
+    email_nums:0,
     currentTab: 0,
     adminname:'',
-    adminpassword:''
+    adminpassword:'',
+    selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示
+    selectData: ['所有订单','确认收货订单','未确认收货订单'],//下拉列表的数据
+    index: 0,//选择的下拉列表下标
+  },
+  selectTap() {
+    this.setData({
+      selectShow: !this.data.selectShow
+    });
+  },
+  // 点击下拉列表
+  optionTap(e) {
+    let Index = e.currentTarget.dataset.index;//获取点击的下拉列表的下标
+    console.log(e)
+    this.getOrders(Index)
+    this.setData({
+      index: Index,
+      selectShow: !this.data.selectShow,
+      email_nums:0
+    });
   },
   previewReturn(){
     if(this.data.category==true){
@@ -165,14 +184,23 @@ Page({
       })
     })
   },
-  getOrders(){
+  getOrders(index){
     this.setData({
       orders:true,
       begin:false,
       email_nums:0,
       ordersList:[]
     })
-    app.globalData.db.collection('orders').orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
+    let searchindex = {}
+    const _ =  app.globalData.db.command
+    if(index == 0||index.type=='tap'){
+      searchindex = {}
+    }else if(index == 1){
+      searchindex = {orderState : "C"}
+    }else{
+      searchindex = {orderState : _.in(['A', 'B'])}
+    }
+    app.globalData.db.collection('orders').where(searchindex).orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
       console.log(res.data)
       for(var i=0;i<res.data.length;i++){
         //状态：A-预约配送、B-商品自取、C-订单完成
@@ -196,18 +224,24 @@ Page({
   },
   onReachBottom: function () {
     if(this.data.orders == true){
-
-    
+      let searchindex = {}
+      if(this.data.index == 0){
+        searchindex = {}
+      }else if(this.data.index == 1){
+        searchindex = {orderState : "C"}
+      }else{
+        searchindex = {orderState : _.in(['A', 'B'])}
+      }  
     console.log('YES')
     wx.showLoading({
       title: '刷新中！',
       duration: 1000
     })
-    
+    console.log(searchindex)
     let x = this.data.email_nums + 20
     console.log(x)
     let old_data = this.data.email
-    app.globalData.db.collection('orders') .orderBy('orderTime', 'desc').skip(x) // 限制返回数量为 20 条
+    app.globalData.db.collection('orders').where(searchindex).orderBy('orderTime', 'desc').skip(x) // 限制返回数量为 20 条
       .get()
       .then(res => {
       //  // 这里是从数据库获取文字进行转换 变换显示（换行符转换） 
@@ -269,7 +303,7 @@ Page({
                 icon: 'success',
                 duration: 3000
               });
-              _this.getOrders()
+              _this.getOrders(this.data.Index)
           })
           // app.globalData.db.collection('orders').doc(id).update({
           //   data:{

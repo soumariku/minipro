@@ -51,15 +51,18 @@ Page({
     });
   },
   tocalDialog: function () {
-    let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
-    if(!!theMsg.length){
-      wx.showToast({
-        title: '购物车存在该商品',
-        icon: 'none',
-        image:'../../icon/close.png',
-        duration: 2000
-      });
-    }else{
+    // let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
+    // if(!!theMsg.length){
+    //   this.tocal()
+    //   //购物车存在该商品
+    //   wx.showToast({
+    //     title: '商品数量已更改',
+    //     duration: 2000
+    //   });
+    //   this.setData({
+    //     showDialog: false
+    //   });
+    // }else{
       if (Number(this.data.buysum)==0){
         if(this.data.showDialog){
           wx.showToast({
@@ -74,26 +77,6 @@ Page({
           });
         }
       }else{
-        if(this.data.flavor.length){
-          if(!!this.data.clickflavor){
-            this.tocal()
-            wx.showToast({
-              title: '添加购物车成功',
-              icon: 'success',
-              duration: 3000
-            });
-            this.setData({
-              showDialog: false
-            });
-          }else{
-            wx.showToast({
-              title: '未选择口味',
-              icon: 'none',
-              image:'../../icon/close.png',
-              duration: 1000
-            });
-          }
-        }else{
           this.tocal()
           wx.showToast({
             title: '添加购物车成功',
@@ -103,9 +86,7 @@ Page({
           this.setData({
             showDialog: false
           });
-        } 
       }
-    }
   },
   //点击口味
   toclickflavor(e){
@@ -114,22 +95,136 @@ Page({
       clickflavor: e.currentTarget.dataset.id
     });
   },
+  getsamenum(flavornum){
+    let samegoods = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+    console.log('samegoods',samegoods)
+    let samegoodsnum = flavornum;
+    for(var k=0;k<samegoods.length;k++){
+      samegoodsnum = Number(samegoodsnum)+Number(samegoods[k].count)
+    }
+    console.log('samegoodsnum',samegoodsnum)
+    var newprice = this.getnewprice(samegoodsnum)
+    return newprice
+  },
+  getnewprice(samegoodsnum){
+    let newsingleprice = 0
+    for(var i=0;i<this.data.rule.length;i++){
+      if (Number(this.data.rule[i].maxnum)!=0){
+        if (Number(this.data.rule[i].minnum) <= Number(samegoodsnum)){
+          if (Number(samegoodsnum)<=Number(this.data.rule[i].maxnum)){
+            newsingleprice = this.data.rule[i].price
+            break;
+          }
+        }
+      }else{
+        newsingleprice = this.data.rule[i].price
+        break;
+      }
+      
+    }
+    return newsingleprice
+  },
   //添加购物车
   tocal(){
-    let orderlist = []
-    orderlist = {
-      imgGood:this.data.imgUrls[0],
-      nameGood:this.data.goodmsg.name,
-      npriceGood:Number(this.data.singleprice),
-      opriceGood:this.data.goodmsg.price1,
-      count:Number(this.data.buysum),
-      id:this.data.goodsID,
-      selected: true,
-      clickflavor: this.data.clickflavor,
-      levelname:this.data.levelname,
-      buyingprice:this.data.buyingprice
+    console.log(!!this.data.flavor.length)
+    if(!!this.data.flavor.length){
+      let goods = this.data.flavor.filter(f=>{return f.flavornum!=0})
+      for(var i=0;i<goods.length;i++){
+        let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==goods[i].flavor})
+        let samegoods = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+        if(!!theMsg.length){
+          let newsingleprice = this.getsamenum(goods[i].flavornum)
+          for(var j=0;j<API.orderinfo.length;j++){
+            if(API.orderinfo[j]==theMsg[0]){
+              let newcount = Number(API.orderinfo[j].count)+Number(goods[i].flavornum)
+              API.orderinfo[j].count = newcount
+            }
+            if(API.orderinfo[j].nameGood==this.data.goodmsg.name){
+              API.orderinfo[j].npriceGood = newsingleprice
+            }
+          }
+        }else if(!!samegoods.length){
+          let newsingleprice = this.getsamenum(goods[i].flavornum)
+          console.log('newsingleprice',newsingleprice)
+          for(var j=0;j<API.orderinfo.length;j++){
+            if(API.orderinfo[j].nameGood==this.data.goodmsg.name){
+              API.orderinfo[j].npriceGood = newsingleprice
+            }
+          }
+          let orderlist = []
+          orderlist = {
+            imgGood:this.data.imgUrls[0],
+            nameGood:this.data.goodmsg.name,
+            npriceGood:Number(newsingleprice).toFixed(2),
+            opriceGood:this.data.goodmsg.price1,
+            count:Number(goods[i].flavornum),
+            id:this.data.goodsID,
+            selected: true,
+            clickflavor: goods[i].flavor,
+            levelname:this.data.levelname,
+            buyingprice:this.data.buyingprice
+          }
+          API.orderinfo.push(orderlist)
+        }else{
+          let orderlist = []
+          orderlist = {
+            imgGood:this.data.imgUrls[0],
+            nameGood:this.data.goodmsg.name,
+            npriceGood:Number(this.data.singleprice).toFixed(2),
+            opriceGood:this.data.goodmsg.price1,
+            count:Number(goods[i].flavornum),
+            id:this.data.goodsID,
+            selected: true,
+            clickflavor: goods[i].flavor,
+            levelname:this.data.levelname,
+            buyingprice:this.data.buyingprice
+          }
+          API.orderinfo.push(orderlist)
+        }
+      }
+    }else{
+      //无口味
+      let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+      if(!!theMsg.length){
+        for(var j=0;j<API.orderinfo.length;j++){
+          if(API.orderinfo[j]==theMsg[0]){
+            let newsingleprice = 0
+            let newcount = Number(API.orderinfo[j].count)+Number(this.data.buysum)
+            for(var i=0;i<this.data.rule.length;i++){
+              if (Number(this.data.rule[i].maxnum)!=0){
+                if (Number(this.data.rule[i].minnum) <= Number(newcount)){
+                  if (Number(newcount)<=Number(this.data.rule[i].maxnum)){
+                    newsingleprice = this.data.rule[i].price
+                    break;
+                  }
+                }
+              }else{
+                newsingleprice = this.data.rule[i].price
+                break;
+              }
+            }
+            API.orderinfo[j].count = newcount
+            API.orderinfo[j].npriceGood = newsingleprice
+            console.log('yew')
+          }
+        }
+      }else{
+        let orderlist = []
+        orderlist = {
+          imgGood:this.data.imgUrls[0],
+          nameGood:this.data.goodmsg.name,
+          npriceGood:Number(this.data.singleprice),
+          opriceGood:this.data.goodmsg.price1,
+          count:Number(this.data.buysum),
+          id:this.data.goodsID,
+          selected: true,
+          clickflavor: this.data.clickflavor,
+          levelname:this.data.levelname,
+          buyingprice:this.data.buyingprice
+        }
+        API.orderinfo.push(orderlist)
+      }
     }
-    API.orderinfo.push(orderlist)
   },
   closeDialog:function(){
     this.setData({
@@ -204,15 +299,15 @@ Page({
   },
   // 立即购买
   immeBuy() {
-    let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
-    if(!!theMsg.length){
-      wx.showToast({
-        title: '购物车存在该商品',
-        icon: 'none',
-        image:'../../icon/close.png',
-        duration: 2000
-      });
-    }else{
+    // let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
+    // if(!!theMsg.length){
+    //   wx.showToast({
+    //     title: '购物车存在该商品',
+    //     icon: 'none',
+    //     image:'../../icon/close.png',
+    //     duration: 2000
+    //   });
+    // }else{
       if (Number(this.data.buysum)==0){
         if(this.data.showDialog){
           wx.showToast({
@@ -227,28 +322,17 @@ Page({
           });
         }
       }else{
-        if(this.data.flavor.length){
-          if(!!this.data.clickflavor){
-            this.tocal()
-            wx.reLaunch({
-              url: '../shop/shop',
-            })
-          }else{
-            wx.showToast({
-              title: '未选择口味',
-              icon: 'none',
-              image:'../../icon/close.png',
-              duration: 1000
-            });
-          }
-        }else{
+        if(this.data.showDialog){
           this.tocal()
           wx.reLaunch({
             url: '../shop/shop',
           })
-        }  
+        }else{
+          wx.reLaunch({
+            url: '../shop/shop',
+          })
+        }
       }
-    }
   },
   getDate:function() {
     // console.log(app.globalData.db)
@@ -257,12 +341,18 @@ Page({
     }).get().then((res)=>{
       let pic = [];
       let detailspic = [];
+      let flavorlist = [];
       pic.push(res.data[0].goodspic)
       pic.push(res.data[0].gdetailspic)
+      console.log(res.data[0].flavor)
       detailspic.push(res.data[0].gdetailspic)
+      for(var i=0;i<res.data[0].flavor.length;i++){
+        let list = {flavor:res.data[0].flavor[i],flavornum:0}
+        flavorlist.push(list)
+      }
       this.setData({
         goodmsg: res.data[0],
-        flavor: res.data[0].flavor,
+        flavor: flavorlist,
         imgUrls: pic,
         detailImg: detailspic,
         buyingprice:res.data[0].buyingprice
@@ -283,7 +373,26 @@ Page({
   },
   //点-
   subNum(){
-    if(this.data.buysum==0){
+      if(this.data.buysum==0){
+        wx.showToast({
+          title: '商品数量为0',
+          icon: 'none',
+          image:'../../icon/close.png',
+          duration: 1000
+        });
+      }else{
+        let newsum = Number(this.data.buysum)-1
+        this.setData({
+          buysum: newsum
+        })
+        this.calculateprice()
+      }
+  },
+  flavorSub(e){
+    console.log(e.currentTarget.dataset.index)
+    let index = e.currentTarget.dataset.index
+    let newflvor = this.data.flavor
+    if(newflvor[index].flavornum==0){
       wx.showToast({
         title: '商品数量为0',
         icon: 'none',
@@ -292,8 +401,10 @@ Page({
       });
     }else{
       let newsum = Number(this.data.buysum)-1
+      newflvor[index].flavornum = Number(newflvor[index].flavornum)-1
       this.setData({
-        buysum: newsum
+        buysum: newsum,
+        flavor:newflvor
       })
       this.calculateprice()
     }
@@ -303,6 +414,18 @@ Page({
     let newsum = Number(this.data.buysum) + 1
     this.setData({
       buysum: newsum
+    })
+    this.calculateprice()
+  },
+  flavorAdd(e){
+    console.log(e.currentTarget.dataset.index)
+    let index = e.currentTarget.dataset.index
+    let newflvor = this.data.flavor
+    newflvor[index].flavornum = Number(newflvor[index].flavornum)+1
+    let newsum = Number(this.data.buysum) + 1
+    this.setData({
+      buysum: newsum,
+      flavor:newflvor
     })
     this.calculateprice()
   },

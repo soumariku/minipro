@@ -83,12 +83,12 @@ page{
   margin: 0 30rpx 0 30rpx;
 }
 .has_shop_circlechecked1{
-  width:32rpx;
-  height:32rpx;
+  width:42rpx;
+  height:42rpx;
 }
 .has_shop_circlechecked{
-  width:32rpx;
-  height:32rpx;
+  width:42rpx;
+  height:42rpx;
   margin: 0 30rpx 0 30rpx;
 }
 .has_shop_icon1{
@@ -106,7 +106,7 @@ page{
   font-size:24rpx;
   font-family:PingFangSC-Regular;
   font-weight:400;
-  color:rgba(85,141,247,1);
+  color:#5076ab;
   line-height:33rpx;
 }
 .has_shop_list{
@@ -237,12 +237,12 @@ page{
   align-items: center;
 }
 .btn_sub{
-  width: 35rpx;
-  height: 35rpx;
+  width: 38rpx;
+  height: 38rpx;
 }
 .btn_add{
-  width: 35rpx;
-  height: 35rpx;
+  width: 38rpx;
+  height: 38rpx;
 }
 .goods_num{
   font-size:32rpx;
