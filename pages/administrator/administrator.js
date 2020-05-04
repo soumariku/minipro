@@ -223,6 +223,7 @@ Page({
     })
   },
   onReachBottom: function () {
+    const _ =  app.globalData.db.command
     if(this.data.orders == true){
       let searchindex = {}
       if(this.data.index == 0){

@@ -74,8 +74,8 @@
   <mp-dialog title="联系我们" show="{{showtelBtnDialog}}" buttons="{{oneButton}}">
     <view style="min-width:500rpx">
       <text style="display:block;text-align: left;color:#bfbfbf">联系方式：</text>
-      <text space="nbsp" style="display:block;text-align: left" > 0759-6798606</text>
-      <text space="nbsp" style="display:block;text-align: left"> 18922071070</text>
+      <text space="nbsp" style="display:block;text-align: left" bindtap="calling" data-phonenum="0759-6798606"> 0759-6798606</text>
+      <text space="nbsp" style="display:block;text-align: left" bindtap="calling" data-phonenum="18922071070"> 18922071070</text>
     </view>
   </mp-dialog>
   <mp-dialog title="关于我们" show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">

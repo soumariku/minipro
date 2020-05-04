@@ -66,6 +66,8 @@ Page({
         password:this.data.password
       }).get().then((res)=>{
         if(res.data.length!=0){
+          wx.setStorageSync("name", this.data.phone)
+          wx.setStorageSync("password", this.data.password)
           app.globalData.role = res.data[0].role
           console.log( app.globalData.role)
           wx.reLaunch({
@@ -87,14 +89,6 @@ Page({
     //获取头像昵称等仅需要调用wx.getUserInfo方法，但要注意button的open-type="getUserInfo"
       success: function (res) {
         console.log(res);
-        //var avatarUrl = 'userInfo.avatarUrl';
-        //var nickName = 'userInfo.nickName';
-        // that.setData({
-        //   avatarUrl: res.userInfo.avatarUrl,
-        //   nickName: res.userInfo.nickName,
-        // })
-        // wx.setStorageSync("avatarUrl", res.userInfo.avatarUrl),//将头像放入缓存，
-        // wx.setStorageSync("nickName", res.userInfo.nickName)
         app.globalData.userInfo = res.userInfo
       }
     })
@@ -147,17 +141,23 @@ Page({
   },
   onLoad: function () {
     let openid = wx.getStorageSync('openid')
+    let name = wx.getStorageSync('name')
+    let password = wx.getStorageSync('password')
+    this.setData({
+      phone: name,
+      password: password
+    })
     console.log(openid)
     if (openid.length <= 0) {
       //查看用户之前是否已经授权登录过，如果没有就让授权弹框显示，并让用户按指示授权
           app.globalData.show = false
           this.setData({
-            show:app.globalData.show
+            show:false
           })
       } else {
           app.globalData.show = false
           this.setData({
-            show:app.globalData.show
+            show:true
           })
       }
     if (app.globalData.userInfo) {
