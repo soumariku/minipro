@@ -15,6 +15,37 @@ Page({
       url: '../home/home'   
     })
   },
+  changeseearch(e){
+    let inputmsg = e.detail.value;
+    this.setData({
+      searchmsg:inputmsg
+    })
+  },
+  getorders(){
+    let _this = this
+    const _ = app.globalData.db.command
+    app.globalData.db.collection('orders').where(_.or([
+      {
+        buyer:app.globalData.db.RegExp({
+            regexp:'.*' + _this.data.searchmsg + '.*',
+            option:'i'
+        })
+      },
+      {
+        _id:app.globalData.db.RegExp({
+            regexp:_this.data.searchmsg,
+            option:'i'
+        })
+      }
+    ])).get({
+        success: function(res) {
+            console.log(res)
+            _this.setData({
+              ordersList:res.data
+            })
+        }
+    })
+  },
   getgoods:function(e){
     var inputmsg = "";
     inputmsg = e.detail.value;

@@ -254,6 +254,11 @@ Page({
       })
     })
   },
+  orderSearch(){
+    wx.navigateTo({
+      url: '../search/search',
+    })
+  },
   getpal(){
     wx.navigateTo({
       url: '../profitAndLoss/profitAndLoss',

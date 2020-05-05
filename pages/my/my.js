@@ -1,5 +1,5 @@
 // pages/my/my.js
-
+const API = require('../../utils/API.js')
 const app = getApp()
 Page({
   /**
@@ -155,7 +155,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(API.orderinfo.length>0){
+      wx.setTabBarBadge({
+        index: 2,
+        text: String(API.orderinfo.length)
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 0,
+      })
+    }
   },
 
   /**

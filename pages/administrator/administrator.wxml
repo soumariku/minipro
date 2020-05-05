@@ -1,9 +1,10 @@
 <!--pages/administrator/administrator.wxml-->
-<view style="margin-top:350rpx" wx:if="{{begin}}">
+<view style="margin-top:250rpx" wx:if="{{begin}}">
   <button class="thebtn" bindtap="updateUser">用户管理</button>
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
   <button class="thebtn" bindtap="updategoods">商品管理</button>
   <button class="thebtn" bindtap="getOrders">订单管理</button>
+  <button class="thebtn" bindtap="orderSearch">订单查询</button>
   <button class="thebtn" bindtap="getpal">盈亏查看</button>
 </view>
 

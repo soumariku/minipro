@@ -4,6 +4,7 @@ const db = wx.cloud.database({
 })
 const MAX_LIMIT = 2
 const app = getApp()
+const API = require('../../utils/API.js')
 Page({
   onLoad:function(option){
     this.getDate();
@@ -100,5 +101,16 @@ Page({
     })
   },
  
- 
+  onShow: function () {
+    if(API.orderinfo.length>0){
+      wx.setTabBarBadge({
+        index: 2,
+        text: String(API.orderinfo.length)
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 0,
+      })
+    }
+  },
 })

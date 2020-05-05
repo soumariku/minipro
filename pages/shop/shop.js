@@ -770,5 +770,15 @@ Page({
     this.getgoodsCar();
     this.checklist();
     this.totalPrice();
+    if(API.orderinfo.length>0){
+      wx.setTabBarBadge({
+        index: 2,
+        text: String(API.orderinfo.length)
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 0,
+      })
+    }
   }
 })

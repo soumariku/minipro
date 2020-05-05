@@ -3,7 +3,8 @@ const API = require('../../utils/API.js');
 Page({
   onLoad:function(option){
     this.setData({
-      goodsID: option.id
+      goodsID: option.id,
+      onshopnum:String(API.orderinfo.length)
     })
     console.log(this.data.goodsID);
     this.getDate();
@@ -13,6 +14,7 @@ Page({
   data: {
     isLike: false,//收藏
     showDialog:false,
+    onshopnum:0,
     goodsID:'',
     goodmsg:[],
     flavor:[],
@@ -225,6 +227,9 @@ Page({
         API.orderinfo.push(orderlist)
       }
     }
+    this.setData({
+      onshopnum:String(API.orderinfo.length)
+    })
   },
   closeDialog:function(){
     this.setData({

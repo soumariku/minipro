@@ -78,10 +78,10 @@ swiper-item image {
   height: 100rpx;
 }
 .detail-bottom-img{
-  min-width:45rpx;
-  max-width:45rpx;
-  min-height:45rpx;
-  max-height:45rpx;
+  min-width:50rpx;
+  max-width:50rpx;
+  min-height:50rpx;
+  max-height:50rpx;
 }
 .detail-bottom-tag{
   background-color: #5076ab;
@@ -93,15 +93,15 @@ swiper-item image {
 }
 .button-green {
   background-color: #5076ab; /* Green */
-  min-width: 260rpx;
-  max-width: 260rpx;
+  min-width: 500rpx;
+  max-width: 500rpx;
   font-size: 30rpx;
   height: 90rpx;
   line-height: 50rpx;
   border-top-left-radius:2em;
   border-bottom-left-radius:2em;
-  border-top-right-radius:0em;
-  border-bottom-right-radius:0em;
+  border-top-right-radius:2em;
+  border-bottom-right-radius:2em;
 }
 .button-red {
   background-color: #f57c00; /* 红色 */
@@ -306,4 +306,43 @@ text {
 }
 .flavorList{
   display: flex;
+}
+
+.iconBtn{
+  width: 100%;
+  height: 130rpx;
+  background: rgba(155, 155, 155, 0);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+.iconBtn::after{
+  border: none;
+}
+.remind-num{
+border-radius: 40%;
+position: absolute;
+top: 2rpx;
+right: 2rpx;
+font-size: 20rpx;
+/*padding: 4rpx 15rpx;*/
+/*align-items: center;*/
+text-align: center;
+
+width: 35rpx;
+line-height: 30rpx;
+height: 30rpx;
+color: var(--white);
+z-index: 100;
+background-color: #f57c00;
+}
+.icon-img{
+  margin-top: 0rpx;
+  min-width:50rpx;
+  max-width:50rpx;
+  min-height:50rpx;
+  max-height:50rpx;
 }

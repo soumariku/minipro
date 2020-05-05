@@ -1,4 +1,5 @@
 // pages/home/home.js
+const API = require('../../utils/API.js')
 const app = getApp()
 const db = wx.cloud.database({
   //这个是环境ID不是环境名称
@@ -130,7 +131,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(API.orderinfo.length>0){
+      wx.setTabBarBadge({
+        index: 2,
+        text: String(API.orderinfo.length)
+      })
+    }else{
+      wx.removeTabBarBadge({
+        index: 0,
+      })
+    }
   },
 
   /**
