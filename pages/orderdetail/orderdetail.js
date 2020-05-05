@@ -51,7 +51,8 @@ Page({
         sumprice:res.data[0].sumprice,
         remarks:res.data[0].remarks,
         orderTime:res.data[0].orderTime,
-        sendmsg:res.data[0].sendmsg
+        sendmsg:res.data[0].sendmsg,
+        orderId:res.data[0]._id
       })
     })
   },
@@ -59,6 +60,28 @@ Page({
     var self=this;
     wx.setClipboardData({
     data: self.data.sendmsg,
+    success: function(res) {
+      // self.setData({copyTip:true}),
+      wx.showModal({
+        title: '提示',
+        content: '复制成功',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('确定')
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  });
+  },
+  copyOrderId:function(){
+    var self=this;
+    console.log('2')
+    console.log(self.data.orderId)
+    wx.setClipboardData({
+    data: self.data.orderId,
     success: function(res) {
       // self.setData({copyTip:true}),
       wx.showModal({

@@ -6,7 +6,7 @@
         <image class='has_shop_icon1' src='../../icon/isshop.png'></image> 
         <text class='has_shop_smalltxt'>自来批发部</text> 
       </view> 
-      <text class='btn_shop_change' bindtap='copyTBL'>复制</text>
+      <text class='btn_shop_change' bindtap='copyTBL'>订单复制</text>
     </view> 
     <!-- 循环的商品列表 --> 
     <view class='has_shop_list'> 
@@ -51,7 +51,11 @@
                   <text class='total_name'>下单时间：</text> 
                   <text class='total_name_num' style="color:#5076ab">{{orderTime}}</text> 
                 </text>  
-                
+                <text class='menu_right_nprice' bindtap='copyOrderId'>
+                  <text class='total_name'>订单编号：</text> 
+                  <text class='total_name_num' style="color:#5076ab;font-size:22rpx">{{orderId}}</text>
+                  <text  class='total_name_num' style="color:#000;font-size:22rpx;background: #eee;margin-left:10rpx;padding:5rpx;border-radius: 20%">复制</text>  
+                </text>  
               </view> 
               
             </view> 

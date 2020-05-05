@@ -51,9 +51,7 @@
                   </view> 
                 </view>
                 <view class='btn_delete_shop' style=" background:#fff;flex-flow: column">
-                  <view class="btn_delete_shop" style="background:orange;width: 100rpx;height: 115rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
-                  <view class="btn_delete_shop" wx:if="{{item.orderState!='订单完成'}}" style="background:#5076ab;width: 100rpx;height: 115rpx; " bindtap="updateCompleteState" data-id="{{item._id}}"><text>确认\n收货</text></view>
-                  <view class='btn_detele_all' wx:else style="width: 100rpx;height: 115rpx; " data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view> 
+                  <view class="btn_delete_shop" style="background:orange;width: 100rpx;height: 230rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
                 </view> 
                 
               </view> 
