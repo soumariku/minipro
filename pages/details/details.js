@@ -364,7 +364,7 @@ Page({
   getRule:function(){
     app.globalData.db.collection('rule').where({
       goodsid: this.data.goodsID
-    }).get().then((res) => {
+    }).orderBy('price', 'desc').get().then((res) => {
       console.log(res.data)
       this.setData({
         rule: res.data

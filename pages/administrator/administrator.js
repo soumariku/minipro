@@ -153,10 +153,11 @@ Page({
       user:true,
       begin:false
     })
-    app.globalData.db.collection('CATEGORY').get().then((res)=>{
+    app.globalData.db.collection('customer').get().then((res)=>{
       console.log(res.data)
       this.setData({
-        catagoryList:res.data
+        userList:res.data,
+        userNumber:res.data.length
       })
     })
   },
@@ -165,24 +166,60 @@ Page({
       category:true,
       begin:false
     })
-    app.globalData.db.collection('CATEGORY').get().then((res)=>{
-      console.log(res.data)
-      this.setData({
-        catagoryList:res.data
-      })
+    wx.showLoading({
+      title: '',
     })
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'CATEGORY',
+        data:{
+        }
+      }
+    }).then((res)=>{
+      let catagory = res.result.data
+      // console.log(res)
+      this.setData({ 
+        catagoryList: catagory
+      })
+      wx.hideLoading()
+    }) 
+    // app.globalData.db.collection('CATEGORY').get().then((res)=>{
+    //   console.log(res.data)
+    //   this.setData({
+    //     catagoryList:res.data
+    //   })
+    // })
   },
   updategoods(){
     this.setData({
       goods:true,
       begin:false
     })
-    app.globalData.db.collection('goods').get().then((res)=>{
-      console.log(res.data)
-      this.setData({
-        goodsList:res.data
-      })
+    wx.showLoading({
+      title: '',
     })
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+        }
+      }
+    }).then((res)=>{
+      let good = res.result.data
+      // console.log(res)
+      this.setData({ 
+        goodsList: good
+      })
+      wx.hideLoading()
+    }) 
+    // app.globalData.db.collection('goods').get().then((res)=>{
+    //   console.log(res.data)
+    //   this.setData({
+    //     goodsList:res.data
+    //   })
+    // })
   },
   getOrders(index){
     this.setData({

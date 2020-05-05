@@ -73,6 +73,7 @@ Page({
     var prelist = this.data.classList;
     db.collection('CATEGORY').get().then((res)=>{
       thelist = res.data
+      thelist = thelist.filter(l=>{return l.name!='猜你喜欢'})
       // console.log(thelist)
       var tlength = this.data.classList.length;
       for(var i = 0;i<thelist.length;i++){

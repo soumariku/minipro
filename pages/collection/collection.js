@@ -35,19 +35,39 @@ Page({
         searchmsg.push(res.data[i].goodsid)
       }
       console.log(searchmsg)
-      app.globalData.db.collection('goods').where({
-        _id: _.in(searchmsg)
-      }).get().then((res)=>{
-        good = res.data
+      wx.showLoading({
+      title: '',
+    })
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+          _id: _.in(searchmsg)
+        }
+      }
+    }).then((res)=>{
+      let good = res.result.data
         console.log(res)
         this.setData({
           //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
           goods: good
         })
-      })
-    }).catch((err)=>{
-      console.log(err)
+        wx.hideLoading()
     }) 
+      // app.globalData.db.collection('goods').where({
+      //   _id: _.in(searchmsg)
+      // }).get().then((res)=>{
+      //   good = res.data
+      //   console.log(res)
+      //   this.setData({
+      //     //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
+      //     goods: good
+      //   })
+      //   })
+      }).catch((err)=>{
+        console.log(err)
+      }) 
   },
   turnmsg:function(e){
     // console.log(e.currentTarget.dataset.id)

@@ -32,17 +32,23 @@ Page({
       let newitems = []
       for(var i=0;i<res.data.length;i++){
         let params = {}
+        let num = String(i+1)
+        console.log('length',num.length)
+        for(var j=0;j<=(3-num.length);j++){
+          num = '0'+num
+        }
         if(!!this.data.catgory){
-          let choose = this.data.catgory.indexOf(String(i)) != -1
-          params = {name:String(i),value:res.data[i].name,checked:choose}
+          let choose = this.data.catgory.indexOf(num) != -1
+          params = {name:num,value:res.data[i].name,checked:choose}
         }else{
-          params = {name:String(i),value:res.data[i].name}
+          params = {name:num,value:res.data[i].name}
         }  
         newitems.push(params)
       }
       this.setData({
         items:newitems
       })
+      console.log(this.data.items)
     })
   },
   getGoods(){

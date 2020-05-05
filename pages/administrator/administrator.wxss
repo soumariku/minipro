@@ -418,7 +418,7 @@ page{
 }
 .swiper-tab-list{  font-size: 30rpx;
     display: inline-block;
-	width: 50%;
+	width: 33.33%;
   color: #777777;
   min-height: 100;
 }

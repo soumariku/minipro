@@ -67,6 +67,26 @@
         </view>
       </block>
     </view>
+    <view class='has_shop_list'>
+      <text style="text-align:center;color:#555556;margin:20rpx;font-weight:600">---猜你喜欢---</text>
+      <view style="width:100%;flex-direction: row;">
+        <view class="img_item" wx:for="{{col1}}" wx:key="id">
+          <view >
+          <view class="item_info">
+            <image src="{{item.goodspic}}" style="width:100%;height:300rpx"></image>
+          </view>
+                <view class="product-name">
+                  {{item.name}}
+                </view>
+                <view class="product-price-wrap">
+                  <p class="product-price-new">￥{{item.price3}}</p>  
+                  <p class="product-price-old">￥{{item.price1}}</p> 
+                  <!-- <p class="discount">{{item.discount}}折</p>    -->
+                </view>
+          </view>
+        </view>
+      </view>
+    </view>
     <!-- 底部选择栏 -->
     <view class='shop_car_total'>
       <view class='car_total_left'>

@@ -27,6 +27,7 @@ Page({
     var prelist = this.data.pres;
     db.collection('CATEGORY').get().then((res)=>{
       thelist = res.data
+      thelist = thelist.filter(l=>{return l.name!='猜你喜欢'})
       // console.log(thelist)
       var tlength = this.data.pres.length;
       for(var i = 0;i<thelist.length;i++){
@@ -40,28 +41,56 @@ Page({
     })
   },
   getgoods:function(e){
+    wx.showLoading({
+      title: '',
+    })
     var ids = "";
     if(!e.currentTarget){
       ids = e
     }else{
       ids = e.currentTarget.dataset.id;
     }
-    
+    console.log(ids.length)
+    let newstr = String(Number(ids)+1)
+    for(var i=0;i<(3-ids.length);i++){
+      newstr = '0'+newstr
+    }
+    console.log(newstr)
     console.log(e);
-    var good = ""; 
-    db.collection('goods').where({
-      catgory:{								//columnName表示欲模糊查询数据所在列的名
-        $regex:'.*' + ids + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
-        $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+    var good = "";
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+          catgory:{								//columnName表示欲模糊查询数据所在列的名
+            $regex:'.*' + newstr + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+            $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+          }
+        }
       }
-    }).get().then((res)=>{
-      good = res.data
+    }).then((res)=>{
+      good = res.result.data
       // console.log(res)
       this.setData({
         id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
         goods: good
       })
-    })
+      wx.hideLoading()
+    }) 
+    // db.collection('goods').where({
+    //   catgory:{								//columnName表示欲模糊查询数据所在列的名
+    //     $regex:'.*' + newstr + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+    //     $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+    //   }
+    // }).get().then((res)=>{
+    //   good = res.data
+    //   // console.log(res)
+    //   this.setData({
+    //     id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
+    //     goods: good
+    //   })
+    // })
   },
   turnmsg:function(e){
     // console.log(e.currentTarget.dataset.id)
