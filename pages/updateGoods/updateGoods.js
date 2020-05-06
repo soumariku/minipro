@@ -125,7 +125,7 @@ Page({
   checkUpdate(){
     // &&!!_this.data.goodspic&&!!_this.data.gdetailspic
     let _this = this
-    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.gdetailspic&&!!_this.data.rule1.price&&!!_this.data.rule1.name&&!!_this.data.rule1.minnum&&!!_this.data.rule1.maxnum&&!!_this.data.rule2.price&&!!_this.data.rule2.name&&!!_this.data.rule2.minnum&&!!_this.data.rule2.maxnum&&!!_this.data.rule3.price&&!!_this.data.rule3.name&&!!_this.data.rule3.minnum&&!!_this.data.rule3.maxnum){
+    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.gdetailspic&&!!_this.data.rule1.price&&!!_this.data.rule1.name&&!!_this.data.rule1.minnum&&!!_this.data.rule1.maxnum&&!!_this.data.rule2.price&&!!_this.data.rule2.name&&!!_this.data.rule2.minnum&&!!_this.data.rule2.maxnum&&!!_this.data.rule3.price&&!!_this.data.rule3.name&&!!_this.data.rule3.minnum&&!!_this.data.rule3.maxnum&&!!_this.data.buyingprice){
       if(this.data.isUpdate==true){
         this.updateGoods();
       }else{

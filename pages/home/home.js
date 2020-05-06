@@ -137,8 +137,8 @@ Page({
         text: String(API.orderinfo.length)
       })
     }else{
-      wx.removeTabBarBadge({
-        index: 0,
+      wx.hideTabBarRedDot({
+        index: 2,
       })
     }
   },

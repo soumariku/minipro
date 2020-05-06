@@ -18,7 +18,8 @@
     "pages/updatecategory/updatecategory",
     "pages/updateGoods/updateGoods",
     "pages/profitAndLoss/profitAndLoss",
-    "pages/newSearch/newSearch"
+    "pages/newSearch/newSearch",
+    "pages/updateOrders/updateOrders"
   ],
   "window": {
     "backgroundTextStyle": "light",

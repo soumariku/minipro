@@ -1,0 +1,111 @@
+<view class="thepage">
+  <view class="inputblock">
+    <text class="inputTitle">商品名称:</text>
+    <input class="inputname" value="{{name}}" placeholder="请输入新增商品名称" bindinput="changeName" style="width:520rpx"></input>
+  </view>
+  <view class="inputblock">
+    <text class="inputTitle">选择商品分类:</text>
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox" wx:for="{{items}}">
+        <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      </label>
+    </checkbox-group>
+  </view>
+  <view style="display:flex;flex-flow: column;">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle">商品原价:</text>
+      <input class="inputname" value="{{rule1.price}}" style="width:100rpx" bindinput="changerule1price"></input>
+      <text class="inputTitle">规则名称:</text>
+      <input class="inputname" value="{{rule1.name}}" style="width:100rpx" bindinput="changerule1name"></input>
+    </view>
+    <view class="inputblock">
+      <text class="inputTitle">最小数量:</text>
+      <input class="inputname" value="{{rule1.minnum}}" style="width:100rpx" bindinput="changerule1min"></input>
+      <text class="inputTitle">至最大数量:</text>
+      <input class="inputname" value="{{rule1.maxnum}}" style="width:100rpx" bindinput="changerule1max"></input>
+    </view>
+  </view>
+  <view style="display:flex;flex-flow: column;">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle">商品批价:</text>
+      <input class="inputname" value="{{rule2.price}}" style="width:100rpx" bindinput="changerule2price"></input>
+      <text class="inputTitle">规则名称:</text>
+      <input class="inputname" value="{{rule2.name}}" style="width:100rpx" bindinput="changerule2name"></input>
+    </view>
+    <view class="inputblock">
+      <text class="inputTitle">最小数量:</text>
+      <input class="inputname" value="{{rule2.minnum}}" style="width:100rpx" bindinput="changerule2min"></input>
+      <text class="inputTitle">至最大数量:</text>
+      <input class="inputname" value="{{rule2.maxnum}}" style="width:100rpx" bindinput="changerule2max"></input>
+    </view>
+  </view>
+  <view style="display:flex;flex-flow: column;">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle">商品二批:</text>
+      <input class="inputname" value="{{rule3.price}}" style="width:100rpx" bindinput="changerule3price"></input>
+      <text class="inputTitle">规则名称:</text>
+      <input class="inputname" value="{{rule3.name}}" style="width:100rpx" bindinput="changerule3name"></input>
+    </view>
+    <view class="inputblock">
+      <text class="inputTitle">数量以上:</text>
+      <input class="inputname" value="{{rule3.minnum}}" style="width:100rpx" bindinput="changerule3min"></input>
+    </view>
+  </view>
+  <view style="display:flex;flex-flow: column;border-bottom: 3rpx dashed  #444;">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle">商品进货价:</text>
+      <input class="inputname" value="{{buyingprice}}" style="width:100rpx" bindinput="changebuyingprice"></input>
+    </view>
+  </view>
+  <view style="display:flex;flex-flow: column;border-bottom: 3rpx dashed  #444;" wx:if="{{flavor.length}}">
+    <view class="inputblock" style="border-bottom:0" wx:for="{{flavor}}">
+      <text class="inputTitle">商品口味:</text>
+      <input class="inputname" value="{{item}}" placeholder="请输入新增分类名称" bindinput="changeflavor" data-index="{{index}}"></input>
+      <image class='has_shop_icon1' src='../../icon/plus.png' bindtap="addflavor"></image>
+      <image class='has_shop_icon1' src='../../icon/sub.png' bindtap="deleteflavor" data-id="{{item}}"></image>  
+    </view>
+  </view>
+  <view style="display:flex;flex-flow: column;border-bottom: 3rpx dashed  #444;" wx:else bindtap="addflavor">
+    <view class="inputblock" style="border-bottom:0" >
+      <image class='has_shop_icon1' src='../../icon/plus.png' ></image>
+      <text class="inputTitle">添加口味</text>
+    </view>
+  </view>
+  <view class="inputblock" bindtap='changepic1'>
+    <text class="inputTitle">封面图片:</text>
+    <input class="inputname" value="{{hasimg1}}" placeholder="增改图片" disabled="true"></input>
+  </view>
+  <view class="inputblock" bindtap='changepic2'>
+    <text class="inputTitle">详情图片:</text>
+    <input class="inputname" value="{{hasimg2}}" placeholder="增改图片" disabled="true"></input>
+  </view>
+  <view class="inputblock">
+    <text class="inputTitle">图片预览:</text>
+        <view class='img-back'>
+          <view class='classify-input1'>
+              <image class='fruit' src='{{goodspic}}' mode='aspectFit' bindtap='fruitClassify' data-id='{{item.id}}'></image>
+              <!-- 字体分类 -->
+              <view class='classify-text'>
+                <text class='text-text'>{{categoryName}}</text>
+              </view>
+          </view>
+        </view>
+        <view class='img-back'>
+          <view class='classify-input1'>
+              <image class='fruit' src='{{gdetailspic}}' mode='aspectFit' bindtap='fruitClassify' data-id='{{item.id}}'></image>
+              <!-- 字体分类 -->
+              <view class='classify-text'>
+                <text class='text-text'>{{categoryName}}</text>
+              </view>
+          </view>
+        </view>
+  </view>  
+  <view class="shop_car_total">
+    <view class='shop_total_right'> 
+        <!-- 一个都没选择，展示灰色结算按钮 --> 
+        <view class='btn_result_all_red' style="background:#5076ab" bindtap='checkUpdate' >提交</view> 
+        <view class='btn_result_all_red' wx:if="{{isUpdate}}" bindtap='deleteGoods' style="background:#D6463C" >删除</view> 
+        <view class='btn_result_all_red' wx:else bindtap='turnPreview'>取消</view> 
+    </view>
+  </view>
+</view>

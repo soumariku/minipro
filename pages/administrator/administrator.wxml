@@ -141,9 +141,22 @@
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品</text> 
       </view> 
       <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+    </view>
+    <view class='has_shop_list'>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+            <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changeseearch" value="{{inputmsg}}"/>
+                </view>
+            </view>
+            <!-- 取消搜索 -->
+            <view class="weui-search-bar__cancel-btn" bindtap='searchgoods'>搜索</view>
+        </view>
     </view> 
     <!-- 循环的商品列表 --> 
-    <view class='has_shop_list'> 
+    <view class='has_shop_list' style="margin-top: 0rpx; "> 
       <!-- 循环商品列表 --> 
       <block wx:key="goods_car_index" wx:for="{{goodsList}}"> 
         <view class='has_shop_item' style="height: 115rpx; "> 

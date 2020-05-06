@@ -419,9 +419,16 @@ Page({
                 _this.setData({
                   carisShow: true
                 });
+                wx.hideTabBarRedDot({
+                  index: 2,
+                })
               } else {
                 // 调用金额渲染数据
                 _this.totalPrice();
+                wx.setTabBarBadge({
+                  index: 2,
+                  text: String(list.length)
+                })
               }
             } else {
               console.log(res);
@@ -430,7 +437,7 @@ Page({
         }
       }
     })
-
+    this.checklist()
   },
   //删除单个商品
   deteleGood: function(e) {
@@ -488,9 +495,16 @@ Page({
               that.setData({
                 carisShow: true
               });
+              wx.hideTabBarRedDot({
+                index: 2,
+              })
             } else {
               // 调用金额渲染数据
               that.totalPrice();
+              wx.setTabBarBadge({
+                index: 2,
+                text: String(list.length)
+              })
             }
         })
         } else {
@@ -504,9 +518,9 @@ Page({
     })
   },
   checklist(){
-    if (!API.orderinfo.length) {
+    if (API.orderinfo.length>0) {
       this.setData({
-        carisShow: true
+        carisShow: false
       });
       wx.setTabBarBadge({
         index: 2,
@@ -514,10 +528,10 @@ Page({
       })
     }else{
       this.setData({
-        carisShow: false
+        carisShow: true
       });
-      wx.removeTabBarBadge({
-        index: 0,
+      wx.hideTabBarRedDot({
+        index: 2,
       })
     }
   },
@@ -545,6 +559,7 @@ Page({
         console.log(goodsmsg)
         nlist.push(goodsmsg);
         piclist.push(pic);
+        goodslist.push(selectgood)
       }
     }
     sendmsg = '客户：'+app.globalData.userInfo.nickName+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
@@ -558,7 +573,8 @@ Page({
       realOrderMsg:nlist,
       orderPic:piclist,
       profitPrice:profitPrice,
-      sendmsg:sendmsg
+      sendmsg:sendmsg,
+      goodslist:goodslist
     })
     //状态：A-预约配送、B-商品自取、C-订单完成
     // console.log('A')
@@ -582,7 +598,8 @@ Page({
               sumprice:_this.data.totalPrice,
               profitPrice:_this.data.profitPrice,
               remarks:'',
-              sendmsg:sendmsg
+              sendmsg:sendmsg,
+              goodslist:goodslist
             }
           }).then((res)=>{
             app.sendmsg(_this.data.sendmsg)
@@ -729,15 +746,15 @@ Page({
     this.getgoodsCar();
     this.checklist();
     this.totalPrice();
-    if(API.orderinfo.length>0){
-      wx.setTabBarBadge({
-        index: 2,
-        text: String(API.orderinfo.length)
-      })
-    }else{
-      wx.removeTabBarBadge({
-        index: 0,
-      })
-    }
+    // if(API.orderinfo.length>0){
+    //   wx.setTabBarBadge({
+    //     index: 2,
+    //     text: String(API.orderinfo.length)
+    //   })
+    // }else{
+    //   wx.removeTabBarBadge({
+    //     index: 0,
+    //   })
+    // }
   }
 })

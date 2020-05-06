@@ -191,6 +191,35 @@ Page({
     //   })
     // })
   },
+  changeseearch(e){
+    this.setData({
+      inputmsg:e.detail.value
+    })
+  },
+  searchgoods(){
+    wx.showLoading({
+      title: '',
+    })
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+            name:{								//columnName表示欲模糊查询数据所在列的名
+              $regex:'.*' + this.data.inputmsg + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+              $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+            }
+        }
+      }
+    }).then((res)=>{
+      let good = res.result.data
+      // console.log(res)
+      this.setData({ 
+        goodsList: good
+      })
+      wx.hideLoading()
+    }) 
+  },
   updategoods(){
     this.setData({
       goods:true,
@@ -306,7 +335,7 @@ Page({
       // 利用concat函数连接新数据与旧数据
       // 并更新emial_nums  
         this.setData({
-          email: newlist,
+          ordersList: newlist,
           email_nums: x
         })
         console.log(res.data)
@@ -382,8 +411,11 @@ Page({
   },
   toOrderDetail(e){
     console.log(e)
+    // wx.navigateTo({
+    //   url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
+    // })
     wx.navigateTo({
-      url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
+      url: './../updateOrders/updateOrders',
     })
   },
   bindChange: function( e ) {
