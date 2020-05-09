@@ -55,4 +55,8 @@
     </swiper>
   </view>
   </view>
+  <view class="round-click">
+    <image class="upimg" src="./../../icon/up.png" bindtap="goTop"></image>
+  </view>
 </scroll-view>
+

@@ -47,7 +47,7 @@
                   </view> 
                 </view> 
               </view> 
-              <view class='btn_delete_shop' bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view> 
+              <view class='btn_delete_shop' bindtap='toOrderDetail' data-index='{{index}}' data-id="{{item._id}}"><text>订单\n详情</text></view> 
             </view> 
           </view> 
         </view> 
