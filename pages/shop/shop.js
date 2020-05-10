@@ -550,7 +550,7 @@ Page({
       if(list[i].selected){
         let goodsmsg = ''
         let pic = list[i].imgGood
-        let selectgood = {name:list[i].nameGood,count:list[i].count,flavor:list[i].clickflavor}
+        let selectgood = {name:list[i].nameGood,count:list[i].count,flavor:list[i].clickflavor,price:String(list[i].npriceGood),buyingprice:Number(list[i].buyingprice),levelname:list[i].levelname,opriceGood:list[i].opriceGood}
         let sumprice = (Number(list[i].npriceGood)*Number(list[i].count)).toFixed(2);
         console.log('buyingprice',list[i].buyingprice)
         profitPrice = Number(profitPrice)+(Number(list[i].count)*Number(list[i].buyingprice))
@@ -562,7 +562,7 @@ Page({
         goodslist.push(selectgood)
       }
     }
-    sendmsg = '客户：'+app.globalData.userInfo.nickName+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
+    sendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
     console.log(time)
     console.log(sendmsg)
     profitPrice = Number(_this.data.totalPrice)-Number(profitPrice)
@@ -588,7 +588,7 @@ Page({
         if(res.confirm){
           app.globalData.db.collection('orders').add({
             data: {
-              buyer: app.globalData.userInfo.nickName,
+              buyer: _this.data.buyer,
               orderTime: time,
               orderState:'B',
               goodsmsg: nlist,
@@ -626,10 +626,11 @@ Page({
       name:app.globalData.userInfo.nickName
     }).get().then((res)=>{
       if(res.data.length>0){
-        if(!!res.data[0].telephone&&!!res.data[0].address){
+        if(!!res.data[0].telephone&&!!res.data[0].address&&!!res.data[0].truename){
           this.setData({
             userTel:res.data[0].telephone,
-            userAddress:res.data[0].address
+            userAddress:res.data[0].address,
+            buyer:res.data[0].truename
           })
         }else{
           wx.showModal({
@@ -691,7 +692,7 @@ Page({
       let newsendmsg = _this.data.sendmsg+'\n预约送货：'+_this.data.remarks
       app.globalData.db.collection('orders').add({
         data: {
-          buyer: app.globalData.userInfo.nickName,
+          buyer: _this.data.buyer,
           orderTime: _this.data.time,
           orderState:'A',
           goodsmsg: _this.data.realOrderMsg,

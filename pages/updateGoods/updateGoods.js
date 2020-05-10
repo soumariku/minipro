@@ -106,7 +106,7 @@ Page({
     app.globalData.db.collection('rule').where({
       goodsid:this.data.goodsid,
       price:allprice
-    }).get().then((res)=>{
+    }).orderBy('price', 'desc').get().then((res)=>{
       console.log(res)
       let prams = {
         maxnum:res.data[0].maxnum,
@@ -220,9 +220,9 @@ Page({
       }
     }).then((res)=>{
       console.log(res._id)
-      _this.insertrule(res._id,_this.data.rule1);
-      _this.insertrule(res._id,_this.data.rule2);
-      _this.insertrule(res._id,_this.data.rule3);
+      _this.insertrule(res._id,_this.data.rule1,'商品单价：');
+      _this.insertrule(res._id,_this.data.rule2,'批发单价：');
+      _this.insertrule(res._id,_this.data.rule3,'二批单价：');
       wx.showToast({
         title: '添加完成！',
       })
@@ -237,14 +237,15 @@ Page({
       })
     })
   },
-  insertrule(id,rule){
+  insertrule(id,rule,levelname){
     app.globalData.db.collection('rule').add({
       data:{
         goodsid:id,
         maxnum:rule.maxnum,
         minnum:rule.minnum,
         name:rule.name,
-        price:rule.price
+        price:rule.price,
+        levelname:levelname
       }
     }).then((res)=>{
       console.log(res)
@@ -281,9 +282,9 @@ Page({
       }
     }).then((res)=>{
       console.log(res)
-        _this.updaterule(_this.data.rule1._id,_this.data.rule1);
-        _this.updaterule(_this.data.rule2._id,_this.data.rule2);
-        _this.updaterule(_this.data.rule3._id,_this.data.rule3);
+        _this.updaterule(_this.data.rule1._id,_this.data.rule1,'商品单价：');
+        _this.updaterule(_this.data.rule2._id,_this.data.rule2,'批发单价：');
+        _this.updaterule(_this.data.rule3._id,_this.data.rule3,'二批单价：');
         wx.showToast({
           title: '更新完成！',
         })
@@ -328,7 +329,7 @@ Page({
     //   }
     // })
   },
-  updaterule(id,rule){
+  updaterule(id,rule,levelname){
     wx.cloud.callFunction({
       name: "setMsg",
       data: {
@@ -339,7 +340,8 @@ Page({
           maxnum:rule.maxnum,
           minnum:rule.minnum,
           name:rule.name,
-          price:rule.price
+          price:rule.price,
+          levelname:levelname
         }
       }
     }).then((res)=>{
@@ -532,7 +534,14 @@ Page({
       rule3:newrule
     })
   },
-
+  turnPreview(){
+    wx.navigateBack({
+      delta: 1,  // 返回上一级页面。
+      complete: (res) => {
+        console.log(res)
+      },
+    })
+   },
   /**
    * 生命周期函数--监听页面加载
    */

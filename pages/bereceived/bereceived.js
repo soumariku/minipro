@@ -15,26 +15,32 @@ Page({
   },
   getOrders(){
     const _ =  app.globalData.db.command
-    app.globalData.db.collection('orders').where({
-      buyer : app.globalData.userInfo.nickName,
-      orderState : _.in(['A', 'B'])
+    app.globalData.db.collection('customer').where({
+      name:app.globalData.userInfo.nickName
     }).get().then((res)=>{
-      console.log(res)
-      for(var i=0;i<res.data.length;i++){
-        //状态：A-预约配送、B-商品自取、C-订单完成
-        if(res.data[i].orderState == 'A'){
-          res.data[i].orderState = '预约配送'
-        }else if(res.data[i].orderState == 'B'){
-          res.data[i].orderState = '商品自取'
-        }else{
-          res.data[i].orderState = '订单完成'
+      let truename = res.data[0].truename
+      app.globalData.db.collection('orders').where({
+        buyer : truename,
+        orderState : _.in(['A', 'B'])
+      }).get().then((res)=>{
+        console.log(res)
+        for(var i=0;i<res.data.length;i++){
+          //状态：A-预约配送、B-商品自取、C-订单完成
+          if(res.data[i].orderState == 'A'){
+            res.data[i].orderState = '预约配送'
+          }else if(res.data[i].orderState == 'B'){
+            res.data[i].orderState = '商品自取'
+          }else{
+            res.data[i].orderState = '订单完成'
+          }
         }
-      }
-      this.setData({
-        orders:res.data
+        this.setData({
+          orders:res.data
+        })
+        this.checklist()
       })
-      this.checklist()
     })
+    
   },
   // 计算金额
   totalPrice: function() {

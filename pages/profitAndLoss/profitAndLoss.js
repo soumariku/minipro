@@ -50,7 +50,8 @@ Page( {
         orderTime:{								//columnName表示欲模糊查询数据所在列的名
           $regex:'.*' + this.data.serachDate + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
           $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
-        }
+        },
+        orderState:"C"
       })
       .get().then((res)=>{
       console.log(res.data)

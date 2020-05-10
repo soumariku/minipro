@@ -411,11 +411,8 @@ Page({
   },
   toOrderDetail(e){
     console.log(e)
-    // wx.navigateTo({
-    //   url: './../orderdetail/orderdetail?id='+e.currentTarget.dataset.id,
-    // })
     wx.navigateTo({
-      url: './../updateOrders/updateOrders',
+      url: './../updateOrders/updateOrders?id='+e.currentTarget.dataset.id,
     })
   },
   bindChange: function( e ) {
