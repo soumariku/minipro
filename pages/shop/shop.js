@@ -562,7 +562,7 @@ Page({
         goodslist.push(selectgood)
       }
     }
-    sendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
+    let selfsendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
     console.log(time)
     console.log(sendmsg)
     profitPrice = Number(_this.data.totalPrice)-Number(profitPrice)
@@ -598,19 +598,12 @@ Page({
               sumprice:_this.data.totalPrice,
               profitPrice:_this.data.profitPrice,
               remarks:'',
-              sendmsg:sendmsg,
+              sendmsg:selfsendmsg,
               goodslist:goodslist
             }
           }).then((res)=>{
-            app.sendmsg(_this.data.sendmsg)
-            API.orderinfo =[]
-            wx.showToast({
-              title: '提交成功',
-              icon: 'success',
-              duration: 3000
-            });
-            
-            _this.checklist()
+            app.sendmsg(selfsendmsg)
+            _this.updategoodscount()
           })
         }else{
           _this.setData({
@@ -689,7 +682,8 @@ Page({
   tapDialogButton(e){
     let _this = this
     if(e.detail.item.text = '确定'){
-      let newsendmsg = _this.data.sendmsg+'\n预约送货：'+_this.data.remarks
+      let newsendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+_this.data.time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n预约送货：'+_this.data.remarks+'\n'+_this.data.sendmsg +'应收：'+_this.data.totalPrice
+      // let newsendmsg = _this.data.sendmsg+'\n预约送货：'+_this.data.remarks
       app.globalData.db.collection('orders').add({
         data: {
           buyer: _this.data.buyer,
@@ -706,13 +700,7 @@ Page({
         }
       }).then((res)=>{
         app.sendmsg(newsendmsg)
-        API.orderinfo =[]
-        wx.showToast({
-          title: '提交成功',
-          icon: 'success',
-          duration: 3000
-        });
-        _this.checklist()
+        _this.updategoodscount()
       })
     }
     this.setData({
@@ -729,6 +717,78 @@ Page({
     console.log(goodsCar)
     this.setData({
       goodsCar:goodsCar
+    })
+  },
+  //改变库存
+  updategoodscount(){
+    let orderslist = API.orderinfo
+    let _this = this
+    for(var j=0;j<orderslist.length;j++){
+      let clickflavor = orderslist[j].clickflavor
+      let clickcount = orderslist[j].count
+      let id = orderslist[j].id
+      let nameGood = orderslist[j].nameGood
+      if(!!orderslist[j].clickflavor){
+        this.updateflavorlist(clickflavor,clickcount,id,nameGood)
+      }else{
+        this.updatenoflavorlist(clickcount,id,nameGood)
+      }
+    }
+    API.orderinfo =[]
+    wx.showToast({
+      title: '提交成功',
+      icon: 'success',
+      duration: 3000
+    });
+    _this.checklist()
+  },
+  updatenoflavorlist(clickcount,id,nameGood){
+    let _this = this
+    app.globalData.db.collection('goods').where({
+      name:nameGood
+    }).get().then((res)=>{
+      let count = Number(res.data[0].goodscount)-Number(clickcount)
+      wx.cloud.callFunction({
+        name: "updateData",
+        data: {
+          id:id,
+          collection:'goods',
+          data:{
+            goodscount:count
+          }
+        }
+      }).then((res)=>{
+        console.log(res)
+      })
+    })
+  },
+  updateflavorlist(clickflavor,clickcount,id,nameGood){
+    let _this = this
+    app.globalData.db.collection('goods').where({
+      name:nameGood
+    }).get().then((res)=>{
+      let flavorlist = res.data[0].flavor
+      for(var i=0;i<flavorlist.length;i++){
+        if(flavorlist[i].flavor==clickflavor){
+          let index = i
+          let count = Number(flavorlist[i].count)-Number(clickcount)
+          flavorlist[i].count = count
+          console.log('flavorlist',flavorlist)
+          let tt = 'flavor.'+index+'.count'
+          wx.cloud.callFunction({
+            name: "updateData",
+            data: {
+              id:id,
+              collection:'goods',
+              data:{
+                [tt]:count
+              }
+            }
+          }).then((res)=>{
+            console.log(res)
+          })
+        }
+      }
     })
   },
   /**

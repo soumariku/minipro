@@ -14,7 +14,8 @@ Page({
     flavor:[],
     goodsid:'',
     isUpdate:false,
-    ruleID:[]
+    ruleID:[],
+    goodscount:0
   },
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
@@ -25,6 +26,12 @@ Page({
     }
     this.setData({
       catgory:newcatagory
+    })
+  },
+  goodsmsgchange(e){
+    console.log(e.detail.value)
+    this.setData({
+      goodsmsg:e.detail.value
     })
   },
   getCategory(){
@@ -51,6 +58,11 @@ Page({
       console.log(this.data.items)
     })
   },
+  changegoodscount(e){
+    this.setData({
+      goodscount:e.detail.value
+    })
+  },
   getGoods(){
     let _this = this
     app.globalData.db.collection('goods').where({
@@ -65,9 +77,13 @@ Page({
         name:res.data[0].name,
         catgory:res.data[0].catgory,
         flavor:res.data[0].flavor,
-        gdetailspic:res.data[0].gdetailspic,
+        gdetailspic1:res.data[0].gdetailspic1,
+        gdetailspic2:res.data[0].gdetailspic2,
+        gdetailspic3:res.data[0].gdetailspic3,
         goodspic:res.data[0].goodspic,
         buyingprice:res.data[0].buyingprice,
+        goodsmsg:res.data[0].goodsmsg,
+        goodscount:res.data[0].goodscount
       })
       this.getCategory()
       console.log(allprice)
@@ -81,7 +97,8 @@ Page({
   },
   addflavor(){
     let newflavor = this.data.flavor;
-    newflavor.push('');
+    let nn = {flavor:'',count:0}
+    newflavor.push(nn);
     console.log(newflavor)
     this.setData({
       flavor:newflavor
@@ -91,7 +108,7 @@ Page({
     console.log(e)
     let thekey = 0;
     for(var i = 0;i<this.data.flavor.length;i++){
-      if(this.data.flavor[i]==e.currentTarget.dataset.id){
+      if(this.data.flavor[i].flavor==e.currentTarget.dataset.id){
         thekey = i;
         break;
       }
@@ -125,7 +142,26 @@ Page({
   checkUpdate(){
     // &&!!_this.data.goodspic&&!!_this.data.gdetailspic
     let _this = this
-    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.gdetailspic&&!!_this.data.rule1.price&&!!_this.data.rule1.name&&!!_this.data.rule1.minnum&&!!_this.data.rule1.maxnum&&!!_this.data.rule2.price&&!!_this.data.rule2.name&&!!_this.data.rule2.minnum&&!!_this.data.rule2.maxnum&&!!_this.data.rule3.price&&!!_this.data.rule3.name&&!!_this.data.rule3.minnum&&!!_this.data.rule3.maxnum&&!!_this.data.buyingprice){
+    let flavorcheck = true
+    if(!!_this.data.flavor.length){
+      for(var i=0;i<_this.data.flavor.length;i++){
+        if(!!_this.data.flavor[i].flavor&&_this.data.flavor[i].count!=0){
+          flavorcheck = true
+        }else{
+          flavorcheck = false;
+          break;
+        }
+      }
+    }else{
+      console.log('noflavor')
+      console.log(_this.data.goodscount)
+      if(Number(_this.data.goodscount)!=0){
+        flavorcheck = true
+      }else{
+        flavorcheck = false;
+      }
+    }
+    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.gdetailspic1&&!!_this.data.gdetailspic2&&!!_this.data.gdetailspic3&&!!_this.data.rule1.price&&!!_this.data.rule1.name&&!!_this.data.rule1.minnum&&!!_this.data.rule1.maxnum&&!!_this.data.rule2.price&&!!_this.data.rule2.name&&!!_this.data.rule2.minnum&&!!_this.data.rule2.maxnum&&!!_this.data.rule3.price&&!!_this.data.rule3.name&&!!_this.data.rule3.minnum&&!!_this.data.rule3.maxnum&&!!_this.data.buyingprice&&flavorcheck){
       if(this.data.isUpdate==true){
         this.updateGoods();
       }else{
@@ -133,7 +169,7 @@ Page({
       }
     }else{
       wx.showToast({
-        title: '请确保每项不为控',
+        title: '存在值为空',
         icon: 'none',
         image:'../../icon/close.png',
         duration: 3000
@@ -196,27 +232,21 @@ Page({
   },
   insertGoods(){
     let _this = this
-    console.log(_this.data.flavor)
-    console.log(_this.data.catgory)
-    console.log(_this.data.goodspic)
-    console.log(_this.data.gdetailspic)
-    console.log(_this.data.name)
-    console.log(_this.data.rule1.price)
-    console.log(_this.data.rule2.price)
-    console.log(_this.data.rule3.price)
-    console.log(_this.data.rule3.maxnum)
-    console.log(!!this.data.rule1.name)
     app.globalData.db.collection('goods').add({
       data:{
         catgory: _this.data.catgory,
         flavor: _this.data.flavor,
         goodspic: _this.data.goodspic,
-        gdetailspic:_this.data.gdetailspic,
+        gdetailspic1:_this.data.gdetailspic1,
+        gdetailspic2:_this.data.gdetailspic2,
+        gdetailspic3:_this.data.gdetailspic3,
         name: _this.data.name,
         price1: _this.data.rule1.price,
         price2: _this.data.rule2.price,
         price3: _this.data.rule3.price,
-        buyingprice:_this.data.buyingprice
+        buyingprice:_this.data.buyingprice,
+        goodsmsg:_this.data.goodsmsg,
+        goodscount:_this.data.goodscount
       }
     }).then((res)=>{
       console.log(res._id)
@@ -254,15 +284,6 @@ Page({
   updateGoods(){
     let _this = this
     let theid = _this.data.goodsid
-    console.log(_this.data.flavor)
-    console.log(_this.data.catgory)
-    console.log(_this.data.goodspic)
-    console.log(_this.data.gdetailspic)
-    console.log(_this.data.name)
-    console.log(_this.data.rule1.price)
-    console.log(_this.data.rule2.price)
-    console.log(_this.data.rule3.price)
-    console.log(!!this.data.rule1.name)
     wx.cloud.callFunction({
       name: "setMsg",
       data: {
@@ -272,12 +293,16 @@ Page({
               catgory: _this.data.catgory,
               flavor: _this.data.flavor,
               goodspic: _this.data.goodspic,
-              gdetailspic:_this.data.gdetailspic,
+              gdetailspic1:_this.data.gdetailspic1,
+              gdetailspic2:_this.data.gdetailspic2,
+              gdetailspic3:_this.data.gdetailspic3,
               name: _this.data.name,
               price1: _this.data.rule1.price,
               price2: _this.data.rule2.price,
               price3: _this.data.rule3.price,
-              buyingprice:_this.data.buyingprice
+              buyingprice:_this.data.buyingprice,
+              goodsmsg:_this.data.goodsmsg,
+              goodscount:_this.data.goodscount
             }
       }
     }).then((res)=>{
@@ -419,9 +444,77 @@ Page({
           title: '上传图片成功',
          })
          that.setData({
-          gdetailspic: res.fileID,
+          gdetailspic1: res.fileID,
           hasimg2:'上传成功',
           hasChangeImg2:true
+         })       
+        },
+        })
+    }
+  })
+  },
+  changepic3(){
+    let that = this;
+    let timestamp = (new Date()).valueOf();
+    wx.chooseImage({
+     success: chooseResult => {
+       var index1=chooseResult.tempFilePaths[0].lastIndexOf(".");
+       var index2=chooseResult.tempFilePaths[0].length;
+       var type=chooseResult.tempFilePaths[0].substring(index1,index2);
+       wx.showLoading({
+        title: '上传中。。。',
+       })
+       // 将图片上传至云存储空间
+       wx.cloud.uploadFile({
+        // 指定上传到的云路径
+        cloudPath: timestamp + type,
+        // 指定要上传的文件的小程序临时文件路径
+        filePath: chooseResult.tempFilePaths[0],
+        // 成功回调
+        success: res => {
+         console.log('上传成功', res)
+         wx.hideLoading()
+         wx.showToast({
+          title: '上传图片成功',
+         })
+         that.setData({
+          gdetailspic2: res.fileID,
+          hasimg3:'上传成功',
+          hasChangeImg3:true
+         })       
+        },
+        })
+    }
+  })
+  },
+  changepic4(){
+    let that = this;
+    let timestamp = (new Date()).valueOf();
+    wx.chooseImage({
+     success: chooseResult => {
+       var index1=chooseResult.tempFilePaths[0].lastIndexOf(".");
+       var index2=chooseResult.tempFilePaths[0].length;
+       var type=chooseResult.tempFilePaths[0].substring(index1,index2);
+       wx.showLoading({
+        title: '上传中。。。',
+       })
+       // 将图片上传至云存储空间
+       wx.cloud.uploadFile({
+        // 指定上传到的云路径
+        cloudPath: timestamp + type,
+        // 指定要上传的文件的小程序临时文件路径
+        filePath: chooseResult.tempFilePaths[0],
+        // 成功回调
+        success: res => {
+         console.log('上传成功', res)
+         wx.hideLoading()
+         wx.showToast({
+          title: '上传图片成功',
+         })
+         that.setData({
+          gdetailspic3: res.fileID,
+          hasimg4:'上传成功',
+          hasChangeImg4:true
          })       
         },
         })
@@ -432,7 +525,16 @@ Page({
     console.log(e)
     let index = e.currentTarget.dataset.index
     let newflavor = this.data.flavor
-    newflavor[index] = e.detail.value
+    newflavor[index].flavor = e.detail.value
+    this.setData({
+      flavor:newflavor
+    })
+  },
+  changeflavorcount(e){
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    let newflavor = this.data.flavor
+    newflavor[index].count = e.detail.value
     this.setData({
       flavor:newflavor
     })

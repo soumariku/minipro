@@ -23,9 +23,9 @@
   border:3rpx solid #000;
   background-color: white;
   display: inline-block;
-  width: 25%;
+  width: 23%;
   text-align: center;
-  margin-right: 30rpx;
+  margin-right: 5rpx;
 }
 .classify-input1 {
   margin-top: 20rpx;
@@ -105,3 +105,6 @@
   justify-content: space-between; 
   background:rgba(255,255,255,1); 
 } 
+.checkbox{
+  font-size: 30rpx;
+}

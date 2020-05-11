@@ -72,7 +72,7 @@
       <view style="width:100%;flex-direction: row;">
         <view class="img_item" wx:for="{{col1}}" wx:key="id">
           <view >
-          <view class="item_info">
+          <view class="item_info" bindtap="turnmsg"  data-id="{{item._id}}">
             <image src="{{item.goodspic}}" style="width:100%;height:300rpx"></image>
           </view>
                 <view class="product-name">

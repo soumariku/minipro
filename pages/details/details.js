@@ -348,11 +348,14 @@ Page({
       let detailspic = [];
       let flavorlist = [];
       pic.push(res.data[0].goodspic)
-      pic.push(res.data[0].gdetailspic)
+      pic.push(res.data[0].gdetailspic1)
+      
       console.log(res.data[0].flavor)
-      detailspic.push(res.data[0].gdetailspic)
+      detailspic.push(res.data[0].gdetailspic1)
+      detailspic.push(res.data[0].gdetailspic2)
+      detailspic.push(res.data[0].gdetailspic3)
       for(var i=0;i<res.data[0].flavor.length;i++){
-        let list = {flavor:res.data[0].flavor[i],flavornum:0}
+        let list = {flavor:res.data[0].flavor[i].flavor,flavornum:0,count:res.data[0].flavor[i].count}
         flavorlist.push(list)
       }
       this.setData({
@@ -360,7 +363,8 @@ Page({
         flavor: flavorlist,
         imgUrls: pic,
         detailImg: detailspic,
-        buyingprice:res.data[0].buyingprice
+        buyingprice:res.data[0].buyingprice,
+        goodscount:res.data[0].goodscount
       })
       console.log(this.data.flavor)
      console.log(this.data.goodmsg)
