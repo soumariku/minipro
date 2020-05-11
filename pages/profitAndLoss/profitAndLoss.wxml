@@ -77,7 +77,7 @@
               <text class='has_shop_smalltxt' style="margin-left:20rpx">{{years}}年{{months}}月</text>
             </view> 
             <!-- <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> -->
-             <picker mode="date" fields="month" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="getDateTime">
+            <picker mode="date" fields="month" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="getDateTime">
               <view class="selectDate">
                 <text class='btn_shop_change'>选择年月</text>
               </view>

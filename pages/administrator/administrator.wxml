@@ -68,11 +68,11 @@
               <!-- 搜索框 -->
                 <view class="weui-search-bar__box">
                   <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                  <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changeseearch" value="{{inputmsg}}"/>
+                  <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changesearch" value="{{inputuser}}"/>
                 </view>
               </view>
               <!-- 取消搜索 -->
-              <view class="weui-search-bar__cancel-btn" bindtap='searchgoods'>搜索</view>
+              <view class="weui-search-bar__cancel-btn" bindtap='searchuser'>搜索</view>
             </view>
              
             <!-- 循环商品列表 --> 
@@ -214,8 +214,14 @@
     </view>  
         <!-- <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text>  -->
-      </view> 
-      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+      </view>
+      <picker mode="date" fields="month" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="getDateTime">
+              <view class="selectDate">
+                <text class='btn_shop_change' wx:if="{{!!serachDate}}">{{serachDate}}</text>
+                <text class='btn_shop_change' wx:else>选择年月</text>
+              </view>
+            </picker>  
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red;margin-left:auto;margin-right:15rpx">返回</text> 
     </view>
     
     <!-- 循环的商品列表 --> 

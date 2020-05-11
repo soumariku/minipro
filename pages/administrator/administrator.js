@@ -16,8 +16,9 @@ Page({
     adminname:'',
     adminpassword:'',
     selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示
-    selectData: ['所有订单','确认收货订单','未确认收货订单'],//下拉列表的数据
+    selectData: ['所有订单','预约送货','上门自取','确认收货订单','未确认收货订单'],//下拉列表的数据
     index: 0,//选择的下拉列表下标
+    serachDate:''
   },
   selectTap() {
     this.setData({
@@ -193,8 +194,37 @@ Page({
   },
   changeseearch(e){
     this.setData({
+      inputuser:e.detail.value
+    })
+  },
+  changesearch(e){
+    this.setData({
       inputmsg:e.detail.value
     })
+  },
+  searchuser(){
+    wx.showLoading({
+      title: '',
+    })
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'customer',
+        data:{
+            truename:{								//columnName表示欲模糊查询数据所在列的名
+              $regex:'.*' + this.data.inputmsg + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+              $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+            }
+        }
+      }
+    }).then((res)=>{
+      let customer = res.result.data
+      // console.log(res)
+      this.setData({ 
+        userList: customer
+      })
+      wx.hideLoading()
+    }) 
   },
   searchgoods(){
     wx.showLoading({
@@ -259,12 +289,46 @@ Page({
     })
     let searchindex = {}
     const _ =  app.globalData.db.command
+    console.log(this.data.serachDate)
     if(index == 0||index.type=='tap'){
-      searchindex = {}
+      searchindex = {
+        orderTime:{								
+        $regex:'.*' + this.data.serachDate + '.*',		
+        $options: 'i'							
+        }
+      }
     }else if(index == 1){
-      searchindex = {orderState : "C"}
+      searchindex = {
+        orderState : "A",
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        },
+      }
+    }else if(index == 2){
+      searchindex = {
+        orderState : "B",
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        }
+      }
+    }else if(index == 3){
+      searchindex = {
+        orderState : "C",
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        }
+      }
     }else{
-      searchindex = {orderState : _.in(['A', 'B'])}
+      searchindex = {
+        orderState : _.in(['A', 'B']),
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        }
+      }
     }
     app.globalData.db.collection('orders').where(searchindex).orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
       console.log(res.data)
@@ -436,10 +500,35 @@ Page({
       })
     }
   },
+  getDateTime(e){
+    var obj = e.detail.value
+    console.log(obj)
+    var index=obj.lastIndexOf("\-");
+    var years=obj.substring(0,index);
+    var months=obj.substring(index+1,obj.length);
+    var newDate = years+'/'+months
+    this.setData({
+      years:years,
+      months:months,
+      serachDate:newDate
+    })
+    this.getOrders(this.data.index)
+    console.log(newDate)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var date = new Date();
+    var nowyears = date.getFullYear(); //获取完整的年份(4位)
+    var nowmonths = date.getMonth()+1;
+    nowmonths = nowmonths<10?'0'+nowmonths:nowmonths
+    var startDate = String(nowyears-3)+'-'+String(nowmonths)
+    var endDate = String(nowyears)+'-'+String(nowmonths)
+    this.setData({
+      startDate:startDate,
+      endDate:endDate,
+    })
   },
 
   /**

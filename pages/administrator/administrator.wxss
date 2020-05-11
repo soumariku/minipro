@@ -74,7 +74,7 @@ page{
   background-color: #fff; 
 } 
 .position_title{ 
-  width: 650rpx; 
+  width: 500rpx; 
   height: 100rpx; 
   display: flex; 
   flex-direction: row; 
@@ -111,7 +111,7 @@ page{
   font-size:24rpx; 
   font-family:PingFangSC-Regular; 
   font-weight:400; 
-  color:rgba(85,141,247,1); 
+  color:#5076ab; 
   line-height:33rpx; 
 } 
 .has_shop_list{ 
