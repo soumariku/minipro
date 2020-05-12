@@ -137,6 +137,14 @@ Page({
       });
     }
   },
+  getlikegoods(){
+    app.globalData.db.collection('goods').get().then((res)=>{
+
+      this.setData({
+        col1:res.data
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -166,6 +174,7 @@ Page({
         index: 2,
       })
     }
+    this.getlikegoods()
   },
 
   /**

@@ -77,6 +77,14 @@ Page({
       url: './../administrator/administrator',
     })
   },
+  clearStorage(){
+    console.log('111')
+    try {
+      wx.clearStorageSync()
+    } catch(e) {
+      alert('清理失败')
+    }
+  },
   onLoad: function (options) {
     if (app.globalData.role != 'user') {
       this.setData({
@@ -142,6 +150,11 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  bindViewTap(){
+    wx.navigateTo({
+      url: '../personalData/personalData',
     })
   },
   /**

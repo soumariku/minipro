@@ -1,0 +1,21 @@
+<!--pages/updateGoods/updateGoods.wxml-->
+<view class="thepage">
+  <view class="inputblock">
+    <image  class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="inputTitle" style="font-size:40rpx;margin-top:33rpx;color:#5076ab">{{userInfo.nickName}}</text>
+  </view>
+  <view class="inputblock" style="margin-bottom:20rpx">
+    <text class="inputTitle">真实姓名:</text>
+    <input class="inputname" value="{{truename}}" placeholder="请输入您的真实姓名" bindinput="changeTrueName" style="width:520rpx"></input>
+  </view>
+  <view class="inputblock">
+    <text class="inputTitle">联系方式:</text>
+    <input class="inputname" value="{{telephone}}" placeholder="请输入您的联系方式" bindinput="changetelephone" style="width:520rpx"></input>
+  </view>
+  <view class="inputblock">
+    <text class="inputTitle">收货地址:</text>
+    <textarea class="inputname" style="width:520rpx;margin-top:10rpx;height:150rpx" placeholder="请输入您的收货地址" name="textarea"  maxlength="-1" bindinput="changeadderss" value="{{address}}"/>
+  </view>
+</view>
+  <button class="button-green" style="background-color:#5076ab" bindtap="changeMsg" formType="submit">保存</button>
+  <button class="button-green" bindtap="changeUser" formType="submit">切换账号</button>

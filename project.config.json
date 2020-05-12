@@ -162,6 +162,13 @@
 					"id": -1,
 					"name": "pages/profitAndLoss/profitAndLoss",
 					"pathName": "pages/profitAndLoss/profitAndLoss",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personalData/personalData",
+					"pathName": "pages/personalData/personalData",
 					"scene": null
 				}
 			]

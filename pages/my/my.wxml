@@ -54,7 +54,7 @@
       <image class="order-icon" src="../../icon/bindingtel.png" mode="cover"></image> 
       <text class="order-text">绑定手机</text>
     </view>
-    <view class="order-item">
+    <view class="order-item" bindtap="clearStorage">
       <image class="order-icon" src="../../icon/clean.png" mode="cover"></image> 
       <text class="order-text">清理缓存</text>
     </view>
