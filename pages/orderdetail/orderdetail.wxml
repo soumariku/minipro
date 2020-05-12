@@ -1,7 +1,7 @@
 <view class="containers"> 
   <view class='has_shop' > 
     <!-- 第一排 --> 
-    <view class='has_shop_title'  style="margin-left:20rpx"> 
+    <view class='has_shop_title'  style="padding-left:20rpx"> 
       <view class='position_title'> 
         <image class='has_shop_icon1' src='../../icon/isshop.png'></image> 
         <text class='has_shop_smalltxt'>自来批发部</text> 
@@ -45,7 +45,7 @@
                 </text>
                 <text class='menu_right_nprice'>
                   <text class='total_name'>配送类型：</text> 
-                  <text class='total_name_num' style="color:#5076ab">{{orderState}}</text> 
+                  <text class='total_name_num' style="color:#5076ab">{{orderState}}</text>
                 </text>
                 <text class='menu_right_nprice'>
                   <text class='total_name'>下单时间：</text> 
@@ -66,19 +66,19 @@
     <!-- 底部选择栏 --> 
     <view class='shop_car_total'> 
       <view class='car_total_left'> 
-        <view class='shop_total_freight' style="margin-left:190rpx"> 
+        <view class='shop_total_freight' style="margin-left:110rpx"> 
           <view class='position_total'> 
             <text class='total_name' style="font-size:35rpx">合计:</text> 
             <text class='total_name_num' style="font-size:35rpx">￥{{sumprice}}</text> 
           </view> 
-          
         </view> 
       </view> 
       <view class='shop_total_right'> 
         
-        <!-- 一个都没选择，展示灰色结算按钮 --> 
+        <!-- 一个都没选择，展示灰色结算按钮 -->
+        <view class='btn_result_all_red' bindtap='updateCompleteState' style="background:#5076ab" wx:if="{{!isComplete}}">更改配送</view>   
         <view class='btn_detele_all' wx:if="{{isComplete}}">已确认收货</view>
-        <view class='btn_result_all_red' bindtap='updateCompleteState' wx:else>确认收货</view> 
+        <view class='btn_result_all_red' bindtap='updateCompleteState' wx:else>确认收货</view>
       </view> 
     </view> 
   </view> 

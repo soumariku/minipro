@@ -7,8 +7,9 @@ Page({
   data: {
     orders: [],//用来接收接口返回数据
     goods:[],
-    sumprice:''
-    
+    sumprice:'',
+    index:0,
+    selectData: ['所有订单','预约送货','上门自取','确认收货订单','未确认收货订单'],//下拉列表的数据
   },
   /**
    * 生命周期函数--监听页面加载
@@ -18,6 +19,22 @@ Page({
       id:options.id
     })
     this.getOrders(options.id)
+  },
+  selectTap() {
+    this.setData({
+      selectShow: !this.data.selectShow
+    });
+  },
+  // 点击下拉列表
+  optionTap(e) {
+    let Index = e.currentTarget.dataset.index;//获取点击的下拉列表的下标
+    console.log(e)
+    this.getOrders(Index)
+    this.setData({
+      index: Index,
+      selectShow: !this.data.selectShow,
+      email_nums:0
+    });
   },
   getOrders(id){
     app.globalData.db.collection('orders').where({

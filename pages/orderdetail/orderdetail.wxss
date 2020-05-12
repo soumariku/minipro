@@ -333,7 +333,7 @@ page{
   line-height:42rpx; 
 } 
 .btn_result_all_red{ 
-  width: 220rpx; 
+  width: 150rpx; 
  height: 100rpx; 
  background:#f57c00; 
  display: flex; 
@@ -350,3 +350,4 @@ page{
   height: 32rpx; 
   margin:0 30rpx 0 30rpx; 
 }
+

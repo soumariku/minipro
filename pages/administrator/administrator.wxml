@@ -204,14 +204,14 @@
       <view class='position_title' style="width: 500rpx;">
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
         <view class='select_box'>
-        <view class='select' catchtap='selectTap'>
-            <text class='select_text'>{{selectData[index]}}</text>
-            <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
-        </view>
-        <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
-            <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
-        </view>
-    </view>  
+          <view class='select' catchtap='selectTap'>
+              <text class='select_text'>{{selectData[index]}}</text>
+              <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
+          </view>
+          <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
+              <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+          </view>
+        </view>  
         <!-- <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text>  -->
       </view>

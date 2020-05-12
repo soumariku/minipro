@@ -114,7 +114,7 @@
   border-radius: 50%;
 }
 .button-green {
-  background-color: red; /* Green */
+  background-color: rgba(155, 0, 0, 0.719); /* Green */
   min-width: 700rpx;
   max-width: 700rpx;
   font-size: 30rpx;

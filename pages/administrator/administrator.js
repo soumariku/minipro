@@ -287,10 +287,21 @@ Page({
       email_nums:0,
       ordersList:[]
     })
+    let type = true
+    console.log(index)
+    if(!!index.type){
+      if(index.type=='tap'){
+        type = true
+      }else{
+        type = false
+      }
+    }else{
+      type = false
+    }
     let searchindex = {}
     const _ =  app.globalData.db.command
     console.log(this.data.serachDate)
-    if(index == 0||index.type=='tap'){
+    if(index == 0||type){
       searchindex = {
         orderTime:{								
         $regex:'.*' + this.data.serachDate + '.*',		
@@ -439,7 +450,7 @@ Page({
                 icon: 'success',
                 duration: 3000
               });
-              _this.getOrders(this.data.Index)
+              _this.getOrders(_this.data.index)
           })
           // app.globalData.db.collection('orders').doc(id).update({
           //   data:{
@@ -462,21 +473,38 @@ Page({
   },
   changedeliver(e){
     let id = e.currentTarget.dataset.id
-    wx.cloud.callFunction({
-      name: "updateData",
-      data: {
-        id:id,
-        collection:'orders',
-        data:{
-          deliver:'Y'
+    console.log(id)
+    let _this = this
+    wx.showModal({
+      title: '提示',
+      content: '请确定是否发货',
+      cancelText:'确定',
+      confirmText:'取消',
+      cancelColor:'#D6463C',
+      success: function(res){
+        if(res.confirm){
+          console.log('按了取消')
+        }else{
+          wx.cloud.callFunction({
+            name: "updateData",
+            data: {
+              id:id,
+              collection:'orders',
+              data:{
+                deliver:'N'
+              }
+            }
+          }).then((res)=>{
+            console.log(res)
+              wx.showToast({
+                title: '更改完成！',
+                icon: 'success',
+                duration: 3000
+              });
+              _this.getOrders(_this.data.index)
+          })
         }
       }
-    }).then((res)=>{
-      wx.showToast({
-        title: '更改完成！',
-        icon: 'success',
-        duration: 3000
-      });
     })
   },
   bindFormSubmit: function(e) {
