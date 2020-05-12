@@ -74,7 +74,7 @@ page{
   background-color: #fff; 
 } 
 .position_title{ 
-  width: 500rpx; 
+  width: 650rpx; 
   height: 100rpx; 
   display: flex; 
   flex-direction: row; 
@@ -285,7 +285,7 @@ page{
   display: flex; 
   justify-content: center; 
   align-items: center; 
-  font-size:30rpx; 
+  font-size:24rpx; 
   font-family:PingFangSC-Medium; 
   font-weight:500; 
   color:rgba(153,153,153,1); 

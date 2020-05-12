@@ -46,6 +46,12 @@ Page({
         }
     })
   },
+  toOrderDetail(e){
+    console.log(e)
+    wx.navigateTo({
+      url: './../updateOrders/updateOrders?id='+e.currentTarget.dataset.id,
+    })
+  },
   getgoods:function(e){
     var inputmsg = "";
     inputmsg = e.detail.value;

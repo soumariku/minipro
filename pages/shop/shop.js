@@ -599,7 +599,8 @@ Page({
               profitPrice:_this.data.profitPrice,
               remarks:'',
               sendmsg:selfsendmsg,
-              goodslist:goodslist
+              goodslist:goodslist,
+              deliver:'N'
             }
           }).then((res)=>{
             app.sendmsg(selfsendmsg)
@@ -634,8 +635,8 @@ Page({
             cancelColor:'#D6463C',
             success: function(res){
               if(res.confirm){
-                wx.switchTab({
-                  url: './../my/my'
+                wx.navigateTo({
+                  url: './../personalData/personalData',
                 })
               }else{
                 wx.switchTab({
@@ -655,7 +656,7 @@ Page({
           success: function(res){
             if(res.confirm){
               wx.switchTab({
-                url: './../my/my'
+                url: './../personalData/personalData'
               })
             }else{
               wx.switchTab({
@@ -696,7 +697,9 @@ Page({
           sumprice: _this.data.totalPrice,
           profitPrice:_this.data.profitPrice,
           remarks: _this.data.remarks,
-          sendmsg:newsendmsg
+          sendmsg:newsendmsg,
+          goodslist:_this.data.goodslist,
+          deliver:'N'
         }
       }).then((res)=>{
         app.sendmsg(newsendmsg)

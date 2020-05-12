@@ -460,6 +460,25 @@ Page({
     })
     
   },
+  changedeliver(e){
+    let id = e.currentTarget.dataset.id
+    wx.cloud.callFunction({
+      name: "updateData",
+      data: {
+        id:id,
+        collection:'orders',
+        data:{
+          deliver:'Y'
+        }
+      }
+    }).then((res)=>{
+      wx.showToast({
+        title: '更改完成！',
+        icon: 'success',
+        duration: 3000
+      });
+    })
+  },
   bindFormSubmit: function(e) {
     console.log(e)
   },
