@@ -491,7 +491,7 @@ Page({
               id:id,
               collection:'orders',
               data:{
-                deliver:'N'
+                deliver:'Y'
               }
             }
           }).then((res)=>{
