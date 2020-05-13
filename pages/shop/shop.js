@@ -562,7 +562,7 @@ Page({
         goodslist.push(selectgood)
       }
     }
-    let selfsendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n'+sendmsg +'应收：'+_this.data.totalPrice
+    let selfsendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n配送类型：商品自取\n'+sendmsg +'应收：'+_this.data.totalPrice
     console.log(time)
     console.log(sendmsg)
     profitPrice = Number(_this.data.totalPrice)-Number(profitPrice)
@@ -682,7 +682,9 @@ Page({
   },
   tapDialogButton(e){
     let _this = this
-    if(e.detail.item.text = '确定'){
+    console.log(e)
+    if(e.detail.item.text == '确定'){
+      console.log('按了确认')
       let newsendmsg = '客户：'+_this.data.buyer+'\n下单时间：'+_this.data.time+'\n联系方式：'+_this.data.userTel+'\n地址：'+_this.data.userAddress+'\n预约送货：'+_this.data.remarks+'\n'+_this.data.sendmsg +'应收：'+_this.data.totalPrice
       // let newsendmsg = _this.data.sendmsg+'\n预约送货：'+_this.data.remarks
       app.globalData.db.collection('orders').add({
@@ -705,6 +707,8 @@ Page({
         app.sendmsg(newsendmsg)
         _this.updategoodscount()
       })
+    }else{
+      console.log('按了取消')
     }
     this.setData({
       dialogShow: false

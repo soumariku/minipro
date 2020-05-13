@@ -76,10 +76,35 @@
       <view class='shop_total_right'> 
         
         <!-- 一个都没选择，展示灰色结算按钮 -->
-        <view class='btn_result_all_red' bindtap='updateCompleteState' style="background:#5076ab" wx:if="{{!isComplete}}">更改配送</view>   
+        <view class='btn_result_all_red' bindtap='changedelivery' style="background:#5076ab" wx:if="{{!isComplete}}">更改配送</view>   
         <view class='btn_detele_all' wx:if="{{isComplete}}">已确认收货</view>
         <view class='btn_result_all_red' bindtap='updateCompleteState' wx:else>确认收货</view>
       </view> 
     </view> 
-  </view> 
+  </view>
+  <form>
+    <mp-dialog show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}" mask-closable="false">
+      <view style="min-width:500rpx;min-height:300rpx">
+        <view class="thepage">
+          <view class="inputblock" style="margin-bottom:20rpx">
+            <text class="inputTitle">类型:</text>
+            <view class='select_box'>
+              <view class='select' catchtap='selectTap'>
+                  <text class='select_text'>{{selectData[index]}}</text>
+                  <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
+              </view>
+              <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
+                  <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+              </view>
+            </view>  
+          </view>
+          <view class="inputblock" wx:if="{{destate=='A'}}">
+            <text class="inputTitle">备注:</text>
+            <textarea class="inputname" style="width:380rpx;margin-top:10rpx;height:150rpx" placeholder="请输入备注" name="textarea"  maxlength="-1" bindinput="remarkchange" value="{{remarks}}"/>
+          </view>
+          <view wx:else  class="inputblock"></view>
+        </view>
+      </view>  
+    </mp-dialog>
+  </form> 
 </view> 
