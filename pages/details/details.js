@@ -1,15 +1,23 @@
 const app = getApp()
 const API = require('../../utils/API.js');
+const device = wx.getSystemInfoSync()
+const width = device.windowWidth
 Page({
   onLoad:function(option){
+    let num = 0
+    for(var item in API.orderinfo){ 
+      num +=Number(API.orderinfo[item].count)
+    }
     this.setData({
       goodsID: option.id,
-      onshopnum:String(API.orderinfo.length)
+      onshopnum:String(num)
     })
     console.log(this.data.goodsID);
     this.getDate();
     this.getRule();
     this.getLike();
+  },
+  onShow(){
   },
   data: {
     isLike: false,//收藏
@@ -37,11 +45,12 @@ Page({
     detailImg: [
       // "cloud://minishop-kxw64.6d69-minishop-kxw64-1301898931/pic2.jpg"
     ],
+    width
   },
   //预览图片
   previewImage: function (e) {
     var current = e.target.dataset.src;
-
+    console.log(this.data.width)
     wx.previewImage({
       current: current, // 当前显示图片的http链接  
       urls: this.data.imgUrls // 需要预览的图片http链接列表  
@@ -227,8 +236,12 @@ Page({
         API.orderinfo.push(orderlist)
       }
     }
+    let num = 0
+    for(var item in API.orderinfo){ 
+      num +=Number(API.orderinfo[item].count)
+    }
     this.setData({
-      onshopnum:String(API.orderinfo.length)
+      onshopnum:String(num)
     })
   },
   closeDialog:function(){

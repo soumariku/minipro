@@ -1,0 +1,35 @@
+/* pages/testimg/testimg.wxss */
+.imgDisposeControlLine{
+  width: 100vw;
+  height:10vh;
+  position: relative;
+  background: #fff;
+}
+.editBtn{
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+  width:260rpx;
+  height: 60rpx;
+  background: #3a8d5f;
+  font-size: 30rpx;
+  text-align: center;
+  line-height: 60rpx;
+  color:#fff;
+}
+.editBtn.reelectBtn{
+  left:10%;
+}
+.editBtn.editPerfectBtn{
+  right:10%;
+}
+.imgDisposeBlock{
+  position: absolute;
+  z-index: 99;
+  left:0;
+  top:0;
+  width:100vw;
+  height:100vh;
+  background: rgb(0, 0, 0);
+  overflow: hidden;
+}

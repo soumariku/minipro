@@ -40,7 +40,20 @@
         </view>
       </view>
     </view>
-  
+  <view style="background:#fff;margin:10px 5px;text-align:center;font-weight:600"> 
+    <text style="text-align:center;color:#555556">---推荐新品---</text>
+  </view>
+  <view class='demo-page'>
+    <!-- 平移轮播 -->
+    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="1" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
+      <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
+        <swiper-item class="swiper-item" bindtap='jumpCoupon'>
+          <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" bindtap="turnmsg"  data-id="{{item._id}}"/>
+          
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
   <view class='has_shop_list'>
       <text style="text-align:center;color:#555556;margin:20rpx;font-weight:600">---店铺商品---</text>
       <view style="width:100%;flex-direction: row;">
@@ -62,20 +75,7 @@
       </view>
     </view>
   </view>
-  <view style="background:#fff;margin:10px 5px;text-align:center"> 
-    <text style="text-align:center;color:#555556">---推荐商品---</text>
-  </view>
-  <view class='demo-page'>
-    <!-- 平移轮播 -->
-    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="{{centerItem}}" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
-      <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
-        <swiper-item class="swiper-item" bindtap='jumpCoupon'>
-          <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" bindtap="turnmsg"  data-id="{{item._id}}"/>
-          
-        </swiper-item>
-      </block>
-    </swiper>
-  </view>
+  
   <view class="round-click">
     <image class="upimg" src="./../../icon/up.png" bindtap="goTop"></image>
   </view>

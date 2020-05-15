@@ -20,7 +20,8 @@
     "pages/profitAndLoss/profitAndLoss",
     "pages/newSearch/newSearch",
     "pages/updateOrders/updateOrders",
-    "pages/personalData/personalData"
+    "pages/personalData/personalData",
+    "pages/testimg/testimg"
   ],
   "window": {
     "backgroundTextStyle": "light",

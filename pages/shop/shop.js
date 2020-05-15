@@ -425,9 +425,13 @@ Page({
               } else {
                 // 调用金额渲染数据
                 _this.totalPrice();
+                let num = 0
+                for(var item in list){ 
+                  num +=Number(list[item].count)
+                }
                 wx.setTabBarBadge({
                   index: 2,
-                  text: String(list.length)
+                  text: String(num)
                 })
               }
             } else {
@@ -501,9 +505,13 @@ Page({
             } else {
               // 调用金额渲染数据
               that.totalPrice();
+              let num = 0
+                for(var item in list){ 
+                  num +=Number(list[item].count)
+                }
               wx.setTabBarBadge({
                 index: 2,
-                text: String(list.length)
+                text: String(num)
               })
             }
         })
@@ -519,12 +527,16 @@ Page({
   },
   checklist(){
     if (API.orderinfo.length>0) {
+      let num = 0
+      for(var item in API.orderinfo){ 
+        num +=Number(API.orderinfo[item].count)
+      }
       this.setData({
         carisShow: false
       });
       wx.setTabBarBadge({
         index: 2,
-        text: String(API.orderinfo.length)
+        text: String(num)
       })
     }else{
       this.setData({

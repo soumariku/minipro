@@ -1,5 +1,5 @@
 <!-- banner -->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style="height:{{width}}px">
   <block wx:for="{{imgUrls}}">
     <swiper-item>
       <image src="{{item}}" data-src="{{item}}" bindtap="previewImage"></image>
@@ -99,8 +99,8 @@
   </view> -->
   <view class="separate">
   <text>商品详情</text>
-  <block wx:for-items="{{detailImg}}" wx:key="name">
-    <image class="image_detail" src="{{item}}" />
+  <block wx:for-items="{{detailImg}}" wx:key="name" >
+    <image src="{{item}}" style="height:{{width}}px"/>
   </block>
   </view>
   <view class="temp"></view>

@@ -169,9 +169,13 @@ Page({
    */
   onShow: function () {
     if(API.orderinfo.length>0){
+      let num = 0
+      for(var item in API.orderinfo){ 
+        num +=Number(API.orderinfo[item].count)
+      }
       wx.setTabBarBadge({
         index: 2,
-        text: String(API.orderinfo.length)
+        text: String(num)
       })
     }else{
       wx.hideTabBarRedDot({

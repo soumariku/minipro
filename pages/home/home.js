@@ -89,14 +89,16 @@ Page({
   },
   getSwiperGoods(){
     app.globalData.db.collection('goods').where({
-      catgory:{								//columnName表示欲模糊查询数据所在列的名
-        $regex:'.*' + "0" + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
-        $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
-      }
+      // catgory:{								//columnName表示欲模糊查询数据所在列的名
+      //   $regex:'.*' + "0" + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+      //   $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+      // }
     }).get().then((res)=>{
-      console.log(res)
+      let newlist = res.data
+      newlist = newlist.reverse();
+      console.log(newlist)
       this.setData({
-        imgInfoArr:res.data
+        imgInfoArr:newlist
       })
     })
   },
@@ -165,9 +167,13 @@ Page({
    */
   onShow: function () {
     if(API.orderinfo.length>0){
+      let num = 0
+      for(var item in API.orderinfo){ 
+        num +=Number(API.orderinfo[item].count)
+      }
       wx.setTabBarBadge({
         index: 2,
-        text: String(API.orderinfo.length)
+        text: String(num)
       })
     }else{
       wx.hideTabBarRedDot({

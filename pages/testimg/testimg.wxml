@@ -1,0 +1,27 @@
+<!--pages/testimg/testimg.wxml-->
+  <view wx:if="{{path =='' || path == null}}">
+    <view class="head">
+      <view class="button" bindtap="chooseImage">
+        <text>更换抽奖封面</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 裁剪 -->
+  <view class='imgDisposeBlock' wx:if="{{isShear}}">
+    <!-- start 用户自动截取正方形照片 -->
+    <!-- 裁剪区域   重要 -->
+    <template name="we-cropper">
+      <canvas class="cropper {{cutImage}}" disable-scroll="true" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" style="width:{{width}}px;height:{{height}}px;" canvas-id="{{id}}"></canvas>
+    </template>
+    <!-- 按钮，无所谓的东西 -->
+    <view class="cropper-wrapper {{cutImage}}">
+      <template is="we-cropper" data="{{...cropperOpt}}" />
+      <view class='imgDisposeControlLine'>
+        <view class='editBtn reelectBtn' bindtap="chooseImage">重新选择</view>
+        <view class='editBtn editPerfectBtn' bindtap="getCropperImage">确定</view>
+      </view>
+    </view>
+    <!-- end 用户自动截取正方形照片 -->
+  </view>
+

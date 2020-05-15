@@ -1,4 +1,8 @@
 // pages/updateGoods/updateGoods.js
+import WeCropper from '../../utils/we-cropper/we-cropper.js'
+const device = wx.getSystemInfoSync()
+const width = device.windowWidth
+const height = device.windowHeight - 100;
 const app = getApp()
 Page({
 
@@ -15,7 +19,120 @@ Page({
     goodsid:'',
     isUpdate:false,
     ruleID:[],
-    goodscount:0
+    goodscount:0,
+    picno:0,
+    // 切图部分
+    isShear: false,  //  这个时设置剪切图片的弹框是否显示
+    cropperOpt: {  //基础设置 
+      id: 'cropper',
+      width,
+      height,
+      scale: 2.5,
+      zoom: 8,
+      cut: {
+        x: 20, // 裁剪框x轴起点(width * fs * 0.128) / 2
+        y: (height * 0.5 - 250 * 0.5), // 裁剪框y轴期起点
+        width: width-40, // 裁剪框宽度
+        height: width-40// 裁剪框高度
+      }
+    },
+  },
+  
+  chooseImage: function (e) {
+    let picnum = e.currentTarget.dataset.num
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],  //可选择原图或压缩后的图片
+      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+      success: function (res) {
+        var index1=res.tempFilePaths[0].lastIndexOf(".");
+        var index2=res.tempFilePaths[0].length;
+        var type=res.tempFilePaths[0].substring(index1,index2);
+        // 切图部分
+        that.setData({
+          cutImage: 'show',
+          isShear: true,
+          type:type,
+          picno:picnum
+        });
+        that.wecropper.pushOrign(res.tempFilePaths[0]); 
+      }
+    })
+  },
+  touchStart(e) {    // 这里是剪切图片里面的方法，不能少
+    this.wecropper.touchStart(e)
+  },
+  touchMove(e) {      // 这里是剪切图片里面的方法，不能少
+    this.wecropper.touchMove(e)
+  },
+  touchEnd(e) {       // 这里是剪切图片里面的方法，不能少
+    this.wecropper.touchEnd(e)
+  },
+  getCropperImage() {
+    let type = this.data.type
+    let timestamp = (new Date()).valueOf();
+    var that = this;
+    that.wecropper.getCropperImage((src) => {
+      if (src) {
+        console.log(src)
+        //此处添加用户确定裁剪后执行的操作 src是截取到的图片路径
+        that.setData({
+          isShear: false,
+          img: src,
+        })
+        wx.cloud.uploadFile({
+          cloudPath: timestamp + type,
+          filePath: src,   //   这是截取后的图片
+          success: function (res) {
+            console.log('上传成功', res)
+            wx.hideLoading()
+            wx.showToast({
+              title: '上传图片成功',
+            })
+            console.log(that.data.picno)
+            if(that.data.picno=='1'){
+              that.setData({
+                goodspic: res.fileID,
+                hasimg1:'上传成功',
+                hasChangeImg1:true
+              }) 
+            }else if(that.data.picno=='2'){
+              that.setData({
+                gdetailspic1: res.fileID,
+                hasimg2:'上传成功',
+                hasChangeImg2:true
+               })  
+            }else if(that.data.picno=='3'){
+              that.setData({
+                gdetailspic2: res.fileID,
+                hasimg3:'上传成功',
+                hasChangeImg3:true
+               })  
+            }else if(that.data.picno=='4'){
+              that.setData({
+                gdetailspic3: res.fileID,
+                hasimg4:'上传成功',
+                hasChangeImg4:true
+               })  
+            }
+            // var data = res.data;   //  json 格式转换成对象，要看后端返回给你什么格式，我这里后端给的json格式的所以要转
+            // console.log(res)
+            // that.setData({
+            //   path: data.msg,
+            // });
+          },
+          fail: function (res) {
+            console.log(res)
+            wx.showToast({
+              title: '保存失败',
+              duration: 3000
+            });
+          }
+        })
+
+      }
+    })
   },
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
@@ -657,6 +774,31 @@ Page({
     }else{
       this.getCategory()
     }
+    let _this = this
+    const {
+      cropperOpt
+    } = _this.data
+    new WeCropper(cropperOpt)
+      .on('ready', (ctx) => { })
+      .on('beforeImageLoad', (ctx) => {
+        console.log(`before picture loaded, i can do something`)
+        console.log(`current canvas context:`, ctx)
+        wx.showToast({
+          title: '上传中',
+          icon: 'loading',
+          duration: 20000
+        })
+      })
+      .on('imageLoad', (ctx) => {
+        console.log(`picture loaded`)
+        console.log(`current canvas context:`, ctx)
+        wx.hideToast()
+      })
+      .on('beforeDraw', (ctx, instance) => {
+        console.log(`before canvas draw,i can do something`)
+        console.log(`current canvas context:`, ctx)
+      })
+      .updateCanvas();
     // this.getGoods()
   },
 
