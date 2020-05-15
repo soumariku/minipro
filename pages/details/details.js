@@ -10,7 +10,8 @@ Page({
     }
     this.setData({
       goodsID: option.id,
-      onshopnum:String(num)
+      onshopnum:String(num),
+      window_width: app.globalData.window_width
     })
     console.log(this.data.goodsID);
     this.getDate();

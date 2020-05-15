@@ -141,6 +141,7 @@ App({
   },
   
   globalData: {
+    window_width: wx.getSystemInfoSync().windowWidth,
     openId:'o6HCI5NR8UKfn6CBFAELDgL51ZwA',
     userInfo: null,
     db:null,

@@ -1,8 +1,8 @@
 <!-- banner -->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style="height:{{width}}px">
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style="min-height:{{window_width}}px;max-height:{{window_width}}px">
   <block wx:for="{{imgUrls}}">
     <swiper-item>
-      <image src="{{item}}" data-src="{{item}}" bindtap="previewImage"></image>
+      <image src="{{item}}" data-src="{{item}}" bindtap="previewImage" style="width:100%;height: 100%;"></image>
     </swiper-item>
   </block>
 </swiper>
@@ -100,7 +100,7 @@
   <view class="separate">
   <text>商品详情</text>
   <block wx:for-items="{{detailImg}}" wx:key="name" >
-    <image src="{{item}}" style="height:{{width}}px"/>
+    <image src="{{item}}" style="height:{{width}}px;width:100%"/>
   </block>
   </view>
   <view class="temp"></view>
