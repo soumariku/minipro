@@ -12,7 +12,7 @@
     <view class="column">
       <view class="sku-pricelist">
         <text class="sku-price" style="left:10rpx;color:#bfbfbf;margin-right:30rpx;font-size:20rpx">价格</text>
-        <text class="sku-rule" style="left: 10rpx;color:#bfbfbf;margin-right:30rpx;font-size:20rpx">批价</text>
+        <text class="sku-rule" style="left: 10rpx;color:#bfbfbf;margin-right:30rpx;font-size:20rpx">批量</text>
       </view>
       <view class="sku-pricelist" wx:for-items="{{rule}}">
         <text class="sku-price" style="left: 0rpx;font-size:40rpx;margin-right:70rpx;">￥{{item.price}}</text>
@@ -28,6 +28,11 @@
     <text>购买数量</text>
     <text style="color:orange;margin-right:auto;">{{buysum}} 件</text>
     <text style="color:red">￥{{pricesum}}</text>
+  </view>
+  <view class="separate" style="flex-direction:row;padding:10rpx 10rpx 10rpx 0rpx" bindtap="toggleDialog">
+  <!-- sku选择 -->
+    <text style="color:#bfbfbf;margin-right:30rpx;font-size:20rpx">说明</text>
+    <text>{{goodsmsg}}</text>
   </view>
   <view class="dialog {{ showDialog ? 'dialog--show' : '' }}">
     <view class="dialog__mask" bindtap="toggleDialog" />

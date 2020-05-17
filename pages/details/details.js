@@ -374,6 +374,7 @@ Page({
       }
       this.setData({
         goodmsg: res.data[0],
+        goodsmsg:res.data[0].goodsmsg,
         flavor: flavorlist,
         imgUrls: pic,
         detailImg: detailspic,

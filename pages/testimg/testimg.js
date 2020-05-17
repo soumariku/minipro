@@ -10,164 +10,77 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 切图部分
-    isShear: false,  //  这个时设置剪切图片的弹框是否显示
-    cropperOpt: {  //基础设置 
-      id: 'cropper',
-      width,
-      height,
-      scale: 2.5,
-      zoom: 8,
-      cut: {
-        x: 20, // 裁剪框x轴起点(width * fs * 0.128) / 2
-        y: (height * 0.5 - 250 * 0.5), // 裁剪框y轴期起点
-        width: width-40, // 裁剪框宽度
-        height: width-40// 裁剪框高度
-      }
-    },
+    text: "1.【评分标准】页可以查看不同年龄段的评分标准，通过首页选择对应的性别、类别和年龄。2.【单项成绩】页包含了详细的单项打分情况及成绩雷达图，直观地看出自己的弱项和强项。",
+    animation: null,
+    timer: null,
+    duration: 0,
+    textWidth: 0,
+    wrapWidth: 0
   },
-  chooseImage: function () {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'],  //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: function (res) {
-        var index1=res.tempFilePaths[0].lastIndexOf(".");
-        var index2=res.tempFilePaths[0].length;
-        var type=res.tempFilePaths[0].substring(index1,index2);
-        // 切图部分
-        that.setData({
-          cutImage: 'show',
-          isShear: true,
-          type:type
-        });
-        that.wecropper.pushOrign(res.tempFilePaths[0]); 
-      }
+  onShow() {
+    this.initAnimation(this.data.text)
+  },
+  onHide() {
+    this.destroyTimer()
+    this.setData({
+      timer: null
     })
   },
-  touchStart(e) {    // 这里是剪切图片里面的方法，不能少
-    this.wecropper.touchStart(e)
-  },
-  touchMove(e) {      // 这里是剪切图片里面的方法，不能少
-    this.wecropper.touchMove(e)
-  },
-  touchEnd(e) {       // 这里是剪切图片里面的方法，不能少
-    this.wecropper.touchEnd(e)
-  },
-  getCropperImage() {
-    let type = this.data.type
-    let timestamp = (new Date()).valueOf();
-    var that = this;
-    that.wecropper.getCropperImage((src) => {
-      if (src) {
-        console.log(src)
-        //此处添加用户确定裁剪后执行的操作 src是截取到的图片路径
-        that.setData({
-          isShear: false,
-          img: src,
-        })
-        // wx.cloud.uploadFile({
-        //   cloudPath: timestamp + type,
-        //   filePath: src,   //   这是截取后的图片
-        //   success: function (res) {
-        //     var data = res.data;   //  json 格式转换成对象，要看后端返回给你什么格式，我这里后端给的json格式的所以要转
-        //     console.log(res)
-        //     that.setData({
-        //       path: data.msg,
-        //     });
-        //   },
-        //   fail: function (res) {
-        //     console.log(res)
-        //     wx.showToast({
-        //       title: '保存失败',
-        //       duration: 3000
-        //     });
-        //   }
-        // })
-
-      }
+  onUnload() {
+    this.destroyTimer()
+    this.setData({
+      timer: null
     })
   },
-
+destroyTimer() {
+    if (this.data.timer) {
+      clearTimeout(this.data.timer);
+    }
+  },
   /**
-   * 生命周期函数--监听页面加载
+   * 开启公告字幕滚动动画
+   * @param  {String} text 公告内容
+   * @return {[type]} 
    */
-  onLoad: function (options) {
-    let _this = this
-    const {
-      cropperOpt
-    } = _this.data
-    new WeCropper(cropperOpt)
-      .on('ready', (ctx) => { })
-      .on('beforeImageLoad', (ctx) => {
-        console.log(`before picture loaded, i can do something`)
-        console.log(`current canvas context:`, ctx)
-        wx.showToast({
-          title: '上传中',
-          icon: 'loading',
-          duration: 20000
-        })
+  initAnimation(text) {
+    let that = this
+    this.data.duration = 15000
+    this.data.animation = wx.createAnimation({
+      duration: this.data.duration,
+      timingFunction: 'linear'   
+    })
+    let query = wx.createSelectorQuery()
+    query.select('.content-box').boundingClientRect()
+    query.select('#text').boundingClientRect()
+    query.exec((rect) => {
+      that.setData({
+        wrapWidth: rect[0].width,
+        textWidth: rect[1].width
+      }, () => {
+        this.startAnimation()
       })
-      .on('imageLoad', (ctx) => {
-        console.log(`picture loaded`)
-        console.log(`current canvas context:`, ctx)
-        wx.hideToast()
+    })
+  },
+  // 定时器动画
+  startAnimation() {
+    //reset
+    // this.data.animation.option.transition.duration = 0
+    const resetAnimation = this.data.animation.translateX(this.data.wrapWidth).step({ duration: 0 })
+    this.setData({
+      animationData: resetAnimation.export()
+    })
+    // this.data.animation.option.transition.duration = this.data.duration
+    const animationData = this.data.animation.translateX(-this.data.textWidth).step({ duration: this.data.duration })
+    setTimeout(() => {
+      this.setData({
+        animationData: animationData.export()
       })
-      .on('beforeDraw', (ctx, instance) => {
-        console.log(`before canvas draw,i can do something`)
-        console.log(`current canvas context:`, ctx)
-      })
-      .updateCanvas();
-
+    }, 100)
+    const timer = setTimeout(() => {
+      this.startAnimation()
+    }, this.data.duration)
+    this.setData({
+      timer
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

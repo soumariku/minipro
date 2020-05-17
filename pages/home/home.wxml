@@ -1,6 +1,18 @@
 <!--pages/home/home.wxml-->
 <scroll-view>
-
+  <view class='notice'>
+  <view class="left">
+    <text class='iconfont icon-labagonggao voice'></text>
+    <image src="./../../icon/horn.png" style="width:40rpx;height:40rpx"></image>
+      <view class="left-box">
+        <view class="left-text"></view>
+        <view class='content-box'>
+          <view class='content-text' animation="{{animationData}}"><text id="text">{{text}}</text></view>
+        </view>
+        <view class="right-text"></view>
+      </view>
+  </view>
+</view>
   <!-- 顶部轮播图 -->
   <view class='all-img'>
     <swiper indicator-dots='{{indiicatorDots}}' autoplay='{{autoplay}} ' interval='{{interval}}' duration='{{duration}}' indicator-color="#91bef0" indicator-active-color="#5076ab" circular="{{circular}}" bindchange="indexChange">

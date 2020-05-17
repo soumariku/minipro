@@ -185,7 +185,9 @@
               </view> 
             </view> 
           </view>
+          <view class='btn_delete_shop' style="height: 115rpx;background:orange; " bindtap='topping' data-index='{{index}}' data-id="{{item._id}}"><text>置顶</text></view>  
           <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateGoods' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+          
         </view> 
       </block> 
     </view> 

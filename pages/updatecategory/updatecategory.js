@@ -48,9 +48,9 @@ Page({
       title: '上传中。。。',
     })
     if(_this.data.hasChangeImg == true){
-      var index1=_this.data.pathImgUrl.tempFilePaths[0].lastIndexOf(".");
-      var index2=_this.data.pathImgUrl.tempFilePaths[0].length;
-      var type=_this.data.pathImgUrl.tempFilePaths[0].substring(index1,index2);
+      var index1=_this.data.pathImgUrl.lastIndexOf(".");
+      var index2=_this.data.pathImgUrl.length;
+      var type=_this.data.pathImgUrl.substring(index1,index2);
       wx.cloud.uploadFile({
         // 指定上传到的云路径
         cloudPath: timestamp + type,

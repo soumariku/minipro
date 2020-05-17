@@ -38,7 +38,12 @@ Page({
       src: 'cloud://minishop-kxw64.6d69-minishop-kxw64-1301898931/pic1.jpg',
       id: 7
       }],
-      
+    text: "1.【评分标准】页可以查看不同年龄段的评分标准，通过首页选择对应的性别、类别和年龄。2.【单项成绩】页包含了详细的单项打分情况及成绩雷达图，直观地看出自己的弱项和强项。",
+    animation: null,
+    timer: null,
+    duration: 0,
+    textWidth: 0,
+    wrapWidth: 0,
     classList:[],
     indiicatorDots: true,
     imgInfoArrLength: '', // 轮播图列表的长度
@@ -140,13 +145,76 @@ Page({
     }
   },
   getlikegoods(){
-    app.globalData.db.collection('goods').get().then((res)=>{
-
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+        },
+        order:('time', 'desc')
+      }
+    }).then((res)=>{
+      console.log(res)
       this.setData({
-        col1:res.data
+        col1:res.result.data
       })
     })
+    // app.globalData.db.collection('goods').orderBy('time', 'desc').get().then((res)=>{
+
+      
+    // })
   },
+  destroyTimer() {
+    if (this.data.timer) {
+      clearTimeout(this.data.timer);
+    }
+  },
+  /**
+  * 开启公告字幕滚动动画
+  * @param  {String} text 公告内容
+  * @return {[type]} 
+  */
+ initAnimation(text) {
+   let that = this
+   this.data.duration = 25000
+   this.data.animation = wx.createAnimation({
+     duration: this.data.duration,
+     timingFunction: 'linear'   
+   })
+   let query = wx.createSelectorQuery()
+   query.select('.content-box').boundingClientRect()
+   query.select('#text').boundingClientRect()
+   query.exec((rect) => {
+     that.setData({
+       wrapWidth: rect[0].width,
+       textWidth: rect[1].width
+     }, () => {
+       this.startAnimation()
+     })
+   })
+ },
+ // 定时器动画
+ startAnimation() {
+   //reset
+   // this.data.animation.option.transition.duration = 0
+   const resetAnimation = this.data.animation.translateX(this.data.wrapWidth).step({ duration: 0 })
+   this.setData({
+     animationData: resetAnimation.export()
+   })
+   // this.data.animation.option.transition.duration = this.data.duration
+   const animationData = this.data.animation.translateX(-this.data.textWidth).step({ duration: this.data.duration })
+   setTimeout(() => {
+     this.setData({
+       animationData: animationData.export()
+     })
+   }, 100)
+   const timer = setTimeout(() => {
+     this.startAnimation()
+   }, this.data.duration)
+   this.setData({
+     timer
+   })
+ },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -166,6 +234,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.initAnimation(this.data.text)
     if(API.orderinfo.length>0){
       let num = 0
       for(var item in API.orderinfo){ 
@@ -186,15 +255,21 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
+  onHide() {
+    this.destroyTimer()
+    this.setData({
+      timer: null
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
+  onUnload() {
+    this.destroyTimer()
+    this.setData({
+      timer: null
+    })
   },
 
   /**

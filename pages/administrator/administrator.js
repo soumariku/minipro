@@ -1,5 +1,6 @@
 // pages/administrator/administrator.js
 const app = getApp()
+const util = require('../../utils/util.js')
 Page({
 
   /**
@@ -18,7 +19,9 @@ Page({
     selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示
     selectData: ['所有订单','预约送货','上门自取','确认收货订单','未确认收货订单'],//下拉列表的数据
     index: 0,//选择的下拉列表下标
-    serachDate:''
+    serachDate:'',
+    inputuser:'',
+    inputmsg:''
   },
   selectTap() {
     this.setData({
@@ -192,6 +195,30 @@ Page({
     //   })
     // })
   },
+  // 置顶
+  topping(e){
+    let id = e.currentTarget.dataset.id
+    let time = util.formatTime(new Date())
+    let _this = this
+    wx.cloud.callFunction({
+      name: "updateData",
+      data: {
+        id:id,
+        collection:'goods',
+        data:{
+          time:time
+        }
+      }
+    }).then((res)=>{
+      console.log(res)
+        wx.showToast({
+          title: '已完成！',
+          icon: 'success',
+          duration: 3000
+        });
+        _this.updategoods()
+    })
+  },
   changeseearch(e){
     this.setData({
       inputuser:e.detail.value
@@ -230,20 +257,22 @@ Page({
     wx.showLoading({
       title: '',
     })
+    let _this = this
+    console.log(_this.data.inputuser)
     wx.cloud.callFunction({
       name: "searchData",
       data: {
         collection:'goods',
         data:{
             name:{								//columnName表示欲模糊查询数据所在列的名
-              $regex:'.*' + this.data.inputmsg + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+              $regex:'.*' + _this.data.inputuser + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
               $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
             }
         }
       }
     }).then((res)=>{
       let good = res.result.data
-      // console.log(res)
+      console.log(res)
       this.setData({ 
         goodsList: good
       })
@@ -263,7 +292,8 @@ Page({
       data: {
         collection:'goods',
         data:{
-        }
+        },
+        order:('time', 'desc')
       }
     }).then((res)=>{
       let good = res.result.data

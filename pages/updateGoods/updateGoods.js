@@ -1,6 +1,7 @@
 // pages/updateGoods/updateGoods.js
 import WeCropper from '../../utils/we-cropper/we-cropper.js'
 const device = wx.getSystemInfoSync()
+const util = require('../../utils/util.js')
 const width = device.windowWidth
 const height = device.windowHeight - 100;
 const app = getApp()
@@ -349,6 +350,7 @@ Page({
   },
   insertGoods(){
     let _this = this
+    let time = util.formatTime(new Date())
     app.globalData.db.collection('goods').add({
       data:{
         catgory: _this.data.catgory,
@@ -363,7 +365,8 @@ Page({
         price3: _this.data.rule3.price,
         buyingprice:_this.data.buyingprice,
         goodsmsg:_this.data.goodsmsg,
-        goodscount:_this.data.goodscount
+        goodscount:_this.data.goodscount,
+        time:time
       }
     }).then((res)=>{
       console.log(res._id)
@@ -401,6 +404,7 @@ Page({
   updateGoods(){
     let _this = this
     let theid = _this.data.goodsid
+    let time = util.formatTime(new Date())
     wx.cloud.callFunction({
       name: "setMsg",
       data: {
@@ -419,7 +423,8 @@ Page({
               price3: _this.data.rule3.price,
               buyingprice:_this.data.buyingprice,
               goodsmsg:_this.data.goodsmsg,
-              goodscount:_this.data.goodscount
+              goodscount:_this.data.goodscount,
+              time:time
             }
       }
     }).then((res)=>{

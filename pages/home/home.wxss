@@ -432,5 +432,73 @@ swiper {
       background-color: #000;
       color: #fff;
     }
+    /* 公告 */
+    .notice {
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+      padding: 10rpx 25rpx;
+      background: #f1f1f1;
+    }
     
+    .left {
+      display: flex;
+      align-items: center;
+    }
+    
+    .voice {
+      margin-right: 5rpx;
+      margin-top: 2rpx;
+      color: #fa6016;
+    }
+    
+    .left-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .left-text {
+      position: absolute;
+      left: 0;
+      width: 40rpx;
+      height: 100%;
+      background: linear-gradient(to left,rgba(241,241,241,0),rgba(241,241,241,1));
+      z-index: 99;
+    }
+    
+    .right-text {
+      position: absolute;
+      right: -1rpx;
+      width: 40rpx;
+      height: 100%;
+      background: linear-gradient(to left,rgba(241,241,241,1),rgba(241,241,241,0));
+      z-index: 99;
+    }
+    
+    .content-box {
+      overflow: hidden;
+      width: 750rpx;
+    }
+    
+    .content-text {
+      color: #5e5e5e;
+      white-space: nowrap;
+      font-size: 28rpx;
+    }
+    
+    .right {
+      display: flex;
+      align-items: center;
+    }
+    
+    .app {
+      height: 48rpx;
+    }
+    
+    .more {
+      margin-left: 5rpx;
+      color: #aaa;
+      font-size: 32rpx;
+    }
 
