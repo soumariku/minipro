@@ -17,7 +17,7 @@ Page({
     adminname:'',
     adminpassword:'',
     selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示
-    selectData: ['所有订单','预约送货','上门自取','确认收货订单','未确认收货订单'],//下拉列表的数据
+    selectData: ['所有订单','预约送货','上门自取','未发货订单','未确认收货订单','确认收货订单'],//下拉列表的数据
     index: 0,//选择的下拉列表下标
     serachDate:'',
     inputuser:'',
@@ -361,15 +361,23 @@ Page({
       }
     }else if(index == 3){
       searchindex = {
-        orderState : "C",
+        deliver : 'N',
         orderTime:{								
           $regex:'.*' + this.data.serachDate + '.*',		
           $options: 'i'							
         }
       }
-    }else{
+    }else if(index == 4){
       searchindex = {
         orderState : _.in(['A', 'B']),
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        }
+      }
+    }else if(index == 5){
+      searchindex = {
+        orderState : "C",
         orderTime:{								
           $regex:'.*' + this.data.serachDate + '.*',		
           $options: 'i'							
