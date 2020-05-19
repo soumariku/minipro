@@ -9,11 +9,11 @@ App({
       console.log('请使用2.2.3以上版本')
     }else{
       wx.cloud.init({
-        env:'minishop-kxw64'
+        env:'zilaipifabu-ptg4d'
       })
       this.globalData.db = wx.cloud.database({
         //这个是环境ID不是环境名称
-        env: 'minishop-kxw64'
+        env: 'zilaipifabu-ptg4d'
       })
     }
     // this.getOpenid();

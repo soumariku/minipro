@@ -29,7 +29,7 @@
     <text style="color:orange;margin-right:auto;">{{buysum}} 件</text>
     <text style="color:red">￥{{pricesum}}</text>
   </view>
-  <view class="separate" style="flex-direction:row;padding:10rpx 10rpx 10rpx 0rpx" bindtap="toggleDialog">
+  <view class="separate" style="flex-direction:row;padding:10rpx 10rpx 10rpx 0rpx">
   <!-- sku选择 -->
     <text style="color:#bfbfbf;margin-right:30rpx;font-size:20rpx">说明</text>
     <text>{{goodsmsg}}</text>

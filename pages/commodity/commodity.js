@@ -1,6 +1,6 @@
 const db = wx.cloud.database({
   //这个是环境ID不是环境名称
-  env:'minishop-kxw64'
+  env:'zilaipifabu-ptg4d'
 })
 const MAX_LIMIT = 2
 const app = getApp()

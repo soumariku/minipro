@@ -7,7 +7,7 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   // const wxContext = cloud.getWXContext()
-  let postResponse = await got('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx32372f6ba81791b7&secret=e50ac757af25dbc20b42f9e92a157f51')
+  let postResponse = await got('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb4a54f6b5b9d3cc7&secret=86599dfc783d399e7fdc8cf05a8d89e5')
   return postResponse.body
   // return {
   //   event,

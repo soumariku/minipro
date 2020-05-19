@@ -152,6 +152,11 @@ Page({
       })
     }
   },
+  updateHome(){
+    wx.navigateTo({
+      url: '../updateHome/updateHome',
+    })
+  },
   updateUser(){
     this.setData({
       user:true,
@@ -319,14 +324,14 @@ Page({
     })
     let type = true
     console.log(index)
-    if(!!index.type){
+    if(!!index){
       if(index.type=='tap'){
         type = true
       }else{
         type = false
       }
     }else{
-      type = false
+      type = true
     }
     let searchindex = {}
     const _ =  app.globalData.db.command

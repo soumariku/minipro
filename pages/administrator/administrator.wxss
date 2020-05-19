@@ -495,8 +495,8 @@ page{
 }
 .weui-icon-search_in-box {
   position: absolute;
-  left: 10px;
-  top: 7px;
+  left: 20rpx;
+  top: 35rpx;
 }
 .weui-search-bar__form {
   position: relative;
@@ -516,9 +516,9 @@ page{
   z-index: 1;
 }
 .weui-search-bar__input {
-  height: 28px;
-  line-height: 28px;
-  font-size: 14px;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
 }
 .weui-search-bar__cancel-btn {
   margin-left: 10px;

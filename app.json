@@ -21,7 +21,8 @@
     "pages/newSearch/newSearch",
     "pages/updateOrders/updateOrders",
     "pages/personalData/personalData",
-    "pages/testimg/testimg"
+    "pages/testimg/testimg",
+    "pages/updateHome/updateHome"
   ],
   "window": {
     "backgroundTextStyle": "light",

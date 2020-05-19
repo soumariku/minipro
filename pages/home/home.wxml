@@ -26,11 +26,11 @@
       
   </view>
   <!-- 虚化的背景 -->
-  <view class="img-class" wx:if='{{current == 0}}'>
-    <image class="index-img" src="/icon/swiper1.jpg"></image>
+  <view class="img-class" hidden='{{current == 1}}'>
+    <image class="index-img" src="{{imgUrl[0]}}"></image>
   </view>
-  <view class="img-class" wx:elif='{{current == 1}}'>
-    <image class="index-img" src="/icon/swiper2.jpg"></image>
+  <view class="img-class" hidden='{{current == 0}}'>
+    <image class="index-img" src="{{imgUrl[1]}}"></image>
   </view>
       
   <!-- 搜索 -->
@@ -57,7 +57,7 @@
   </view>
   <view class='demo-page'>
     <!-- 平移轮播 -->
-    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="1" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
+    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="{{downcurrent}}" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
       <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
         <swiper-item class="swiper-item" bindtap='jumpCoupon'>
           <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" bindtap="turnmsg"  data-id="{{item._id}}"/>

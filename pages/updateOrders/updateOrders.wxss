@@ -55,23 +55,30 @@
   background-color: #fff; 
 } 
 .position_title{ 
-  width: 650rpx; 
+  width: 600rpx; 
   height: 100rpx; 
   display: flex; 
   flex-direction: row; 
   align-items: center; 
 } 
 .has_shop_icon1{ 
-  margin:10rpx 20rpx;
-  width: 45rpx; 
-  height: 45rpx; 
+  width: 35rpx; 
+  height: 35rpx; 
 } 
 .has_shop_smalltxt{ 
+  margin-left: 20rpx;
   font-size:28rpx; 
   font-family:PingFangSC-Regular; 
-  font-weight:400; 
+  font-weight:600; 
   color:rgba(51,51,51,1); 
   line-height:40rpx; 
+} 
+.btn_shop_change{ 
+  font-size:24rpx; 
+  font-family:PingFangSC-Regular; 
+  font-weight:400; 
+  color:#5076ab; 
+  line-height:33rpx; 
 } 
 .shop_total_right{ 
   height: 100rpx; 
@@ -128,7 +135,7 @@
   color:rgba(51,51,51,1);
 }
 .total_name_num{
-  font-size:35rpx;
+  font-size:28rpx;
   font-family:PingFangSC-Medium;
   font-weight:500;  
   line-height:40rpx;

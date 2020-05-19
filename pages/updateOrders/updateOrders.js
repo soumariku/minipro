@@ -15,7 +15,9 @@ Page({
       console.log(res)
       this.setData({
         orders:res.data[0],
-        goodslist:res.data[0].goodslist
+        goodslist:res.data[0].goodslist,
+        sendmsg:res.data[0].sendmsg,
+        orderId:res.data[0]._id
       })
       this.totalPrice()
     })
@@ -38,7 +40,7 @@ Page({
       let goodsid = res.data[0]._id
       app.globalData.db.collection('rule').where({
         goodsid:goodsid
-      }).get().then((res)=>{
+      }).orderBy('price', 'desc').get().then((res)=>{
         let rule = res.data
         console.log(rule)
         let changegoods = _this.data.goodslist.filter(g=>{return g.name == choosename&&g.flavor==chooseflavor})
@@ -161,6 +163,47 @@ Page({
       },
     })
    },
+   copyTBL:function(e){
+    var self=this;
+    wx.setClipboardData({
+    data: self.data.sendmsg,
+    success: function(res) {
+      // self.setData({copyTip:true}),
+      wx.showModal({
+        title: '提示',
+        content: '复制成功',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('确定')
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  });
+  },
+  copyOrderId:function(){
+    var self=this;
+    console.log(self.data.orderId)
+    wx.setClipboardData({
+    data: self.data.orderId,
+    success: function(res) {
+      // self.setData({copyTip:true}),
+      wx.showModal({
+        title: '提示',
+        content: '复制成功',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('确定')
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  });
+  }, 
   /**
    * 生命周期函数--监听页面加载
    */

@@ -3,7 +3,7 @@ const API = require('../../utils/API.js')
 const app = getApp()
 const db = wx.cloud.database({
   //这个是环境ID不是环境名称
-  env:'minishop-kxw64'
+  env:'zilaipifabu-ptg4d'
 })
 Page({
 
@@ -13,8 +13,8 @@ Page({
   
   data: {
     imgUrl: [
-      "/icon/swiper1.jpg",//存在云里的图片，可以改成你们的地址
-      "/icon/swiper2.jpg"
+      // "/icon/swiper1.jpg",//存在云里的图片，可以改成你们的地址
+      // "/icon/swiper2.jpg"
     ],
     imgInfoArr: [{
       src: 'cloud://minishop-kxw64.6d69-minishop-kxw64-1301898931/pic1.jpg',
@@ -49,8 +49,7 @@ Page({
     imgInfoArrLength: '', // 轮播图列表的长度
     autoplay: true,
     interval: 3000,
-    duration: 2000,
-    duration: 500,
+    duration: 1000,
     current: 0,
     swiperIndex: 0,
   },
@@ -98,12 +97,16 @@ Page({
       //   $regex:'.*' + "0" + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
       //   $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
       // }
-    }).get().then((res)=>{
+    }).orderBy('time', 'desc').get().then((res)=>{
       let newlist = res.data
-      newlist = newlist.reverse();
+      let downcurrent = 0
+      if(res.data.length>1){
+        downcurrent = 1
+      }
       console.log(newlist)
       this.setData({
-        imgInfoArr:newlist
+        imgInfoArr:newlist,
+        downcurrent:downcurrent
       })
     })
   },
@@ -176,7 +179,7 @@ Page({
   */
  initAnimation(text) {
    let that = this
-   this.data.duration = 25000
+   this.data.duration = Number(text.length)*200
    this.data.animation = wx.createAnimation({
      duration: this.data.duration,
      timingFunction: 'linear'   
@@ -215,12 +218,30 @@ Page({
      timer
    })
  },
+ getHomeMsg(){
+   
+   app.globalData.db.collection('home').get().then((res)=>{
+     let imgurl = []
+    //  let count = (res.data[0].horn.length)*100
+     imgurl.push(res.data[0].img1)
+     imgurl.push(res.data[0].img2)
+     console.log(imgurl)
+     this.setData({
+       text:res.data[0].horn,
+      //  duration:count,
+       imgUrl:imgurl
+     })
+     this.initAnimation(this.data.text)
+    //  console.log(this.data.homeMsg)
+   })
+ },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getDate();
     this.getSwiperGoods();
+    this.getHomeMsg();
   },
 
   /**
@@ -234,7 +255,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.initAnimation(this.data.text)
     if(API.orderinfo.length>0){
       let num = 0
       for(var item in API.orderinfo){ 

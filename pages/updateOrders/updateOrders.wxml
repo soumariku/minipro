@@ -1,12 +1,20 @@
 <view class="thepage">
-  <view class="inputblock">
+  <view class='has_shop_title'  style="padding-left:20rpx"> 
+    <view class='position_title'> 
+      <image class='has_shop_icon1' src='../../icon/my.png'></image> 
+      <text class='has_shop_smalltxt'>{{orders.buyer}}</text> 
+    </view> 
+    <text class='btn_shop_change' bindtap='copyTBL'>订单复制</text>
+  </view> 
+  <view class="inputblock" style="margin-top:100rpx">
     <text class="inputTitle" style="color:#5076ab;">订单编号:</text>
     <text class="inputTitle" style="font-size:25rpx">{{orders._id}}</text>
+    <text  class='total_name_num' style="color:#000;font-size:22rpx;background: #eee;margin-left:10rpx;padding:5rpx;border-radius: 20%;height:38rpx" bindtap='copyOrderId'>复制</text>  
   </view>
-  <view class="inputblock">
+  <!-- <view class="inputblock">
     <text class="inputTitle" style="color:#5076ab;">客户名称:</text>
     <text class="inputTitle" >{{orders.buyer}}</text>
-  </view>
+  </view> -->
   <view style="border-bottom:0;width:100%;flex-direction: column;">
     <text class="inputTitle" style="color:#5076ab;font-weight:600;text-align:center;">商品列表</text>
   </view>

@@ -1,5 +1,6 @@
 <!--pages/administrator/administrator.wxml-->
-<view style="margin-top:250rpx" wx:if="{{begin}}">
+<view style="margin-top:180rpx" wx:if="{{begin}}">
+  <button class="thebtn" bindtap="updateHome">首页管理</button>
   <button class="thebtn" bindtap="updateUser">用户管理</button>
   <button class="thebtn" bindtap="updateCategory">分类管理</button>
   <button class="thebtn" bindtap="updategoods">商品管理</button>

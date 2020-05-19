@@ -62,9 +62,10 @@ Page({
       })
     }else {
       app.globalData.db.collection('user').where({
-        name:this.data.phone,
-        password:this.data.password
+        // name:this.data.phone,
+        // password:this.data.password
       }).get().then((res)=>{
+        console.log(res)
         if(res.data.length!=0){
           wx.setStorageSync("name", this.data.phone)
           wx.setStorageSync("password", this.data.password)
@@ -102,12 +103,13 @@ Page({
         wx.cloud.callFunction({
           name: 'getOpenid',
           complete: res => {
-            console.log('云函数获取到的openid: ', res.result.openId)
-            var openid = res.result.openId;
+            console.log(res)
+            console.log('云函数获取到的openid: ', res.result.openid)
+            var openid = res.result.openid;
             // that.setData({
             //   openid: openid
             // })
-            wx.setStorageSync("openid", res.result.openId)
+            wx.setStorageSync("openid", res.result.openid)
             app.globalData.show = true
             that.setData({
               show:app.globalData
@@ -147,7 +149,7 @@ Page({
       phone: name,
       password: password
     })
-    console.log(openid)
+    console.log('openidopenidopenid',openid)
     if (openid.length <= 0) {
       //查看用户之前是否已经授权登录过，如果没有就让授权弹框显示，并让用户按指示授权
           app.globalData.show = false

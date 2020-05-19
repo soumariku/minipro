@@ -33,7 +33,7 @@ Page({
   getlikegoods(){
     app.globalData.db.collection('goods').where({
       catgory:{								//columnName表示欲模糊查询数据所在列的名
-        $regex:'.*' + '008' + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+        $regex:'.*' + '002' + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
         $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
       }
   }).get().then((res)=>{
@@ -273,7 +273,7 @@ Page({
     let newprice = list[index].npriceGood;
     app.globalData.db.collection('rule').where({
       goodsid: e.currentTarget.dataset.id
-    }).get().then((res) => {
+    }).orderBy('price', 'desc').get().then((res) => {
       rule = res.data
       console.log(rule)
       // 点击递减
@@ -334,7 +334,7 @@ Page({
     let newprice = list[index].npriceGood;
     app.globalData.db.collection('rule').where({
       goodsid: e.currentTarget.dataset.id
-    }).get().then((res) => {
+    }).orderBy('price', 'desc').get().then((res) => {
       rule = res.data
       console.log(rule)
       // 点击递增

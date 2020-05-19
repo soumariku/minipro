@@ -201,7 +201,8 @@ Page({
         goodspic:res.data[0].goodspic,
         buyingprice:res.data[0].buyingprice,
         goodsmsg:res.data[0].goodsmsg,
-        goodscount:res.data[0].goodscount
+        goodscount:res.data[0].goodscount,
+        time:res.data[0].time
       })
       this.getCategory()
       console.log(allprice)
@@ -424,7 +425,7 @@ Page({
               buyingprice:_this.data.buyingprice,
               goodsmsg:_this.data.goodsmsg,
               goodscount:_this.data.goodscount,
-              time:time
+              time:_this.data.time
             }
       }
     }).then((res)=>{

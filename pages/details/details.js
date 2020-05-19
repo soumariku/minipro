@@ -475,14 +475,14 @@ Page({
       if (Number(this.data.rule[i].maxnum)!=0){
         if (Number(this.data.rule[i].minnum) <= Number(this.data.buysum)){
           if (Number(this.data.buysum)<=Number(this.data.rule[i].maxnum)){
-            newsum = Number(this.data.rule[i].price) * Number(this.data.buysum)
+            newsum = (Number(this.data.rule[i].price) * Number(this.data.buysum)).toFixed(2)
             newsingleprice = this.data.rule[i].price
             thelevel = i
             break;
           }
         }
       }else{
-        newsum = Number(this.data.rule[i].price) * Number(this.data.buysum)
+        newsum = (Number(this.data.rule[i].price) * Number(this.data.buysum)).toFixed(2)
         newsingleprice = this.data.rule[i].price
         thelevel = i
         break;

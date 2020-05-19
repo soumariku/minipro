@@ -170,7 +170,6 @@ Page({
   },
   copyOrderId:function(){
     var self=this;
-    console.log('2')
     console.log(self.data.orderId)
     wx.setClipboardData({
     data: self.data.orderId,
