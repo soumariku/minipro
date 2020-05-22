@@ -63,8 +63,8 @@ Page({
       })
     }else {
       app.globalData.db.collection('user').where({
-        // name:this.data.phone,
-        // password:this.data.password
+        name:this.data.phone,
+        password:this.data.password
       }).get().then((res)=>{
         console.log(res)
         if(res.data.length!=0){
