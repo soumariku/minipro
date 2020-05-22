@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+  show:true,
   motto: 'Hello World',
   userInfo: {},
   hasUserInfo: false,
@@ -70,6 +71,7 @@ Page({
           wx.setStorageSync("name", this.data.phone)
           wx.setStorageSync("password", this.data.password)
           app.globalData.role = res.data[0].role
+          app.globalData.hasLogin = true
           console.log( app.globalData.role)
           wx.reLaunch({
             url: './../home/home',
@@ -114,6 +116,7 @@ Page({
             that.setData({
               show:app.globalData
             }) 
+            that.login()
             console.log(openid)
           }
         })
@@ -141,6 +144,23 @@ Page({
       }
     })
   },
+  checkopenid(){
+    let openid = wx.getStorageSync('openid')
+    if (openid.length <= 0) {
+      //查看用户之前是否已经授权登录过，如果没有就让授权弹框显示，并让用户按指示授权
+          app.globalData.show = false
+          this.setData({
+            show:false
+          })
+      } else {
+          app.globalData.show = false
+          this.login()
+          this.setData({
+            show:true
+          })
+      }
+      
+  },
   onLoad: function () {
     let openid = wx.getStorageSync('openid')
     let name = wx.getStorageSync('name')
@@ -150,18 +170,7 @@ Page({
       password: password
     })
     console.log('openidopenidopenid',openid)
-    if (openid.length <= 0) {
-      //查看用户之前是否已经授权登录过，如果没有就让授权弹框显示，并让用户按指示授权
-          app.globalData.show = false
-          this.setData({
-            show:false
-          })
-      } else {
-          app.globalData.show = false
-          this.setData({
-            show:true
-          })
-      }
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

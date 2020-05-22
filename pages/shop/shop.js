@@ -628,16 +628,43 @@ Page({
   },
   //获取用户地址和联系方式
   getUserMsg(){
-    app.globalData.db.collection('customer').where({
-      name:app.globalData.userInfo.nickName
-    }).get().then((res)=>{
-      if(res.data.length>0){
-        if(!!res.data[0].telephone&&!!res.data[0].address&&!!res.data[0].truename){
-          this.setData({
-            userTel:res.data[0].telephone,
-            userAddress:res.data[0].address,
-            buyer:res.data[0].truename
-          })
+    if(!!app.globalData.hasLogin){
+      app.globalData.db.collection('customer').where({
+        name:app.globalData.userInfo.nickName
+      }).get().then((res)=>{
+        if(res.data.length>0){
+          if(!!res.data[0].telephone&&!!res.data[0].address&&!!res.data[0].truename){
+            this.setData({
+              userTel:res.data[0].telephone,
+              userAddress:res.data[0].address,
+              buyer:res.data[0].truename
+            })
+          }else{
+            wx.showModal({
+              title: '提示',
+              content: '请先添加您的联系方式和地址',
+              confirmText:'确定',
+              cancelText:'取消',
+              cancelColor:'#D6463C',
+              success: function(res){
+                if(res.confirm){
+                  if(app.globalData.hasLogin){
+                    wx.navigateTo({
+                      url: './../personalData/personalData',
+                    })
+                  }else{
+                    wx.switchTab({
+                      url: './../my/my',
+                    })
+                  }
+                }else{
+                  wx.switchTab({
+                    url: './../commodity/commodity'
+                  })
+                }
+              }
+            })
+          }
         }else{
           wx.showModal({
             title: '提示',
@@ -648,7 +675,7 @@ Page({
             success: function(res){
               if(res.confirm){
                 wx.navigateTo({
-                  url: './../personalData/personalData',
+                  url: './../personalData/personalData'
                 })
               }else{
                 wx.switchTab({
@@ -658,27 +685,27 @@ Page({
             }
           })
         }
-      }else{
-        wx.showModal({
-          title: '提示',
-          content: '请先添加您的联系方式和地址',
-          confirmText:'确定',
-          cancelText:'取消',
-          cancelColor:'#D6463C',
-          success: function(res){
-            if(res.confirm){
-              wx.switchTab({
-                url: './../personalData/personalData'
-              })
-            }else{
-              wx.switchTab({
-                url: './../commodity/commodity'
-              })
-            }
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '尚未登录，请先登录',
+        confirmText:'确定',
+        cancelText:'取消',
+        cancelColor:'#D6463C',
+        success: function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: './../index/index'
+            })
+          }else{
+            wx.switchTab({
+              url: './../home/home'
+            })
           }
-        })
-      }
-    })
+        }
+      })
+    }
   },
   tocommodity(){
     wx.switchTab({

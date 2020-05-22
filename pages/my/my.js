@@ -14,7 +14,8 @@ Page({
     showtelBtnDialog:false,
     oneButton: [],
     customerBtn:[{text: '取消'}], 
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    hasLogin:false
   },
   calling:function(e){
     wx.makePhoneCall({
@@ -85,8 +86,16 @@ Page({
       alert('清理失败')
     }
   },
+  login(){
+    wx.navigateTo({
+      url: './../index/index',
+    })
+  },
   onLoad: function (options) {
-    if (app.globalData.role != 'user') {
+    this.setData({
+      hasLogin:app.globalData.hasLogin
+    })
+    if (app.globalData.role == 'administrator') {
       this.setData({
         userInfo: app.globalData.userInfo,
         isAdmin: true
@@ -153,9 +162,16 @@ Page({
     })
   },
   bindViewTap(){
-    wx.navigateTo({
-      url: '../personalData/personalData',
-    })
+    if(this.data.hasLogin==true){
+      wx.navigateTo({
+        url: '../personalData/personalData',
+      })
+    }else{
+      wx.navigateTo({
+        url: '../index/index',
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

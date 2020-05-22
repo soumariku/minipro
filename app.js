@@ -146,6 +146,7 @@ App({
     userInfo: null,
     db:null,
     role:'',
-    show: null
+    show: null,
+    hasLogin:false
   }
 })

@@ -47,7 +47,7 @@
     <!--按钮-->
     <view class="loginBtnView"> 
       <button class="loginBtn" size="{{primarySize}}" 
-          loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="login">登录</button> 
+          loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="checkopenid">授权/登录</button> 
     </view>
  
   </view> 
@@ -58,7 +58,7 @@
   <view class="modal-content">
     <view class="content-title">提示信息</view>
     <view class="content-text">
-      请根据指示授权
+      为了能够使用小程序的预约功能，请根据指示授权
     </view>
   </view>
   <view class="modal-btns">
