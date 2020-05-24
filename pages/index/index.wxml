@@ -58,7 +58,7 @@
   <view class="modal-content">
     <view class="content-title">提示信息</view>
     <view class="content-text">
-      为了能够使用小程序的预约功能，请根据指示授权
+      授权后可获取您的用户信息，作为保存您可以填写联系方式的依据。
     </view>
   </view>
   <view class="modal-btns">

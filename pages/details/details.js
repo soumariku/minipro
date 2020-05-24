@@ -435,23 +435,44 @@ Page({
   },
   //点+
   addNum(){
+    this.data.goodscount
     let newsum = Number(this.data.buysum) + 1
-    this.setData({
-      buysum: newsum
-    })
-    this.calculateprice()
+    if(this.data.goodscount-newsum>=0){
+      this.setData({
+        buysum: newsum
+      })
+      this.calculateprice()
+    }else{
+      wx.showToast({
+        title: '库存数量为0',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 1000
+      });
+    }
+    
   },
   flavorAdd(e){
     console.log(e.currentTarget.dataset.index)
     let index = e.currentTarget.dataset.index
     let newflvor = this.data.flavor
-    newflvor[index].flavornum = Number(newflvor[index].flavornum)+1
-    let newsum = Number(this.data.buysum) + 1
-    this.setData({
-      buysum: newsum,
-      flavor:newflvor
-    })
-    this.calculateprice()
+    console.log(newflvor)
+    if(Number(newflvor[index].count)-(Number(newflvor[index].flavornum)+1)>=0){
+      newflvor[index].flavornum = Number(newflvor[index].flavornum)+1
+      let newsum = Number(this.data.buysum) + 1
+      this.setData({
+        buysum: newsum,
+        flavor:newflvor
+      })
+      this.calculateprice()
+    }else{
+      wx.showToast({
+        title: '库存数量为0',
+        icon: 'none',
+        image:'../../icon/close.png',
+        duration: 1000
+      });
+    }
   },
   //输入购买数量
   bindinput(e){

@@ -45,7 +45,7 @@ Page({
     textWidth: 0,
     wrapWidth: 0,
     classList:[],
-    indiicatorDots: true,
+    indiicatorDots: false,
     imgInfoArrLength: '', // 轮播图列表的长度
     autoplay: true,
     interval: 3000,
@@ -242,6 +242,10 @@ Page({
     this.getDate();
     this.getSwiperGoods();
     this.getHomeMsg();
+    this.setData({
+      window_width: app.globalData.window_width*0.485
+    })
+    console.log(this.data.window_width)
   },
 
   /**
