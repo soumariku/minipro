@@ -17,7 +17,7 @@ Page({
     adminname:'',
     adminpassword:'',
     selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示
-    selectData: ['所有订单','预约送货','上门自取','未发货订单','未确认收货订单','确认收货订单'],//下拉列表的数据
+    selectData: ['所有订单','预约送货','上门自取','未发货订单','未确认收货订单','确认收货订单','已删除订单'],//下拉列表的数据
     index: 0,//选择的下拉列表下标
     serachDate:'',
     inputuser:'',
@@ -338,6 +338,7 @@ Page({
     console.log(this.data.serachDate)
     if(index == 0||type){
       searchindex = {
+        orderState: _.not(_.eq('D')),
         orderTime:{								
         $regex:'.*' + this.data.serachDate + '.*',		
         $options: 'i'							
@@ -383,6 +384,14 @@ Page({
           $options: 'i'							
         }
       }
+    }else if(index == 6){
+      searchindex = {
+        orderState : "D",
+        orderTime:{								
+          $regex:'.*' + this.data.serachDate + '.*',		
+          $options: 'i'							
+        }
+      }
     }
     app.globalData.db.collection('orders').where(searchindex).orderBy('orderState', 'asc').orderBy('orderTime', 'desc').get().then((res)=>{
       console.log(res.data)
@@ -392,8 +401,10 @@ Page({
           res.data[i].orderState = '预约配送'
         }else if(res.data[i].orderState == 'B'){
           res.data[i].orderState = '商品自取'
-        }else{
+        }else if(res.data[i].orderState == 'C'){
           res.data[i].orderState = '订单完成'
+        }else if(res.data[i].orderState == 'D'){
+          res.data[i].orderState = '订单已删除'
         }
       }
       this.setData({
@@ -535,6 +546,42 @@ Page({
               collection:'orders',
               data:{
                 deliver:'Y'
+              }
+            }
+          }).then((res)=>{
+            console.log(res)
+              wx.showToast({
+                title: '更改完成！',
+                icon: 'success',
+                duration: 3000
+              });
+              _this.getOrders(_this.data.index)
+          })
+        }
+      }
+    })
+  },
+  changedelete(e){
+    let id = e.currentTarget.dataset.id
+    console.log(id)
+    let _this = this
+    wx.showModal({
+      title: '提示',
+      content: '请确定是否删除该订单',
+      cancelText:'确定',
+      confirmText:'取消',
+      cancelColor:'#D6463C',
+      success: function(res){
+        if(res.confirm){
+          console.log('按了取消')
+        }else{
+          wx.cloud.callFunction({
+            name: "updateData",
+            data: {
+              id:id,
+              collection:'orders',
+              data:{
+                orderState:'D'
               }
             }
           }).then((res)=>{

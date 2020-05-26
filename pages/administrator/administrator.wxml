@@ -211,7 +211,7 @@
               <text class='select_text'>{{selectData[index]}}</text>
               <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
           </view>
-          <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
+          <view class='option_box' style='height:{{selectShow?(selectData.length>5?350:selectData.length*50):0}}rpx;'>
               <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
           </view>
         </view>  
@@ -231,12 +231,12 @@
     <view class='has_shop_list'> 
       <!-- 循环商品列表 --> 
       <block wx:key="goods_car_index" wx:for="{{ordersList}}"> 
-        <view class='has_shop_item'> 
+        <view class='has_shop_item' style="height: 280rpx"> 
           <view class='btn_ischeck'> 
             <view class='position_hasshop_item'> 
              
               
-              <view class='menu_right_txt' > 
+              <view class='menu_right_txt' style="height: 250rpx;"> 
                 <!-- 描述 --> 
                  <text class='menu_right_name'>
                   <text class='total_name' >客户：</text> 
@@ -264,12 +264,14 @@
               </view> 
             </view> 
           </view>
-          <view class='btn_delete_shop' style=" background:#fff;flex-flow: column">
+          <view class='btn_delete_shop' style=" background:#fff;flex-flow: column;height: 280rpx">
             <view class="btn_delete_shop" style="background:orange;width: 100rpx;height: 77rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
             <view class="btn_delete_shop"  wx:if="{{item.deliver=='N'}}" style="background:red;width: 100rpx;height: 77rpx;" bindtap="changedeliver" data-id="{{item._id}}">未发货</view>
             <view class="btn_detele_all" wx:else style="width: 100rpx;height: 77rpx;" data-id="{{item._id}}">已发货</view>
             <view class="btn_delete_shop" wx:if="{{item.orderState!='订单完成'}}" style="background:#5076ab;width: 100rpx;height: 77rpx; " bindtap="updateCompleteState" data-id="{{item._id}}"><text>确认\n收货</text></view>
-            <view class='btn_detele_all' wx:else style="width: 100rpx;height: 77rpx; " data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view> 
+            <view class='btn_detele_all' wx:else style="width: 100rpx;height: 77rpx; " data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view>
+            <view class='btn_detele_all' style="width: 100rpx;height: 77rpx;background:red; color:#fff" wx:if="{{item.orderState!='订单已删除'}}" data-index='{{index}}' data-id="{{item._id}}" bindtap="changedelete"><text>删除\n订单</text></view>
+            <view class='btn_detele_all' style="width: 100rpx;height: 77rpx; " wx:else  data-index='{{index}}' data-id="{{item._id}}" ><text>已被\n删除</text></view>    
           </view> 
           
         </view> 
