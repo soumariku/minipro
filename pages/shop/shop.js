@@ -31,17 +31,29 @@ Page({
   },
   //获取猜你喜欢列表
   getlikegoods(){
-    app.globalData.db.collection('goods').where({
-      catgory:{								//columnName表示欲模糊查询数据所在列的名
-        $regex:'.*' + '002' + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
-        $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+    let likeid = ''
+    app.globalData.db.collection('CATEGORY').get().then((res)=>{
+      console.log('res',res)
+      for(var i=0;i<res.data.length;i++){
+        let num = String(i+1)
+        if(res.data[i].name == '猜你喜欢'){
+          for(var j=0;j<=(3-num.length);j++){
+            num = '0'+num
+          }
+          likeid = num
+        }
       }
-  }).get().then((res)=>{
-
-      this.setData({
-        col1:res.data
+      app.globalData.db.collection('goods').where({
+        catgory:{								//columnName表示欲模糊查询数据所在列的名
+          $regex:'.*' + likeid + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+          $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
+        }
+      }).get().then((res)=>{
+          this.setData({
+            col1:res.data
+          })
+        })
       })
-    })
   },
   // 编辑事件
   editGood: function() {
@@ -261,6 +273,9 @@ Page({
   },
   //减少数量
   subNum: function(e) {
+    wx.showLoading({
+      title: '',
+    })
     //获取规则
     let rule = [];
     // 获取点击的索引
@@ -311,6 +326,7 @@ Page({
         }
       }
       list[index].count = num;
+      list[index].stock = list[index].stock+1;
       // list[index].npriceGood = newprice;
       // console.log(list);
       // 重新渲染 ---显示新的数量
@@ -318,10 +334,15 @@ Page({
         goodsCar: list
       });
       this.totalPrice();
+      this.checklist()
+      wx.hideLoading()
     })
   },
   //增加数量
   addNum: function(e) {
+    wx.showLoading({
+      title: '',
+    })
     //获取规则
     let rule = [];
     // 获取点击的索引
@@ -341,7 +362,17 @@ Page({
       if(num<0){
         
       }else{
-        num = num + 1;
+        if(list[index].stock>0){
+          num = num + 1;
+          
+        }else{
+          wx.showToast({
+            title: '库存数量为0',
+            icon: 'none',
+            image:'../../icon/close.png',
+            duration: 1000
+          });
+        }
       }
       let samegoods = API.orderinfo.filter(s=>{return s.nameGood==list[index].nameGood})
       let samegoodsnum = 0;
@@ -372,13 +403,17 @@ Page({
       }
     }
     list[index].count = num;
+    list[index].stock = list[index].stock-1;
     // list[index].npriceGood = newprice;
     // console.log(list);
     // 重新渲染 ---显示新的数量
     this.setData({
       goodsCar: list
     });
+    
     this.totalPrice();
+    this.checklist()
+    wx.hideLoading()
     })
   },
   // 计算金额

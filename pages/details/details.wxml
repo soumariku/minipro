@@ -31,8 +31,8 @@
   </view>
   <view class="separate" style="flex-direction:row;padding:10rpx 10rpx 10rpx 0rpx">
   <!-- sku选择 -->
-    <text style="color:#bfbfbf;margin-right:30rpx;font-size:20rpx">说明</text>
-    <text>{{goodsmsg}}</text>
+    <text style="color:#bfbfbf;font-size:20rpx;width:60rpx">说明</text>
+    <text class="goodsmsg">{{goodsmsg}}</text>
   </view>
   <view class="dialog {{ showDialog ? 'dialog--show' : '' }}">
     <view class="dialog__mask" bindtap="toggleDialog" />
@@ -123,6 +123,6 @@
     </button>
     <image class="detail-bottom-img" bindtap="addLike" src="{{isLike?'../../icon/goodscollection.png':'../../icon/uncollection.png'}}" />
   <!-- <view class="detail-bottom-tag">加入购物车|立即购买</view> -->
-  <button class="button-green" bindtap="tocalDialog" formType="submit">加入购物车</button>
+  <button class="button-green" bindtap="opencalDialog" formType="submit">加入购物车</button>
   <!-- <button class="button-red" bindtap="immeBuy" formType="submit">立即购买</button> -->
 </view>

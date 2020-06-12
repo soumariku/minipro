@@ -16,58 +16,80 @@ Page({
   },
   getgoods:function(){
     // inputmsg = e.detail.value;
-    const _ = app.globalData.db.command
-    var good = "";
-    app.globalData.db.collection('collection').where({
-      collector:app.globalData.userInfo.nickName
-    }).get().then((res)=>{
-      console.log(res.data)
-      if(res.data.length<=0){
-        wx.showToast({
-          title: '收藏夹没有商品',
-          icon: 'none',
-          image:'../../icon/close.png',
-          duration: 3000
-        });
-      }
-      let searchmsg = []
-      for(var i=0;i<res.data.length;i++){
-        searchmsg.push(res.data[i].goodsid)
-      }
-      console.log(searchmsg)
-      wx.showLoading({
-      title: '',
-    })
-    wx.cloud.callFunction({
-      name: "searchData",
-      data: {
-        collection:'goods',
-        data:{
-          _id: _.in(searchmsg)
+    if(!!app.globalData.hasLogin){
+      const _ = app.globalData.db.command
+      var good = "";
+      app.globalData.db.collection('collection').where({
+        collector:app.globalData.userInfo.nickName
+      }).get().then((res)=>{
+        console.log(res.data)
+        if(res.data.length<=0){
+          wx.showToast({
+            title: '收藏夹没有商品',
+            icon: 'none',
+            image:'../../icon/close.png',
+            duration: 3000
+          });
         }
-      }
-    }).then((res)=>{
-      let good = res.result.data
-        console.log(res)
-        this.setData({
-          //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
-          goods: good
-        })
-        wx.hideLoading()
-    }) 
-      // app.globalData.db.collection('goods').where({
-      //   _id: _.in(searchmsg)
-      // }).get().then((res)=>{
-      //   good = res.data
-      //   console.log(res)
-      //   this.setData({
-      //     //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
-      //     goods: good
-      //   })
-      //   })
-      }).catch((err)=>{
-        console.log(err)
-      }) 
+        let searchmsg = []
+        for(var i=0;i<res.data.length;i++){
+          searchmsg.push(res.data[i].goodsid)
+        }
+        console.log(searchmsg)
+        wx.showLoading({
+        title: '',
+      })
+      // wx.cloud.callFunction({
+      //   name: "searchData",
+      //   data: {
+      //     collection:'goods',
+      //     data:{
+      //       _id: _.in(searchmsg)
+      //     }
+      //   }
+      // }).then((res)=>{
+      //   let good = res.result.data
+      //     console.log(res)
+      //     this.setData({
+      //       //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
+      //       goods: good
+      //     })
+      //     wx.hideLoading()
+      // }) 
+        app.globalData.db.collection('goods').where({
+          _id: _.in(searchmsg)
+        }).get().then((res)=>{
+          good = res.data
+          console.log(res)
+          this.setData({
+            //id: ids,  //把获取的自定义id赋给当前组件的id(即获取当前组件)  
+            goods: good
+          })
+          wx.hideLoading()
+          })
+        }).catch((err)=>{
+          console.log(err)
+        }) 
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '尚未登录，请先登录',
+        confirmText:'确定',
+        cancelText:'取消',
+        cancelColor:'#D6463C',
+        success: function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: './../index/index'
+            })
+          }else{
+            wx.switchTab({
+              url: './../home/home'
+            })
+          }
+        }
+      })
+    }
   },
   turnmsg:function(e){
     // console.log(e.currentTarget.dataset.id)

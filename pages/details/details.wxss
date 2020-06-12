@@ -346,3 +346,12 @@ background-color: #f57c00;
   min-height:50rpx;
   max-height:50rpx;
 }
+.goodsmsg{
+  font-size: 28rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

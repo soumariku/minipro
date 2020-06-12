@@ -239,6 +239,7 @@ Page({
     })
   },
   getRule(allprice,i){
+    console.log('allprice',allprice)
     app.globalData.db.collection('rule').where({
       goodsid:this.data.goodsid,
       price:allprice

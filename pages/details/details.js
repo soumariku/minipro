@@ -62,6 +62,92 @@ Page({
       showDialog: !this.data.showDialog
     });
   },
+  firstcheckcalgoods(){
+    // 标记
+    let samegoods = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+    if(!!samegoods){
+      for(var item in samegoods){
+        console.log(samegoods[item])
+        if(!!samegoods[item].clickflavor){
+          let newflavor = this.data.flavor
+          for(var i=0;i<newflavor.length;i++){
+            if(this.data.flavor[i].flavor==samegoods[item].clickflavor){
+              newflavor[i].count = newflavor[i].count  - samegoods[item].count
+              if(newflavor[i].count<0){
+                newflavor[i].count = 0
+              }
+              this.setData({
+                flavor:newflavor
+              })
+            }
+            
+          }
+        }else{
+          let newcount = Number(this.data.goodscount)-Number(samegoods[0].count)
+          if(newcount<0){
+            newcount = 0
+          }
+          this.setData({
+            goodscount:newcount
+          })
+        }
+      }
+      // this.data.flavor.length
+    }
+  },
+  checkcalgoods(){
+    // 标记
+    let samegoods = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+    if(!!samegoods){
+      for(var item in samegoods){
+        console.log(samegoods[item])
+        if(!!samegoods[item].clickflavor){
+          let newflavor = this.data.flavor
+          for(var i=0;i<newflavor.length;i++){
+            if(this.data.flavor[i].flavor==samegoods[item].clickflavor){
+              newflavor[i].count = newflavor[i].count  - newflavor[i].flavornum
+              if(newflavor[i].count<0){
+                newflavor[i].count = 0
+              }
+              this.setData({
+                flavor:newflavor
+              })
+            }
+            
+          }
+        }else{
+          let newcount = Number(this.data.goodscount)-Number(this.data.buysum)
+          if(newcount<0){
+            newcount = 0
+          }
+          this.setData({
+            goodscount:newcount
+          })
+        }
+      }
+      // this.data.flavor.length
+    }
+  },
+  opencalDialog(){
+    if (Number(this.data.buysum)==0){
+      if(this.data.showDialog){
+        wx.showToast({
+          title: '请添加数量',
+          icon: 'none',
+          image:'../../icon/close.png',
+          duration: 1000
+        });
+      }else{
+        this.setData({
+          showDialog: !this.data.showDialog
+        });
+      }
+    }else{
+      this.setData({
+        showDialog: true
+      });
+    }
+  },
   tocalDialog: function () {
     // let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==this.data.clickflavor})
     // if(!!theMsg.length){
@@ -89,15 +175,62 @@ Page({
           });
         }
       }else{
-          this.tocal()
-          wx.showToast({
-            title: '添加购物车成功',
-            icon: 'success',
-            duration: 3000
-          });
-          this.setData({
-            showDialog: false
-          });
+          
+          if(this.data.flavor.length>0){
+            let canadd = false
+            for(var i=0;i<this.data.flavor.length;i++){
+              if((Number(this.data.flavor[i].count)-Number(this.data.flavor[i].flavornum)>=0)){
+                canadd = true
+              }else{
+                canadd = false
+                break;
+              }
+            }
+            if(canadd==true){
+              this.tocal()
+              wx.showToast({
+                title: '添加购物车成功',
+                icon: 'success',
+                duration: 3000
+              });
+              this.setData({
+                showDialog: false
+              });
+            }else{
+              wx.showToast({
+                title: '库存数量为0',
+                icon: 'none',
+                image:'../../icon/close.png',
+                duration: 1000
+              });
+              this.setData({
+                showDialog: false
+              });
+            }
+          }else{
+            let newsum = Number(this.data.buysum)
+            if(this.data.goodscount-newsum>=0){
+              this.tocal()
+              wx.showToast({
+                title: '添加购物车成功',
+                icon: 'success',
+                duration: 3000
+              });
+              this.setData({
+                showDialog: false
+              });
+            }else{
+              wx.showToast({
+                title: '库存数量为0',
+                icon: 'none',
+                image:'../../icon/close.png',
+                duration: 1000
+              });
+              this.setData({
+                showDialog: false
+              });
+            }
+          }
       }
   },
   //点击口味
@@ -138,25 +271,31 @@ Page({
   },
   //添加购物车
   tocal(){
+    // 标记
     console.log(!!this.data.flavor.length)
     if(!!this.data.flavor.length){
       let goods = this.data.flavor.filter(f=>{return f.flavornum!=0})
+      console.log('goodsgoods',goods)
       for(var i=0;i<goods.length;i++){
         let theMsg = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name&&s.clickflavor==goods[i].flavor})
         let samegoods = API.orderinfo.filter(s=>{return s.nameGood==this.data.goodmsg.name})
+        // 存在口味一样的相同商品
         if(!!theMsg.length){
           let newsingleprice = this.getsamenum(goods[i].flavornum)
           for(var j=0;j<API.orderinfo.length;j++){
             if(API.orderinfo[j]==theMsg[0]){
               let newcount = Number(API.orderinfo[j].count)+Number(goods[i].flavornum)
               API.orderinfo[j].count = newcount
+              API.orderinfo[j].stock = API.orderinfo[j].stock-Number(goods[i].flavornum)
             }
             if(API.orderinfo[j].nameGood==this.data.goodmsg.name){
               API.orderinfo[j].npriceGood = newsingleprice
             }
           }
         }else if(!!samegoods.length){
+        // 相同商品但口味不一样
           let newsingleprice = this.getsamenum(goods[i].flavornum)
+          let stock = Number(goods[i].count)-Number(goods[i].flavornum)
           console.log('newsingleprice',newsingleprice)
           for(var j=0;j<API.orderinfo.length;j++){
             if(API.orderinfo[j].nameGood==this.data.goodmsg.name){
@@ -168,7 +307,8 @@ Page({
             imgGood:this.data.imgUrls[0],
             nameGood:this.data.goodmsg.name,
             npriceGood:Number(newsingleprice).toFixed(2),
-            opriceGood:this.data.goodmsg.price1,
+            opriceGood:Number(this.data.goodmsg.price1).toFixed(2),
+            stock:stock,
             count:Number(goods[i].flavornum),
             id:this.data.goodsID,
             selected: true,
@@ -178,12 +318,15 @@ Page({
           }
           API.orderinfo.push(orderlist)
         }else{
+          // 添加新的有口味的商品到购物车
           let orderlist = []
+          let stock = Number(goods[i].count)-Number(goods[i].flavornum)
           orderlist = {
             imgGood:this.data.imgUrls[0],
             nameGood:this.data.goodmsg.name,
             npriceGood:Number(this.data.singleprice).toFixed(2),
-            opriceGood:this.data.goodmsg.price1,
+            opriceGood:Number(this.data.goodmsg.price1).toFixed(2),
+            stock:stock,
             count:Number(goods[i].flavornum),
             id:this.data.goodsID,
             selected: true,
@@ -216,17 +359,20 @@ Page({
               }
             }
             API.orderinfo[j].count = newcount
+            API.orderinfo[j].stock = Number(this.data.goodscount) - Number(this.data.buysum)
             API.orderinfo[j].npriceGood = newsingleprice
             console.log('yew')
           }
         }
       }else{
         let orderlist = []
+        let stock = Number(this.data.goodscount)-Number(this.data.buysum)
         orderlist = {
           imgGood:this.data.imgUrls[0],
           nameGood:this.data.goodmsg.name,
-          npriceGood:Number(this.data.singleprice),
-          opriceGood:this.data.goodmsg.price1,
+          npriceGood:Number(this.data.singleprice).toFixed(2),
+          opriceGood:Number(this.data.goodmsg.price1).toFixed(2),
+          stock:stock,
           count:Number(this.data.buysum),
           id:this.data.goodsID,
           selected: true,
@@ -238,6 +384,7 @@ Page({
       }
     }
     let num = 0
+    this.checkcalgoods()
     for(var item in API.orderinfo){ 
       num +=Number(API.orderinfo[item].count)
     }
@@ -252,63 +399,84 @@ Page({
   },
   // 收藏
   addLike() {
-    app.globalData.db.collection('collection').where({
-      goodsid:this.data.goodsID,
-      collector:app.globalData.userInfo.nickName
-    }).get().then((res)=>{
-      let id = ''
-      if(res.data.length>0){
-        id = res.data[0]._id
-        wx.cloud.callFunction({
-          name:'deleteData',
-          data: {
-            id: id,
-            collection:'collection'
-          },
-          complete: res => {
+    if(!!app.globalData.hasLogin){
+      app.globalData.db.collection('collection').where({
+        goodsid:this.data.goodsID,
+        collector:app.globalData.userInfo.nickName
+      }).get().then((res)=>{
+        let id = ''
+        if(res.data.length>0){
+          id = res.data[0]._id
+          wx.cloud.callFunction({
+            name:'deleteData',
+            data: {
+              id: id,
+              collection:'collection'
+            },
+            complete: res => {
+              this.setData({
+                isLike: false
+              });
+            }
+          })
+        }else{
+          app.globalData.db.collection('collection').add({
+            // data 字段表示需新增的 JSON 数据
+            data: {
+              goodsid: this.data.goodsID,
+              collector:app.globalData.userInfo.nickName
+            }
+          })
+          .then(res => {
             this.setData({
-              isLike: false
+              isLike: true
             });
+            wx.showToast({
+              title: '添加收藏成功',
+              icon: 'success',
+              duration: 3000
+            });
+          })
+          
+        }  
+      }) 
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '尚未登录，请先登录',
+        confirmText:'确定',
+        cancelText:'取消',
+        cancelColor:'#D6463C',
+        success: function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: './../index/index'
+            })
+          }else{
+           
           }
-        })
-      }else{
-        app.globalData.db.collection('collection').add({
-          // data 字段表示需新增的 JSON 数据
-          data: {
-            goodsid: this.data.goodsID,
-            collector:app.globalData.userInfo.nickName
-          }
-        })
-        .then(res => {
-          this.setData({
-            isLike: true
-          });
-          wx.showToast({
-            title: '添加收藏成功',
-            icon: 'success',
-            duration: 3000
-          });
-        })
-        
-      }  
-    }) 
+        }
+      })
+    }
   },
   // 收藏
   getLike() {
-    app.globalData.db.collection('collection').where({
-      goodsid:this.data.goodsID,
-      collector:app.globalData.userInfo.nickName
-    }).get().then((res)=>{
-      if(res.data.length>0){
-        this.setData({
-          isLike: true
-        });
-      }else{
-        this.setData({
-          isLike: false
-        });
-      }  
-    }) 
+    if(!!app.globalData.hasLogin){
+      app.globalData.db.collection('collection').where({
+        goodsid:this.data.goodsID,
+        collector:app.globalData.userInfo.nickName
+      }).get().then((res)=>{
+        if(res.data.length>0){
+          this.setData({
+            isLike: true
+          });
+        }else{
+          this.setData({
+            isLike: false
+          });
+        }  
+      })
+    } 
   },
   // 跳到购物车
   toCar() {
@@ -383,6 +551,7 @@ Page({
       })
       console.log(this.data.flavor)
      console.log(this.data.goodmsg)
+     this.firstcheckcalgoods()
     })
   },
   getRule:function(){
@@ -453,6 +622,7 @@ Page({
     
   },
   flavorAdd(e){
+    // 标记
     console.log(e.currentTarget.dataset.index)
     let index = e.currentTarget.dataset.index
     let newflvor = this.data.flavor
@@ -481,9 +651,21 @@ Page({
         buysum: 0
       })
     }else{
-      this.setData({
-        buysum: e.detail.value
-      })
+      if(this.data.goodscount-Number(e.detail.value)>=0){
+        this.setData({
+          buysum: e.detail.value
+        })
+      }else{
+        this.setData({
+          buysum: 0
+        })
+        wx.showToast({
+          title: '库存数量不足',
+          icon: 'none',
+          image:'../../icon/close.png',
+          duration: 1000
+        });
+      }
     }
     this.calculateprice()
   },

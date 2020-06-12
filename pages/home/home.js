@@ -241,7 +241,6 @@ Page({
   onLoad: function (options) {
     this.getDate();
     this.getSwiperGoods();
-    this.getHomeMsg();
     this.setData({
       window_width: app.globalData.window_width*0.485
     })
@@ -274,6 +273,7 @@ Page({
       })
     }
     this.getlikegoods()
+    this.getHomeMsg();
   },
 
   /**
