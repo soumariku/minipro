@@ -1,0 +1,191 @@
+{
+	"description": "项目配置文件",
+	"cloudfunctionRoot": "functions/",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"preloadBackgroundData": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.10.4",
+	"appid": "wxb4a54f6b5b9d3cc7",
+	"projectname": "miniprogram-1",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/my/my",
+					"pathName": "pages/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/shop/shop",
+					"pathName": "pages/shop/shop",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/home/home",
+					"pathName": "pages/home/home",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/commodity/commodity",
+					"pathName": "pages/commodity/commodity",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/details/details",
+					"pathName": "pages/details/details",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "search",
+					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/collection/collection",
+					"pathName": "pages/collection/collection",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "adimin",
+					"pathName": "pages/administrator/administrator",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/customersetting/customersetting",
+					"pathName": "pages/customersetting/customersetting",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bereceived",
+					"pathName": "pages/bereceived/bereceived",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/administrator/administrator",
+					"pathName": "pages/administrator/administrator",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "upcategory",
+					"pathName": "pages/updatecategory/updatecategory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "updatecategory",
+					"pathName": "pages/updatecategory/updatecategory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/updateGoods/updateGoods",
+					"pathName": "pages/updateGoods/updateGoods",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/profitAndLoss/profitAndLoss",
+					"pathName": "pages/profitAndLoss/profitAndLoss",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personalData/personalData",
+					"pathName": "pages/personalData/personalData",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/testimg/testimg",
+					"pathName": "pages/testimg/testimg",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "111112312312312",
+					"pathName": "pages/testimg/testimg",
+					"scene": null
+				}
+			]
+		}
+	}
+}

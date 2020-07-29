@@ -1,0 +1,50 @@
+<view class="thepage">
+  <view class='has_shop_title'  style="padding-left:20rpx"> 
+    <view class='position_title'> 
+      <image class='has_shop_icon1' src='../../icon/my.png'></image> 
+      <text class='has_shop_smalltxt'>{{orders.buyer}}</text> 
+    </view> 
+    <text class='btn_shop_change' bindtap='copyTBL'>订单复制</text>
+  </view> 
+  <view class="inputblock" style="margin-top:100rpx">
+    <text class="inputTitle" style="color:#5076ab;">订单编号:</text>
+    <text class="inputTitle" style="font-size:25rpx">{{orders._id}}</text>
+    <text  class='total_name_num' style="color:#000;font-size:22rpx;background: #eee;margin-left:10rpx;padding:5rpx;border-radius: 20%;height:38rpx" bindtap='copyOrderId'>复制</text>  
+  </view>
+  <!-- <view class="inputblock">
+    <text class="inputTitle" style="color:#5076ab;">客户名称:</text>
+    <text class="inputTitle" >{{orders.buyer}}</text>
+  </view> -->
+  <view style="border-bottom:0;width:100%;flex-direction: column;">
+    <text class="inputTitle" style="color:#5076ab;font-weight:600;text-align:center;">商品列表</text>
+  </view>
+  <view style="display:flex;flex-flow: column;border-bottom: 0" wx:for="{{goodslist}}">
+    <view class="inputblock" style="border-bottom:0">
+      <text class="inputTitle" style="color:#5076ab;">商品名称:</text>
+      <text class="inputTitle">{{item.name}}</text>
+    </view>
+    <view class="inputblock" style="border-bottom: 0">
+      <text class="inputTitle" style="color:#5076ab;" wx:if="{{!!item.flavor}}">口味:</text>
+      <input class="inputname" value="{{item.flavor}}" style="width:300rpx;margin-right:40rpx"disabled="true" wx:if="{{!!item.flavor}}"></input>
+      <text class="inputTitle" style="color:#5076ab">数量:</text>
+      <input class="inputname" value="{{item.count}}" style="width:100rpx" bindinput="changegoodsnum" data-name="{{item.name}}" data-flavor="{{item.flavor}}" data-index="{{index}}"></input>
+    </view>
+    <view class="inputblock" style="border-bottom: 0">
+      <text class="inputTitle" style="color:#5076ab;">商品金额:</text>
+      <text class="inputTitle" style="color:#f57c00;">￥{{item.price}}</text>
+    </view>
+  </view>
+  <view class="shop_car_total">
+    <view class='shop_total_right'>
+      <view class='shop_total_freight' >
+        <view class='position_total' style="margin-left:90rpx">
+          <text class='total_name'>合计:</text>
+          <text class='total_name_num'>￥{{totalPrice}}</text>
+        </view>   
+      </view> 
+      <!-- 一个都没选择，展示灰色结算按钮 --> 
+      <view class='btn_result_all_red' style="background:#5076ab" bindtap='updateOrders' >提交</view> 
+      <view class='btn_result_all_red'  bindtap='turnPreview'>取消</view> 
+    </view>
+  </view>
+</view>

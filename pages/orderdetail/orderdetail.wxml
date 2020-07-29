@@ -1,0 +1,112 @@
+<view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  style="padding-left:20rpx"> 
+      <view class='position_title'> 
+        <image class='has_shop_icon1' src='../../icon/isshop.png'></image> 
+        <text class='has_shop_smalltxt'>自来批发部</text> 
+      </view> 
+      <text class='btn_shop_change' bindtap='copyTBL'>订单复制</text>
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{goods}}"> 
+        <view class='has_shop_item'> 
+          <view class='btn_ischeck'> 
+            <!-- 判断是否为选中状态 --> 
+            <view class='position_hasshop_item'> 
+              <view class='position_hasshop_img'> 
+                <!-- 商品图片 --> 
+                <image class='shop_img' src='{{item.pic}}'></image> 
+                 
+              </view> 
+              <view class='menu_right_txt'> 
+                <!-- 商品名称和描述 --> 
+                <text class='menu_right_name'>{{item.msg}}</text> 
+                
+              </view> 
+              
+            </view> 
+          </view> 
+        </view> 
+      </block>
+      <block > 
+        <view class='has_shop_item'> 
+          <view class='btn_ischeck'> 
+            <!-- 判断是否为选中状态 --> 
+            <view class='position_hasshop_item' style="margin-left:20rpx"> 
+              
+              <view class='menu_right_txt'> 
+                <!-- 商品名称和描述 --> 
+                <text class='menu_right_nprice'>
+                  <text class='total_name'>备注(预送货时间)：</text> 
+                  <text class='total_name_num' style="color:#5076ab">{{remarks}}</text> 
+                </text>
+                <text class='menu_right_nprice'>
+                  <text class='total_name'>配送类型：</text> 
+                  <text class='total_name_num' style="color:#5076ab">{{orderState}}</text>
+                </text>
+                <text class='menu_right_nprice'>
+                  <text class='total_name'>下单时间：</text> 
+                  <text class='total_name_num' style="color:#5076ab">{{orderTime}}</text> 
+                </text>  
+                <text class='menu_right_nprice' bindtap='copyOrderId'>
+                  <text class='total_name'>订单编号：</text> 
+                  <text class='total_name_num' style="color:#5076ab;font-size:22rpx">{{orderId}}</text>
+                  <text  class='total_name_num' style="color:#000;font-size:22rpx;background: #eee;margin-left:10rpx;padding:5rpx;border-radius: 20%">复制</text>  
+                </text>  
+              </view> 
+              
+            </view> 
+          </view> 
+        </view> 
+      </block>  
+    </view> 
+    <!-- 底部选择栏 --> 
+    <view class='shop_car_total'> 
+      <view class='car_total_left'> 
+        <view class='shop_total_freight' style="margin-left:110rpx"> 
+          <view class='position_total'> 
+            <text class='total_name' style="font-size:35rpx">合计:</text> 
+            <text class='total_name_num' style="font-size:35rpx">￥{{sumprice}}</text> 
+          </view> 
+        </view> 
+      </view> 
+      <view class='shop_total_right'> 
+        
+        <!-- 一个都没选择，展示灰色结算按钮 -->
+        <view class='btn_result_all_red' bindtap='changedelivery' style="background:#5076ab" wx:if="{{!isComplete}}">更改配送</view>   
+        <view class='btn_detele_all' wx:if="{{isComplete}}">已确认收货</view>
+        <view class='btn_result_all_red' bindtap='updateCompleteState' wx:else>确认收货</view>
+      </view> 
+    </view> 
+  </view>
+  <form>
+    <mp-dialog show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}" mask-closable="false">
+      <view style="min-width:500rpx;min-height:300rpx">
+        <view class="thepage">
+          <view class="inputblock" style="margin-bottom:20rpx">
+            <text class="inputTitle">类型:</text>
+            <view class='select_box'>
+              <view class='select' catchtap='selectTap'>
+                  <text class='select_text'>{{selectData[index]}}</text>
+                  <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
+              </view>
+              <view class='option_box' style='height:{{selectShow?(selectData.length>5?325:selectData.length*50):0}}rpx;'>
+                  <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+              </view>
+            </view>  
+          </view>
+          <!-- <view class="inputblock" wx:if="{{destate=='A'}}"> -->
+          <!-- 更改自取可备注 -->
+          <view class="inputblock" >
+            <text class="inputTitle">备注:</text>
+            <textarea class="inputname" style="width:380rpx;margin-top:10rpx;height:150rpx" placeholder="请输入备注" name="textarea"  maxlength="-1" bindinput="remarkchange" value="{{remarks}}"/>
+          </view>
+          <!-- <view wx:else  class="inputblock"></view> -->
+        </view>
+      </view>  
+    </mp-dialog>
+  </form> 
+</view> 

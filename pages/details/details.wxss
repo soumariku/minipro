@@ -1,0 +1,357 @@
+page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+/* 直接设置swiper属性 */
+swiper {
+  height: 500rpx;
+}
+swiper-item image {
+  width: 100%;
+  height: 100%;
+}
+.detail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 15rpx;
+  margin-bottom: 0rpx;
+  background-color: #fff;
+  /* height: 250rpx; */
+}
+.detail .title {
+  font-size: 40rpx;
+  /* word-break:break-all;
+  margin: 10rpx;
+  color: black;
+  text-align: justify; */
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  align-content: center;
+  
+}
+.detail .price {
+  color: red;
+  font-size: 40rpx;
+  margin: 10rpx;
+  bottom: 0;
+}
+.separate{
+  display: flex;
+  flex-direction: column;
+  margin-top: 15rpx;
+  margin-bottom: 0rpx;
+  background-color: #fff;
+}
+.line_flag {
+  width: 80rpx;
+  height: 1rpx;
+  display: inline-block;
+  margin: 20rpx auto;
+  background-color: gainsboro;
+  text-align: center;
+}
+.line {
+  width: 100%;
+  height: 2rpx;
+  display: inline-block;
+  margin: 20rpx 0rpx;
+  background-color: gainsboro;
+  text-align: center;
+}
+.detail-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  float: left;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100rpx;
+}
+.detail-bottom-img{
+  min-width:50rpx;
+  max-width:50rpx;
+  min-height:50rpx;
+  max-height:50rpx;
+}
+.detail-bottom-tag{
+  background-color: #5076ab;
+  border-radius: 25rpx; 
+  width: 600rpx;
+  height:50rpx;
+  color: #fff;
+  font-size: 30rpx;
+}
+.button-green {
+  background-color: #5076ab; /* Green */
+  min-width: 500rpx;
+  max-width: 500rpx;
+  font-size: 30rpx;
+  height: 90rpx;
+  line-height: 50rpx;
+  border-top-left-radius:2em;
+  border-bottom-left-radius:2em;
+  border-top-right-radius:2em;
+  border-bottom-right-radius:2em;
+}
+.button-red {
+  background-color: #f57c00; /* 红色 */
+  min-width: 250rpx;
+  max-width: 250rpx;
+  font-size: 30rpx;
+  height: 90rpx;
+  line-height: 50rpx;
+  border-top-left-radius:0em;
+  border-bottom-left-radius:0em;
+  border-top-right-radius:2em;
+  border-bottom-right-radius:2em;
+}
+.image_detail {
+  width: 100%;
+}
+button {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30rpx;
+  border-radius: 0rpx;
+  width: 50%;
+  height: 100%;
+  line-height: 100rpx;
+}
+.detail-nav image {
+  width: 70rpx;
+  height: 50rpx;
+  margin: 20rpx 40rpx;
+}
+.line_nav {
+  width: 5rpx;
+  height: 100%;
+  background-color: gainsboro;
+}
+/* 占位 */
+.temp {
+  height: 100rpx;
+}
+text {
+  display: block;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  margin: 10rpx;
+}
+.text-remark {
+  display: block;
+  font-size: 25rpx;
+  margin: 10rpx;
+}
+
+/* 点击购买 */
+/* sku选择 */
+.dialog__mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+.dialog__container {
+  position: fixed;
+  bottom: 0;
+  width: 750rpx;
+  background: white;
+  transform: translateY(150%);
+  transition: all 0.4s ease;
+  z-index: 11;
+}
+.dialog--show .dialog__container {
+  transform: translateY(0);
+}
+.dialog--show .dialog__mask {
+  display: block;
+}
+.image-sku {
+  width: 150rpx;
+  height: 150rpx;
+  z-index: 12;
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  border-radius: 20rpx;
+}
+.image-close {
+  width: 40rpx;
+  height: 40rpx;
+  position: fixed;
+  right: 10rpx;
+  top: 10rpx;
+}
+.column {
+  display: flex;
+  /* flex-direction: column; */
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.border-line {
+  width: 100%;
+  height: 2rpx;
+  display: inline-block;
+  margin:  0rpx;
+  background-color: gainsboro;
+  text-align: center;
+}
+.btn_sub{
+  width: 59rpx;
+  height: 59rpx;
+}
+.btn_add{
+  width: 59rpx;
+  height: 59rpx;
+}
+.sku-title {
+  position: relative;
+  left: 200rpx;
+  margin: 1rpx;
+}
+.sku-price {
+  color: #f57c00;
+  position: relative;
+  left: 200rpx;
+  padding: 0px;
+  margin: 0px;
+  font-size: 25rpx;
+  margin-right: 100rpx;
+}
+.sku-rule{
+  font-size: 22rpx;
+  color: #f57c00;
+  position: relative;
+  left: 210rpx;
+  padding: 0px;
+  margin: 0px;
+  bottom: 0;
+  top:-10rpx;
+  margin-left:2rpx;
+  margin-right: 80rpx;
+}
+.sku-pricelist {
+  color: #f57c00;
+  position: relative;
+}
+.sku-goodsnum{
+  margin-left: auto;
+  margin-right: 50rpx;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.goods_num{
+  border-radius:2rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  margin: 0px;
+  min-width: 60rpx;
+  max-width: 60rpx;
+  /* height: 20rpx; */
+  background-color: #fff;
+  vertical-align:center;
+  text-align: center;
+}
+.quantity-position {
+  position: relative;
+  left: 30rpx;
+}
+.categorybtn{
+  background-color: rgba(238, 238, 238, 0.747);
+  color: #000;
+  min-width: 250rpx;
+  max-width: 250rpx;
+  font-size: 25rpx;
+  font-weight: 400;
+  height: 60rpx;
+  line-height: 25rpx;
+  border-radius:10rpx;
+  flex-direction: row;
+}
+.clickcategorybtn{
+  background-color: #f57c00;
+  color: #fff;
+  min-width: 250rpx;
+  max-width: 250rpx;
+  font-size: 25rpx;
+  font-weight: 400;
+  height: 60rpx;
+  line-height: 25rpx;
+  border-radius:10rpx;
+  flex-direction: row;
+}
+.flavorList{
+  display: flex;
+}
+
+.iconBtn{
+  width: 100%;
+  height: 130rpx;
+  background: rgba(155, 155, 155, 0);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+.iconBtn::after{
+  border: none;
+}
+.remind-num{
+border-radius: 40%;
+position: absolute;
+top: 2rpx;
+right: 2rpx;
+font-size: 20rpx;
+/*padding: 4rpx 15rpx;*/
+/*align-items: center;*/
+text-align: center;
+
+width: 35rpx;
+line-height: 30rpx;
+height: 30rpx;
+color: var(--white);
+z-index: 100;
+background-color: #f57c00;
+}
+.icon-img{
+  margin-top: 0rpx;
+  min-width:50rpx;
+  max-width:50rpx;
+  min-height:50rpx;
+  max-height:50rpx;
+}
+.goodsmsg{
+  font-size: 28rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

@@ -1,0 +1,68 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/shop/shop",
+    "pages/my/my",
+    "pages/commodity/commodity",
+    "pages/details/details",
+    "pages/search/search",
+    "pages/collection/collection",
+    "pages/administrator/administrator",
+    "pages/customersetting/customersetting",
+    "pages/bereceived/bereceived",
+    "pages/orderdetail/orderdetail",
+    "pages/appointment/appointment",
+    "pages/complete/complete",
+    "pages/updatecategory/updatecategory",
+    "pages/updateGoods/updateGoods",
+    "pages/profitAndLoss/profitAndLoss",
+    "pages/newSearch/newSearch",
+    "pages/updateOrders/updateOrders",
+    "pages/personalData/personalData",
+    "pages/testimg/testimg",
+    "pages/updateHome/updateHome"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#5076ab",
+    "navigationBarTitleText": "自来批发部",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#5076ab",
+    "list": [
+      {
+        "pagePath": "pages/commodity/commodity",
+        "text": "商品",
+        "iconPath": "icon/commodity.png",
+        "selectedIconPath": "icon/hascommodity.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "icon/home.png",
+        "selectedIconPath": "icon/hashome.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "购物车",
+        "iconPath": "icon/shop.png",
+        "selectedIconPath": "icon/hasshop.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "icon/my.png",
+        "selectedIconPath": "icon/hasmy.png"
+      }
+    ]
+  },
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap11.json"
+}

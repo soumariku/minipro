@@ -1,0 +1,74 @@
+<!--index.wxml-->
+<view>
+ <view class="banner">
+        <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="rgba(228,228,228,1)" indicator-active-color="#FECA49">
+            <block wx:for="{{imgUrls}}" wx:key="*this">
+                <swiper-item>
+                    <image src="{{item}}" class="slide-image" width="355" height="200" />
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
+  <!-- <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <view class="page-section">
+    <view class="weui-cells__title">控制最大输入长度的input</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" maxlength="10" placeholder="最大输入长度为10" />
+      </view>
+    </view>
+  </view>
+    </block>
+  </view> -->
+
+<!--pages/login.wxml-->
+<view class="container"> 
+  <view class="login-icon"> 
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image> 
+  </view> 
+  <view class="login-from"> 
+ 
+    <!--账号-->
+    <view class="inputView"> 
+      <!-- <image class="nameImage" src="./../../icon/name.png"></image>  -->
+      <label class="loginLab">账号</label> 
+      <input class="inputText" placeholder="请输入账号" bindinput="phoneInput" value="{{phone}}"/> 
+    </view> 
+    <view class="line"></view> 
+    <!--密码-->
+    <view class="inputView"> 
+      <!-- <image class="keyImage" src="./../../icon/key.png"></image>  -->
+      <label class="loginLab">密码</label> 
+      <input class="inputText" password="true" placeholder="请输入密码" bindinput="passwordInput" value="{{password}}"/> 
+    </view> 
+    <!--按钮-->
+    <view class="loginBtnView"> 
+      <button class="loginBtn" size="{{primarySize}}" 
+          loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="checkopenid">授权/登录</button> 
+    </view>
+ 
+  </view> 
+ 
+</view>
+  <!--浮层弹框设置-->
+<view class="modal-box" hidden='{{show}}'>
+  <view class="modal-content">
+    <view class="content-title">提示信息</view>
+    <view class="content-text">
+      授权后可获取您的用户信息，作为保存您可以填写联系方式的依据。
+    </view>
+  </view>
+  <view class="modal-btns">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <button class="dialog-btn cancel" open-type="exit" bindtap="cancel">拒绝授权</button>
+        <button class="dialog-btn confirm"open-type="getUserInfo" bindgetuserinfo="confirm">授权登录</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+</view>

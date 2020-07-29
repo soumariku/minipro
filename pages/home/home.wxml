@@ -1,0 +1,95 @@
+<!--pages/home/home.wxml-->
+<scroll-view>
+  <view class='notice'>
+  <view class="left">
+    <text class='iconfont icon-labagonggao voice'></text>
+    <image src="./../../icon/horn.png" style="width:40rpx;height:40rpx"></image>
+      <view class="left-box">
+        <view class="left-text"></view>
+        <view class='content-box'>
+          <view class='content-text' animation="{{animationData}}"><text id="text">{{text}}</text></view>
+        </view>
+        <view class="right-text"></view>
+      </view>
+  </view>
+</view>
+  <!-- 顶部轮播图 -->
+  <view class='all-img'>
+    <swiper indicator-dots='{{indiicatorDots}}' autoplay='{{autoplay}} ' interval='{{interval}}' duration='{{duration}}' indicator-color="#91bef0" indicator-active-color="#5076ab" circular="{{circular}}" bindchange="indexChange">
+      <view wx:for="{{imgUrl}}" wx:key="*this">
+        <swiper-item>
+          <!-- <image src='{{item}}' data-src='{{item}}' class='carousel-img'></image> -->
+        </swiper-item>
+      </view>
+    </swiper>
+    <!-- 判断是第几张图片显示 -->
+      
+  </view>
+  <!-- 虚化的背景 -->
+  <view class="img-class" hidden='{{current == 1}}'>
+    <image class="index-img" src="{{imgUrl[0]}}"></image>
+  </view>
+  <view class="img-class" hidden='{{current == 0}}'>
+    <image class="index-img" src="{{imgUrl[1]}}"></image>
+  </view>
+      
+  <!-- 搜索 -->
+  <view class='search-input'>
+    <view class='search-img'>
+      <image class='search' src='/icon/search.png' mode='aspectFit'></image>
+    </view>
+    <view class='search-value'>
+      <input class='sou-input' placeholder='店内搜索你想要的' bindtap='jumpSearchGood'></input>
+    </view>
+  </view>
+  <view style="background:#fff;margin:10px 5px"> 
+    <view class='img-back' wx:for='{{classList}}' wx:key='id'>
+      <view class='classify-input1'>
+        <image class='fruit' src='{{item.imgurl}}' mode='aspectFit' bindtap='fruitClassify' data-id='{{item.id}}'></image>
+        <!-- 字体分类 -->
+        <view class='classify-text'>
+          <text class='text-text'>{{item.title}}</text>
+        </view>
+      </view>
+    </view>
+  <view style="background:#fff;margin:10px 5px;text-align:center;font-weight:600"> 
+    <text style="text-align:center;color:#555556">---推荐新品---</text>
+  </view>
+  <view class='demo-page'>
+    <!-- 平移轮播 -->
+    <swiper class="swiper-block" previous-margin="180rpx" next-margin="180rpx" current="{{downcurrent}}" bindchange="swiperChange" indicator-dots='true' indicator-color="#91bef0" indicator-active-color="#5076ab">
+      <block wx:for="{{imgInfoArr}}" wx:index="{{index}}">
+        <swiper-item class="swiper-item" bindtap='jumpCoupon'>
+          <image mode="aspectFit" src="{{item.goodspic}}" class="slide-image {{swiperIndex == index ? 'active' : ''}}" bindtap="turnmsg"  data-id="{{item._id}}"/>
+          
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class='has_shop_list'>
+      <text style="text-align:center;color:#555556;margin:20rpx;font-weight:600">---店铺商品---</text>
+      <view style="width:100%;flex-direction: row;">
+        <view class="img_item" wx:for="{{col1}}" wx:key="id">
+          <view >
+          <view class="item_info" bindtap="turnmsg"  data-id="{{item._id}}">
+            <image src="{{item.goodspic}}" style="width:100%;min-height:{{window_width}}px;max-height:{{window_width}}px"></image>
+          </view>
+                <view class="product-name">
+                  {{item.name}}
+                </view>
+                <view class="product-price-wrap">
+                  <p class="product-price-new">￥{{item.nowprice}}</p>  
+                  <!-- <p class="product-price-old">￥{{item.preprice}}</p>  -->
+                  <!-- <p class="discount">{{item.discount}}折</p>    -->
+                </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="round-click">
+    <image class="upimg" src="./../../icon/up.png" bindtap="goTop"></image>
+  </view>
+</scroll-view>
+

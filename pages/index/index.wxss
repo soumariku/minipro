@@ -1,0 +1,188 @@
+/**index.wxss**/
+.banner {
+  width: 100%;
+}
+
+swiper {
+  height: 240rpx;
+}
+
+image {
+  width: 100%;
+  display: block;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+/* pages/login.wxss */
+page{ 
+  height: 100%;
+  background:#f5f5f5;
+ } 
+   
+ .container { 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  padding: 0; 
+  box-sizing: border-box; 
+  background:#fff;
+  margin:50rpx;
+  border-radius: 10%;
+  /* opacity:0.2;   */
+ } 
+   
+ /*登录图片*/
+ .login-icon{ 
+  flex: none; 
+ } 
+ .login-img{ 
+  width: 750rpx; 
+ } 
+   
+ /*表单内容*/
+ .login-from { 
+  margin-top: 20px; 
+  flex: auto; 
+  height:100%; 
+ } 
+   
+ .inputView { 
+  background-color: #f5f5f5; 
+  line-height: 44px; 
+  border-radius: 5rpx;
+ } 
+ /*输入框*/
+ .nameImage, .keyImage { 
+  margin-left: 22px; 
+  width: 30rpx; 
+  height: 30rpx;
+  
+ } 
+   
+ .loginLab { 
+  margin: 15px 15px 15px 10px; 
+  color: #545454; 
+  font-size: 25rpx
+ } 
+ .inputText { 
+  flex: block; 
+  float: right; 
+  text-align: left; 
+  margin-right: 22px; 
+  margin-top: 11px; 
+  color: #515151; 
+  font-size: 30rpx;
+  z-index:0;
+ } 
+   
+ .line { 
+  width: 100%; 
+  height: 1px; 
+  background-color: #cccccc; 
+  margin-top: 1px; 
+ } 
+ /*按钮*/
+ .loginBtnView { 
+  width: 100%; 
+  height: auto; 
+  background-color: #fff; 
+  margin-top: 0px; 
+  margin-bottom: 0px; 
+  padding-bottom: 0px; 
+ } 
+   
+ .loginBtn { 
+  width: 100%; 
+  margin-top: 50rpx;
+  margin-bottom: 50rpx; 
+  background-color: #5076ab;
+  color:#fff; 
+  font-size: 35rpx;
+ }
+  
+ .registerBtn { 
+  width: 100%; 
+  margin-top: 5px; 
+ }
+
+.usermotto {
+  margin-top: 200px;
+}
+
+
+/* 弹窗 */
+.modal-box {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0rpx;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+ 
+.modal-content {
+  background: #fff;
+  width: 600rpx;
+  margin: 42% auto 0;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ebebec;
+}
+ 
+.content-title {
+  height: 100rpx;
+  text-align: center;
+  font-size: 1.2rem;
+  padding-top: 10rpx;
+}
+ 
+.content-text {
+  padding:50px 0;
+  text-align: center;
+  font-size: 28rpx;
+}
+ 
+.modal-btns {
+  width: 600rpx;
+  margin: 0 auto;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.dialog-btn {
+  border-radius: 0;
+  border:0;
+  background: #fff;
+  height: 100rpx;
+  width: 100%;
+}
+ 
+.dialog-btn::after {
+  border: none;
+  border-radius: 0;
+}
+ 
+.cancel {
+  color: #ccc;
+}
+ 
+.confirm {
+  /* border-left: 1px solid #ebebec; */
+  color: #60d048;
+}

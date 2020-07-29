@@ -1,0 +1,49 @@
+<view class='tab-container'>
+     <view class='tab-list'>
+        <block wx:for="{{pres}}" wx:key="id">
+        <view class="{{item.id == id?'click':'noclick'}}" bindtap='getgoods' data-id="{{item.id}}" >{{item.preX}}</view>
+        </block>
+     </view>
+     <view>
+        <view class='tab-detail clear'>
+        <block wx:for="{{goods}}" wx:key="*this" >
+           <!-- <view class='tab-item'>
+              <image src='{{item.url}}'></image>
+              <view>{{item.name}}</view>
+           </view> -->
+        
+        
+         <view class='position_hasshop_item' bindtap="turnmsg"  data-id="{{item._id}}">
+              <view class='position_hasshop_img'>
+                <!-- 商品图片 -->
+                <image class='shop_img' src='{{item.goodspic}}'></image>
+                
+              </view>
+              <view class='menu_right_txt'>
+                <!-- 商品名称和描述 -->
+                <text class='menu_right_name'>{{item.name}}</text>
+                <view class='menu_right_down'>
+                  <!-- 商品最新价格 -->
+                  <text class='menu_right_nprice'>¥{{item.nowprice}}</text>
+                  <!-- 商品以往价格 -->
+                  <!-- <text class='menu_right_oprice'>{{item.preprice}}</text> -->
+                  <view class='has_shop_num'>
+                    <!-- 商品数量减少按钮
+                    <image class='btn_sub' src='../../icon/sub.png' bindtap='subNum' data-index='{{index}}'></image>
+                    <text class='goods_num'>{{item.count}}</text>
+                     增加商品数量按钮 
+                    <image class='btn_add' src='../../icon/plus.png' bindtap='addNum' data-index='{{index}}'></image>
+                    -->
+                    <text class='goods_num' >购买</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+         </block>
+        </view>
+     </view>
+     <view class="round-click">
+      <image class="upimg" src="./../../icon/up.png" bindtap="goTop"></image>
+    </view>
+  </view>
+

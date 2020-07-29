@@ -1,0 +1,316 @@
+<!--pages/administrator/administrator.wxml-->
+<view style="margin-top:180rpx" wx:if="{{begin}}">
+  <button class="thebtn" bindtap="updateHome">首页管理</button>
+  <button class="thebtn" bindtap="updateUser">用户管理</button>
+  <button class="thebtn" bindtap="updateCategory">分类管理</button>
+  <button class="thebtn" bindtap="updategoods">商品管理</button>
+  <button class="thebtn" bindtap="getOrders">订单管理</button>
+  <button class="thebtn" bindtap="orderSearch">订单查询</button>
+  <button class="thebtn" bindtap="getpal">盈亏查看</button>
+</view>
+
+<view wx:if="{{user}}">
+  <view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">管理员</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">新增用户</view>
+    <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">用户信息</view>
+    <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">用户管理</view>
+  </view>
+  
+  <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="min-height:500px" bindchange="bindChange">
+    <!-- 管理员 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+        <view class="weui-search-bar" >
+          <view class="itemView">新管理员账号：
+            <input class="input" name="userName" placeholder="请输入新管理员账号" bindinput="adminNameInput" style="width:700rpx"/>
+          </view>
+          </view>
+          <view class="weui-search-bar" >
+          <view class="itemView">新管理员密码：
+            <input class="input" name="userName" placeholder="请输入新管理员密码" bindinput="adminPasswordInput" style="width:700rpx"/>
+            <button  style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" bindtap="adminChange"> 更改 </button>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+    <!-- 新增用户 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+        <view class="weui-search-bar" >
+          <view class="itemView">新普通用户账号：
+            <input class="input" name="userName" placeholder="请输入新普通用户账号" bindinput="userNameInput" style="width:700rpx"/>
+          </view>
+          </view>
+          <view class="weui-search-bar" >
+          <view class="itemView">新普通用户密码：
+            <input class="input" name="userName" placeholder="请输入新普通用户密码" bindinput="userPasswordInput" style="width:700rpx"/>
+            <button bindtap="canChange" style="display:inline-block;background-color:orange;color:#fff;margin:10rpx;float:right" bindtap="userChange"> 增加 </button>
+          </view>
+        </view> 
+      </scroll-view>
+    </swiper-item>
+
+    <!-- 所有用户 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <view class="containers"> 
+        <view class='has_shop' > 
+          <view class='has_shop_title'  > 
+            <view class='position_title'> 
+              <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/my.png'></image> 
+              <text class='has_shop_smalltxt' style="margin-left:20rpx">用户信息概要</text>
+            </view> 
+            <text class='btn_shop_change'  style="color:red">{{userNumber}}位</text> 
+          </view> 
+          <view class='has_shop_list' >
+          
+            <view class="weui-search-bar">
+              <view class="weui-search-bar__form">
+              <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                  <view class="Search_ico_box">
+                    <image class="Search_ico" src="../../icon/search.png"></image>
+                  </view>
+                  <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changesearch" value="{{inputuser}}"/>
+                </view>
+              </view>
+              <!-- 取消搜索 -->
+              <view class="weui-search-bar__cancel-btn" bindtap='searchuser'>搜索</view>
+            </view>
+             
+            <!-- 循环商品列表 --> 
+            <block wx:key="goods_car_index" wx:for="{{userList}}"> 
+              <view class='has_shop_item'> 
+                <view class='btn_ischeck'> 
+                  <view class='position_hasshop_item'> 
+                    <view class='menu_right_txt' > 
+                      <!-- 描述 --> 
+                      <text class='menu_right_name'>
+                        <text class='total_name' >用户名称：</text> 
+                        <text class='total_name_num' >{{item.truename}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >用户收货地址：</text> 
+                        <text class='total_name_num' >{{item.address}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >用户联系方式：</text> 
+                        <text class='total_name_num' >{{item.telephone}}</text> 
+                      </text>    
+                    </view> 
+                  </view> 
+                </view>
+              </view> 
+            </block> 
+          </view> 
+        </view>
+      </view>
+    </swiper-item>
+
+     <!-- 用户管理 -->
+    <swiper-item  style="width: 100%;height: 100%;overflow-x: hidden;">
+      <scroll-view scroll-y="true" style="width: 100%;height: 100%;overflow-x: hidden;">
+        <block wx:key="goods_car_index" wx:for="{{normaluserList}}"> 
+              <view class='has_shop_item' style="height: 130rpx; "> 
+                <view class='btn_ischeck'> 
+                  <view class='position_hasshop_item'> 
+                    <view class='menu_right_txt' style="height: 100rpx; "> 
+                      <!-- 描述 --> 
+                      <text class='menu_right_name'>
+                        <text class='total_name' >用户账号：</text> 
+                        <text class='total_name_num' >{{item.name}}</text> 
+                      </text>
+                      <text class='menu_right_name'>
+                        <text class='total_name' >用户密码：</text> 
+                        <text class='total_name_num' >{{item.password}}</text> 
+                      </text> 
+                    </view> 
+                  </view> 
+                </view>
+                <view class='btn_delete_shop' style="height: 130rpx;" bindtap='deleteuser' data-id="{{item._id}}"><text>删除</text></view>  
+              </view> 
+            </block> 
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+</view>
+
+<!-- 商品分类管理 -->
+<view wx:if="{{category}}">
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      <view class='position_title' bindtap="toUpdateCategory"> 
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品分类</text> 
+      </view>
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{catagoryList}}"> 
+        <view class='has_shop_item' style="height: 115rpx; "> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+              <view class='position_hasshop_img' style="width: 100rpx;height: 100rpx;padding: 7rpx; "> 
+                <!-- 图片 --> 
+                <image class='shop_img' style="width: 100rpx;height: 100rpx; " src='{{item.pic}}'></image> 
+              </view> 
+              <view class='menu_right_txt' style="height: 100rpx "> 
+                <!-- 描述 --> 
+                <text class='menu_right_name'>{{item.name}}</text> 
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateCategory' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view> 
+</view>
+<!-- 商品管理 -->
+<view wx:if="{{goods}}">
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      <view class='position_title' bindtap="toUpdateGoods"> 
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品</text> 
+      </view> 
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+    </view>
+    <view class='has_shop_list'>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+            <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                    <view class="Search_ico_box">
+                      <image class="Search_ico" src="../../icon/search.png"></image>
+                    </view>
+                    <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changeseearch" value="{{inputmsg}}"/>
+                </view>
+            </view>
+            <!-- 取消搜索 -->
+            <view class="weui-search-bar__cancel-btn" bindtap='searchgoods'>搜索</view>
+        </view>
+    </view> 
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list' style="margin-top: 0rpx; "> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{goodsList}}"> 
+        <view class='has_shop_item' style="height: 115rpx; "> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+              <view class='position_hasshop_img' style="width: 100rpx;height: 100rpx;padding: 7rpx; "> 
+                <!-- 图片 --> 
+                <image class='shop_img' style="width: 100rpx;height: 100rpx; " src='{{item.goodspic}}'></image> 
+              </view> 
+              <view class='menu_right_txt' style="height: 100rpx "> 
+                <!-- 描述 --> 
+                <text class='menu_right_name'>{{item.name}}</text> 
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style="height: 115rpx;background:orange; " bindtap='topping' data-index='{{index}}' data-id="{{item._id}}"><text>置顶</text></view>  
+          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateGoods' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+          
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view>
+</view>
+
+<!-- 订单管理 -->
+<view wx:if="{{orders}}">
+  <view class="containers"> 
+  <view class='has_shop' > 
+    <!-- 第一排 --> 
+    <view class='has_shop_title'  > 
+      
+      <view class='position_title' style="width: 500rpx;">
+        <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
+        <view class='select_box'>
+          <view class='select' catchtap='selectTap'>
+              <text class='select_text'>{{selectData[index]}}</text>
+              <image class='select_img {{selectShow&&"select_img_rotate"}}' src='../../icon/down.png'  background-size="contain"></image> 
+          </view>
+          <view class='option_box' style='height:{{selectShow?(selectData.length>5?350:selectData.length*50):0}}rpx;'>
+              <text class='option' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+          </view>
+        </view>  
+        <!-- <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/orders.png'></image> 
+        <text class='has_shop_smalltxt' style="margin-left:20rpx">所有订单</text>  -->
+      </view>
+      <picker mode="date" fields="month" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="getDateTime">
+              <view class="selectDate">
+                <text class='btn_shop_change' wx:if="{{!!serachDate}}">{{serachDate}}</text>
+                <text class='btn_shop_change' wx:else>选择年月</text>
+              </view>
+            </picker>  
+      <text class='btn_shop_change' bindtap='previewReturn' style="color:red;margin-left:auto;margin-right:15rpx">返回</text> 
+    </view>
+    
+    <!-- 循环的商品列表 --> 
+    <view class='has_shop_list'> 
+      <!-- 循环商品列表 --> 
+      <block wx:key="goods_car_index" wx:for="{{ordersList}}"> 
+        <view class='has_shop_item' style="height: 280rpx"> 
+          <view class='btn_ischeck'> 
+            <view class='position_hasshop_item'> 
+             
+              
+              <view class='menu_right_txt' style="height: 250rpx;"> 
+                <!-- 描述 --> 
+                 <text class='menu_right_name'>
+                  <text class='total_name' >客户：</text> 
+                  <text class='total_name_num' >{{item.buyer}}</text> 
+                </text>
+                <text class='menu_right_name'>
+                  <text class='total_name' >下单时间：</text> 
+                  <text class='total_name_num' >{{item.orderTime}}</text> 
+                </text>
+                <text class='menu_right_name'>
+                  <text class='total_name' >备注：</text> 
+                  <text class='total_name_num' >{{item.remarks}}</text> 
+                </text>    
+                <view class='menu_right_down'> 
+                  <!-- 商品最新价格 --> 
+                  <text class='menu_right_nprice'>
+                    <text class='total_name' >配送方式：</text> 
+                    <text class='total_name_num' >{{item.orderState}}</text> 
+                  </text> 
+                  <view class='position_total'> 
+                    <text class='total_name'>共花费:</text> 
+                    <text class='total_name_num'>￥{{item.sumprice}}</text> 
+                  </view> 
+                  </view>
+              </view> 
+            </view> 
+          </view>
+          <view class='btn_delete_shop' style=" background:#fff;flex-flow: column;height: 280rpx">
+            <view class="btn_delete_shop" style="background:orange;width: 100rpx;height: 77rpx; " bindtap="toOrderDetail" data-id="{{item._id}}">详情</view>
+            <view class="btn_delete_shop"  wx:if="{{item.deliver=='N'}}" style="background:red;width: 100rpx;height: 77rpx;" bindtap="changedeliver" data-id="{{item._id}}">未发货</view>
+            <view class="btn_detele_all" wx:else style="width: 100rpx;height: 77rpx;" data-id="{{item._id}}">已发货</view>
+            <view class="btn_delete_shop" wx:if="{{item.orderState!='订单完成'}}" style="background:#5076ab;width: 100rpx;height: 77rpx; " bindtap="updateCompleteState" data-id="{{item._id}}"><text>确认\n收货</text></view>
+            <view class='btn_detele_all' wx:else style="width: 100rpx;height: 77rpx; " data-index='{{index}}' data-id="{{item._id}}"><text>确认\n收货</text></view>
+            <view class='btn_detele_all' style="width: 100rpx;height: 77rpx;background:red; color:#fff" wx:if="{{item.orderState!='订单已删除'}}" data-index='{{index}}' data-id="{{item._id}}" bindtap="changedelete"><text>删除\n订单</text></view>
+            <view class='btn_detele_all' style="width: 100rpx;height: 77rpx; " wx:else  data-index='{{index}}' data-id="{{item._id}}" ><text>已被\n删除</text></view>    
+          </view> 
+          
+        </view> 
+      </block> 
+    </view> 
+    <!-- 底部选择栏 --> 
+  </view> 
+</view>
+
+
+</view>

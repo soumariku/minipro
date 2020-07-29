@@ -1,0 +1,96 @@
+<!--pages/my/my.wxml-->
+<view>
+  <view class="userinfo">
+    <block wx:if="{{hasLogin}}">
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="./../../icon/nouser.png" mode="cover"></image>
+      <text class="userinfo-nickname" bindtap="login">点击/登录</text>
+    </block>
+  </view>
+  <view style="background:#fff;margin:10px 5px" class="bottompart">
+    <view class="k-box-row part">
+      <text class="part" style="color: rgb(115, 115, 115);margin: 10px 0 10px 10px;font-size:14px">我的订单</text> 
+    </view>
+    <view>
+      <view class="order-item" style="width: 33.3%;" bindtap="tobereceived">
+        <image class="order-icon" src="../../icon/backOrder.png" mode="cover"></image> 
+        <text class="order-text">待发货</text>
+      </view>
+      <view class="order-item" style="width: 33.3%;" bindtap="tocomplete">
+        <image class="order-icon" src="../../icon/completely.png" mode="cover"></image> 
+        <text class="order-text">已完成</text>
+      </view>
+      <view class="order-item" style="width: 33.3%;" bindtap="customerBtnDialog">
+        <image class="order-icon" src="../../icon/after-sale.png" mode="cover"></image> 
+        <text class="order-text">售后</text>
+      </view>
+    </view>  
+  </view>
+  <view style="background:#fff;margin:5px" class="bottompart">
+    <view class="order-item" bindtap="toappointment">
+      <image class="order-icon" src="../../icon/appointment.png" mode="cover"></image> 
+      <text class="order-text">我的预约</text>
+    </view>
+    <view class="order-item" bindtap="tocollecton">
+      <image class="order-icon" src="../../icon/collection.png" mode="cover"></image> 
+      <text class="order-text">我的收藏</text>
+    </view>
+    <view class="order-item" bindtap="customerBtnDialog">
+      <image class="order-icon" src="../../icon/customerService.png" mode="cover"></image> 
+      <text class="order-text">在线客服</text>
+    </view>
+    <view class="order-item" bindtap="telBtnDialog">
+      <image class="order-icon" src="../../icon/contact.png" mode="cover"></image> 
+      <text class="order-text">联系我们</text>
+    </view>
+    <view class="order-item" bindtap="tapOneDialogButton">
+      <image class="order-icon" src="../../icon/about.png" mode="cover"></image> 
+      <text class="order-text">关于我们</text>
+    </view>
+    <view class="order-item" bindtap="tosetting" data-id="1">
+      <image class="order-icon" src="../../icon/getAddress.png" mode="cover"></image> 
+      <text class="order-text">收货地址</text>
+    </view>
+    <view class="order-item" bindtap="tosetting" data-id="2">
+      <image class="order-icon" src="../../icon/bindingtel.png" mode="cover"></image> 
+      <text class="order-text">绑定手机</text>
+    </view>
+    <view class="order-item" bindtap="clearStorage">
+      <image class="order-icon" src="../../icon/clean.png" mode="cover"></image> 
+      <text class="order-text">清理缓存</text>
+    </view>
+  </view>
+  <view style="background:#fff;margin:5px;margin-top:10px" class="bottompart" wx:if="{{isAdmin}}">
+    <view class="order-item" bindtap="toadmin">
+      <image class="order-icon" src="../../icon/administrator.png" mode="cover"></image> 
+      <text class="order-text">管理模式</text>
+    </view>
+  </view>
+  <!-- 弹出dialog -->
+  <mp-dialog title="是否前往客服" show="{{showcustomerBtnDialog}}" bindbuttontap="customerBtnDialog" buttons="{{customerBtn}}">
+    <view style="min-width:500rpx">
+      <button style="background-color:#07c160;color:#fff;border:2px soild #5076ab" open-type="contact" bindcontact="handleContact">确认</button>
+    </view>
+  </mp-dialog>
+  <mp-dialog title="联系我们" show="{{showtelBtnDialog}}" buttons="{{oneButton}}">
+    <view style="min-width:500rpx">
+      <text style="display:block;text-align: left;color:#bfbfbf">联系方式：</text>
+      <text space="nbsp" style="display:block;text-align: left" bindtap="calling" data-phonenum="0759-6798606"> 0759-6798606</text>
+      <text space="nbsp" style="display:block;text-align: left" bindtap="calling" data-phonenum="18922071070"> 18922071070</text>
+    </view>
+  </mp-dialog>
+  <mp-dialog title="关于我们" show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
+    <view style="min-width:500rpx">
+      <text style="display:block;text-align: left;color:#bfbfbf">店铺名称:</text>
+      <text space="nbsp" style="display:block;text-align: left"> 自来批发部</text>
+      <text style="display:block;text-align: left;color:#bfbfbf">店铺地址：</text>
+      <text space="nbsp" style="display:block;text-align: left" > 廉江市横山镇晨光农场自来批发部</text>
+      <text space="nbsp" style="display:block;text-align: left;color:#bfbfbf"> \n</text>
+      <text space="nbsp" style="display:block;text-align: left;color:#bfbfbf"> ---一切为了方便更好的我们---</text>
+    </view>
+  </mp-dialog>
+</view>
+
