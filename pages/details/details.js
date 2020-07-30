@@ -550,11 +550,16 @@ Page({
       let detailspic = [];
       let flavorlist = [];
       pic.push(res.data[0].goodspic)
-      pic.push(res.data[0].gdetailspic1)
+      pic.push(res.data[0].gdeatailList[0])
+      res.data[0].gdeatailList.forEach(item=>{
+        // pic.push(item)
+        detailspic.push(item)
+      })
+      // pic.push(res.data[0].gdetailspic1)
       console.log(res.data[0].flavor)
-      detailspic.push(res.data[0].gdetailspic1)
-      detailspic.push(res.data[0].gdetailspic2)
-      detailspic.push(res.data[0].gdetailspic3)
+      // detailspic.push(res.data[0].gdetailspic1)
+      // detailspic.push(res.data[0].gdetailspic2)
+      // detailspic.push(res.data[0].gdetailspic3)
       for(var i=0;i<res.data[0].flavor.length;i++){
         let list = {flavor:res.data[0].flavor[i].flavor,flavornum:0,count:res.data[0].flavor[i].count}
         flavorlist.push(list)
@@ -680,7 +685,7 @@ Page({
         })
       }else{
         this.setData({
-          buysum: 0
+          buysum: this.data.goodscount
         })
         wx.showToast({
           title: '库存数量不足',

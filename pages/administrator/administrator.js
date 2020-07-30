@@ -202,7 +202,8 @@ Page({
       data: {
         collection:'CATEGORY',
         data:{
-        }
+        },
+        order:('seno', 'desc')
       }
     }).then((res)=>{
       let catagory = res.result.data
@@ -323,14 +324,14 @@ Page({
       title: '',
     })
     let _this = this
-    console.log(_this.data.inputuser)
+    console.log(_this.data.inputmsg)
     wx.cloud.callFunction({
       name: "searchData",
       data: {
         collection:'goods',
         data:{
             name:{								//columnName表示欲模糊查询数据所在列的名
-              $regex:'.*' + _this.data.inputuser + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+              $regex:'.*' + _this.data.inputmsg + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
               $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
             }
         }

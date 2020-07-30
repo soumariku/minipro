@@ -19,9 +19,9 @@
                 <text class='menu_right_name'>{{item.name}}</text>
                 <view class='menu_right_down'>
                   <!-- 商品最新价格 -->
-                  <text class='menu_right_nprice'>¥{{item.price3}}</text>
+                  <text class='menu_right_nprice'>¥{{item.priceList[0].price}}</text>
                   <!-- 商品以往价格 -->
-                  <text class='menu_right_oprice'>{{item.price1}}</text>
+                  <!-- <text class='menu_right_oprice'>{{item.price1}}</text> -->
                   <view class='has_shop_num'>
                     <text class='goods_num' bindtap="turnmsg" data-id="{{item._id}}">购买</text>
                   </view>

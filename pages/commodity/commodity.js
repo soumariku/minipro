@@ -32,7 +32,8 @@ Page({
       // console.log(thelist)
       var tlength = this.data.pres.length;
       for(var i = 0;i<thelist.length;i++){
-        let params = {id:String(tlength+i),preX: thelist[i].name}
+        let params = {id:thelist[i]._id,preX: thelist[i].name}
+        // let params = {id:String(tlength+i),preX: thelist[i].name}
         prelist.push(params)
         // console.log(prelist)
       }
@@ -47,19 +48,18 @@ Page({
     })
     var ids = "";
     if(!e.currentTarget){
-      ids = e
+      // ids = e
+      ids = ''
     }else{
       ids = e.currentTarget.dataset.id;
     }
-    console.log(ids.length)
-    let newstr = String(Number(ids)+1)
-    // console.log('1',newstr)
-    // console.log('2',newstr.length)
-    for(var i=0;i<(3-newstr.length);i++){
-      newstr = '0'+newstr
-    }
-    console.log(newstr)
-    console.log(e);
+    // console.log(ids.length)
+    // let newstr = String(Number(ids)+1)
+    // for(var i=0;i<(3-newstr.length);i++){
+    //   newstr = '0'+newstr
+    // }
+    // console.log(newstr)
+    console.log('ids',ids);
     var good = "";
     wx.cloud.callFunction({
       name: "searchData",
@@ -67,13 +67,14 @@ Page({
         collection:'goods',
         data:{
           catgory:{								//columnName表示欲模糊查询数据所在列的名
-            $regex:'.*' + newstr + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
+            $regex:'.*' + ids + '.*',		//queryContent表示欲查询的内容，‘.*’等同于SQL中的‘%’
             $options: 'i'							//$options:'1' 代表这个like的条件不区分大小写,详见开发文档
           }
         }
       }
     }).then((res)=>{
       good = res.result.data
+      console.log(good)
       for(var i=0;i<good.length;i++){
         let thenum = Number(good[i].priceList.length)-1
         let nowprice = good[i].priceList[thenum].price

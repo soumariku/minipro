@@ -98,7 +98,8 @@ Page({
       // console.log(thelist)
       var tlength = this.data.classList.length;
       for(var i = 0;i<thelist.length;i++){
-        let params = {id:String(tlength+i),title: thelist[i].name,imgurl: thelist[i].pic}
+        let params = {id:thelist[i]._id,title: thelist[i].name,imgurl: thelist[i].pic}
+        // let params = {id:String(tlength+i),title: thelist[i].name,imgurl: thelist[i].pic}
         prelist.push(params)
         // console.log(prelist)
       }

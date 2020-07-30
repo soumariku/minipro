@@ -17,6 +17,7 @@ Page({
     rule2:{},
     rule3:{maxnum:"0"},
     flavor:[],
+    gdeatailList:[],
     PriceList:[{levelname:'商品单价：',
       maxnum:'',
       minnum:'',
@@ -91,7 +92,7 @@ Page({
           cloudPath: timestamp + type,
           filePath: src,   //   这是截取后的图片
           success: function (res) {
-            console.log('上传成功', res)
+            console.log('上传成功1', res)
             wx.hideLoading()
             wx.showToast({
               title: '上传图片成功',
@@ -104,8 +105,10 @@ Page({
                 hasChangeImg1:true
               }) 
             }else if(that.data.picno=='2'){
+              let gdetailList = that.data.gdeatailList
+              gdetailList.push(res.fileID)
               that.setData({
-                gdetailspic1: res.fileID,
+                gdeatailList: gdetailList,
                 hasimg2:'上传成功',
                 hasChangeImg2:true
                })  
@@ -140,6 +143,14 @@ Page({
       }
     })
   },
+  deleteimg(e){
+    let index = e.currentTarget.dataset.index
+    let gdetailList = this.data.gdeatailList
+    gdetailList.splice(index,1)
+    this.setData({
+      gdeatailList:gdetailList
+    })
+  },
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
     let newcatagory = ''
@@ -168,10 +179,10 @@ Page({
           num = '0'+num
         }
         if(!!this.data.catgory){
-          let choose = this.data.catgory.indexOf(num) != -1
-          params = {name:num,value:res.data[i].name,checked:choose}
+          let choose = this.data.catgory.indexOf(res.data[i]._id) != -1
+          params = {name:res.data[i]._id,value:res.data[i].name,checked:choose}
         }else{
-          params = {name:num,value:res.data[i].name}
+          params = {name:res.data[i]._id,value:res.data[i].name}
         }  
         newitems.push(params)
       }
@@ -203,6 +214,7 @@ Page({
         gdetailspic1:res.data[0].gdetailspic1,
         gdetailspic2:res.data[0].gdetailspic2,
         gdetailspic3:res.data[0].gdetailspic3,
+        gdeatailList:res.data[0].gdeatailList,
         goodspic:res.data[0].goodspic,
         buyingprice:res.data[0].buyingprice,
         goodsmsg:res.data[0].goodsmsg,
@@ -210,6 +222,7 @@ Page({
         time:res.data[0].time,
         PriceList:res.data[0].priceList,
       })
+      console.log(this.data.gdeatailList)
       this.getCategory()
       // for(var i=0;i<allprice.length;i++){
       //   this.getRule(allprice[i],i)
@@ -325,7 +338,7 @@ Page({
       }
     }
     // &&!!_this.data.rule1.price&&!!_this.data.rule1.name&&!!_this.data.rule1.minnum&&!!_this.data.rule1.maxnum&&!!_this.data.rule2.price&&!!_this.data.rule2.name&&!!_this.data.rule2.minnum&&!!_this.data.rule2.maxnum&&!!_this.data.rule3.price&&!!_this.data.rule3.name&&!!_this.data.rule3.minnum&&!!_this.data.rule3.maxnum
-    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.gdetailspic1&&!!_this.data.gdetailspic2&&!!_this.data.gdetailspic3&&!!_this.data.buyingprice&&flavorcheck){
+    if(!!_this.data.catgory&&!!_this.data.name&&!!_this.data.goodspic&&!!_this.data.buyingprice&&flavorcheck){
       if(this.data.isUpdate==true){
         this.updateGoods();
       }else{
@@ -405,6 +418,7 @@ Page({
         gdetailspic1:_this.data.gdetailspic1,
         gdetailspic2:_this.data.gdetailspic2,
         gdetailspic3:_this.data.gdetailspic3,
+        gdeatailList:_this.data.gdeatailList,
         name: _this.data.name,
         // price1: _this.data.rule1.price,
         // price2: _this.data.rule2.price,
@@ -464,6 +478,7 @@ Page({
               gdetailspic1:_this.data.gdetailspic1,
               gdetailspic2:_this.data.gdetailspic2,
               gdetailspic3:_this.data.gdetailspic3,
+              gdeatailList:_this.data.gdeatailList,
               name: _this.data.name,
               // price1: _this.data.rule1.price,
               // price2: _this.data.rule2.price,
@@ -889,6 +904,60 @@ Page({
       })
       .updateCanvas();
     // this.getGoods()
+  },
+
+  testall(){
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'goods',
+        data:{
+        },
+        order:('time', 'desc')
+      }
+    }).then((res)=>{
+      let good = res.result.data
+      // console.log(good)
+      good.forEach(item => {
+        let theid = item._id
+        let gdeatailList = []
+        let Price = [{levelname:'商品单价：',
+        maxnum:'2',
+        minnum:'1',
+        name:'1',
+        price:'1'}]
+        gdeatailList.push(item.gdetailspic1)
+        gdeatailList.push(item.gdetailspic2)
+        gdeatailList.push(item.gdetailspic3)
+        wx.cloud.callFunction({
+          name: "setMsg",
+          data: {
+            id:theid,
+            collection:'goods',
+            data:{
+                  catgory: '9b61b9ba5f07d821000897c243821654',
+                  flavor: item.flavor,
+                  goodspic: item.goodspic,
+                  gdetailspic1:item.gdetailspic1,
+                  gdetailspic2:item.gdetailspic2,
+                  gdetailspic3:item.gdetailspic3,
+                  gdeatailList:gdeatailList,
+                  name: item.name,
+                  // price1: _this.data.rule1.price,
+                  // price2: _this.data.rule2.price,
+                  // price3: _this.data.rule3.price,
+                  priceList:Price,
+                  buyingprice:item.buyingprice,
+                  goodsmsg:item.goodsmsg,
+                  goodscount:item.goodscount,
+                  time:item.time
+                }
+          }
+        }).then((res)=>{
+          console.log(res)
+        })
+      });
+    })
   },
 
   /**

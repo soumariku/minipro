@@ -82,7 +82,7 @@
           <view class="sku-goodsnum">
             <image class='btn_sub' src='../../icon/detailsub.png' bindtap='subNum' data-index='{{index}}'></image>
             <!-- <text class='goods_num'  >1</text> -->
-            <input class='goods_num' value="{{buysum}}" maxlength="3" type="number" bindinput="bindinput"></input>
+            <input class='goods_num' value="{{buysum}}" maxlength="4" type="number" bindinput="bindinput"></input>
             <!-- 增加商品数量按钮 -->
             <image class='btn_add' src='../../icon/detailplus.png' bindtap='addNum' data-index='{{index}}'></image>
           </view>

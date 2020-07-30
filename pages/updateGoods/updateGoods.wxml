@@ -141,17 +141,18 @@
     <input class="inputname" value="{{hasimg1}}" placeholder="增改图片" disabled="true"></input>
   </view>
   <view class="inputblock" style="border-bottom:0" bindtap='chooseImage' data-num="2">
-    <text class="inputTitle">详情图片1:</text>
-    <input class="inputname" value="{{hasimg2}}" placeholder="增改图片" disabled="true"></input>
+    <text class="inputTitle">详情图片:</text>
+    <input class="inputname" value="增改图片" placeholder="增改图片" disabled="true"></input>
+    <image class='has_shop_icon1' src='../../icon/plus.png' ></image>
   </view>
-  <view class="inputblock" style="border-bottom:0" bindtap='chooseImage' data-num="3">
+  <!-- <view class="inputblock" style="border-bottom:0" bindtap='chooseImage' data-num="3">
     <text class="inputTitle">详情图片2:</text>
     <input class="inputname" value="{{hasimg3}}" placeholder="增改图片" disabled="true"></input>
   </view>
   <view class="inputblock" bindtap='chooseImage' data-num="4">
     <text class="inputTitle">详情图片3:</text>
     <input class="inputname" value="{{hasimg4}}" placeholder="增改图片" disabled="true"></input>
-  </view>
+  </view> -->
   <view class="inputblock">
     <text class="inputTitle">封面预览:</text>
         <view class='img-back'>
@@ -160,24 +161,27 @@
           </view>
         </view>
   </view>
-  <view class="inputblock">
+  <view class="inputblock" style="border-bottom:0">
     <text class="inputTitle">详情预览:</text>
-        <view class='img-back'>
-          <view class='classify-input1'>
-              <image class='fruit' src='{{gdetailspic1}}' mode='aspectFit' ></image>
-          </view>
-        </view>
-        <view class='img-back'>
-          <view class='classify-input1'>
-              <image class='fruit' src='{{gdetailspic2}}' mode='aspectFit' ></image>
-          </view>
-        </view>
-        <view class='img-back'>
-          <view class='classify-input1'>
-              <image class='fruit' src='{{gdetailspic3}}' mode='aspectFit' ></image>
-          </view>
-        </view>
-  </view>    
+  </view>
+  <view class="inputblock" style="border:0" wx:for="{{gdeatailList}}">
+    <view class='img-back' style="min-width:500rpx;min-height:500rpx;margin-left:100rpx">
+      <view class='classify-input1'>
+          <image class='fruit' src='{{item}}' mode='aspectFit' style="height:500rpx"></image>
+          <image class='has_shop_icon1' src='../../icon/sub.png' bindtap="deleteimg" data-index="{{index}}"></image>  
+      </view>
+    </view>
+    <!-- <view class='img-back'>
+      <view class='classify-input1'>
+          <image class='fruit' src='{{gdetailspic2}}' mode='aspectFit' ></image>
+      </view>
+    </view>
+    <view class='img-back'>
+      <view class='classify-input1'>
+          <image class='fruit' src='{{gdetailspic3}}' mode='aspectFit' ></image>
+      </view>
+    </view> -->
+  </view>        
   <view class="shop_car_total">
     <view class='shop_total_right'> 
         <!-- 一个都没选择，展示灰色结算按钮 --> 

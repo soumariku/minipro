@@ -28,7 +28,7 @@ exports.main = async (event, context) => {
   // 承载所有读操作的 promise 的数组
   const tasks = []
   for (let i = 0; i < batchTimes; i++) {
-    const promise = db.collection(collection).where(data).orderBy('time', 'desc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+    const promise = db.collection(collection).where(data).orderBy('time', 'desc').orderBy('seno', 'asc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
     tasks.push(promise)
   }
   // 等待所有

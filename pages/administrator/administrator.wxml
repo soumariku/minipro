@@ -193,7 +193,7 @@
                     <view class="Search_ico_box">
                       <image class="Search_ico" src="../../icon/search.png"></image>
                     </view>
-                    <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changeseearch" value="{{inputmsg}}"/>
+                    <input type="text" class="weui-search-bar__input" placeholder="请输入搜索内容" bindinput="changesearch" value="{{inputmsg}}"/>
                 </view>
             </view>
             <!-- 取消搜索 -->
