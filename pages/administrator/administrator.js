@@ -21,7 +21,8 @@ Page({
     index: 0,//选择的下拉列表下标
     serachDate:'',
     inputuser:'',
-    inputmsg:''
+    inputmsg:'',
+    isCateEdit:false
   },
   selectTap() {
     this.setData({
@@ -220,6 +221,43 @@ Page({
     //   })
     // })
   },
+  //分类编辑
+  toedit(){
+    this.setData({
+      isCateEdit:!this.data.isCateEdit
+    })
+  },
+  //完成编辑
+  finishedit(){
+    wx.showLoading({
+      title: '保存中。。。',
+    })
+    this.data.catagoryList.forEach((item,index)=>{
+      // console.log(index.toPrecision(3))
+      let newindex = Number(index)+1
+      if(String(newindex).length > 3) {
+        newindex = newindex ;
+      }else{
+        newindex = (Array(3).join(0) +newindex).slice(-3);
+      }
+      wx.cloud.callFunction({
+        name: "updateData",
+        data: {
+          id:item._id,
+          collection:'CATEGORY',
+          data:{
+            seno: newindex
+          }
+        }
+      }).then((res)=>{
+        this.setData({
+          isCateEdit:false
+        })
+        wx.hideLoading()
+      })
+    })
+    
+  },
   // 置顶
   topping(e){
     let id = e.currentTarget.dataset.id
@@ -242,6 +280,26 @@ Page({
           duration: 3000
         });
         _this.updategoods()
+    })
+  },
+  upcateorder(e){
+    let index = e.currentTarget.dataset.index
+    let list = this.data.catagoryList
+    let temp = list[index]
+    list[index] = list[index-1]
+    list[index-1] = temp
+    this.setData({
+      catagoryList:list
+    })
+  },
+  downcateorder(e){
+    let index = e.currentTarget.dataset.index
+    let list = this.data.catagoryList
+    let temp = list[index]
+    list[index] = list[index+1]
+    list[index+1] = temp
+    this.setData({
+      catagoryList:list
     })
   },
   changeseearch(e){

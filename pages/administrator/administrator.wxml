@@ -142,11 +142,13 @@
   <view class='has_shop' > 
     <!-- 第一排 --> 
     <view class='has_shop_title'  > 
-      <view class='position_title' bindtap="toUpdateCategory"> 
+      <view class='position_title' bindtap="toUpdateCategory" style="width:620rpx"> 
         <image class='has_shop_icon1' style="margin-left:50rpx" src='../../icon/plus.png'></image> 
         <text class='has_shop_smalltxt' style="margin-left:20rpx">添加商品分类</text> 
       </view>
-      <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text> 
+      <text class='btn_shop_change' bindtap='toedit' style="color:#5076ab" wx:if="{{!isCateEdit}}">编辑模式</text>
+      <text class='btn_shop_change' bindtap='finishedit' style="color:#5076ab;margin-left:30rpx" wx:else>完成</text>  
+      <!-- <text class='btn_shop_change' bindtap='previewReturn' style="color:red">返回</text>  -->
     </view> 
     <!-- 循环的商品列表 --> 
     <view class='has_shop_list'> 
@@ -154,7 +156,7 @@
       <block wx:key="goods_car_index" wx:for="{{catagoryList}}"> 
         <view class='has_shop_item' style="height: 115rpx; "> 
           <view class='btn_ischeck'> 
-            <view class='position_hasshop_item'> 
+            <view class='position_hasshop_item' style="width:620rpx"> 
               <view class='position_hasshop_img' style="width: 100rpx;height: 100rpx;padding: 7rpx; "> 
                 <!-- 图片 --> 
                 <image class='shop_img' style="width: 100rpx;height: 100rpx; " src='{{item.pic}}'></image> 
@@ -165,13 +167,27 @@
               </view> 
             </view> 
           </view>
-          <view class='btn_delete_shop' style="height: 115rpx;" bindtap='toUpdateCategory' data-index='{{index}}' data-id="{{item._id}}"><text>更改</text></view>  
+          <view wx:if="{{!isCateEdit}}">
+            <view class='btn_delete_shop' style="height: 115rpx;background:#fff;border:1px solid #5076ab;color:#5076ab;font-weight:900;width: 130rpx; " bindtap='toUpdateCategory' data-index='{{index}}' data-id="{{item._id}}" 
+              ><text style="font-size:30rpx">更 改</text>
+            </view>
+            <view class="round-click">
+              <image class="upimg" src="./../../icon/back.png" bindtap="previewReturn"></image>
+            </view> 
+          </view>
+          <view wx:if="{{isCateEdit&&index!=0}}" style="float:left;" data-index='{{index}}' data-id="{{item._id}}" bindtap="upcateorder"> 
+            <image class="upimg1" src="./../../icon/cateup.png" ></image>
+          </view>
+          <view wx:if="{{isCateEdit&&index!=catagoryList.length-1}}"  style="float:left;margin-left:15rpx" data-index='{{index}}' data-id="{{item._id}}" bindtap="downcateorder"> 
+            <image class="upimg1" src="./../../icon/catedown.png" ></image>
+          </view>   
         </view> 
       </block> 
     </view> 
     <!-- 底部选择栏 --> 
   </view> 
-</view> 
+</view>
+
 </view>
 <!-- 商品管理 -->
 <view wx:if="{{goods}}">

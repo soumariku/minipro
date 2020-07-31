@@ -7,11 +7,13 @@ const app = getApp()
 const API = require('../../utils/API.js')
 Page({
   onLoad:function(option){
-    this.getDate();
+    // this.getDate();
     if(option.id==null){
-      this.getgoods('0');
+      this.getDate('0');
+      // this.getgoods('0');
     }else{
-      this.getgoods(option.id);
+      this.getDate(option.id);
+      // this.getgoods(option.id);
     }    
     // this.setData({
     //   id:option.id
@@ -22,12 +24,30 @@ Page({
     goods:[],
     id: 0,
   },
-  getDate:function(){
+  getDate:function(e){
     const countResult =  db.collection('CATEGORY').count()
     var thelist = [];
     var prelist = this.data.pres;
-    db.collection('CATEGORY').get().then((res)=>{
-      thelist = res.data
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'CATEGORY',
+        data:{
+        },
+        order:('seno', 'desc')
+      }
+    }).then((res)=>{
+      thelist = res.result.data
+      if(e=='0'){
+        this.setData({
+          ids:thelist[0]._id
+        })
+        this.getgoods(thelist[0]._id);
+      }else{
+        this.getgoods(e);
+      }
+      
+      // this.data.ids = thelist[0]._id
       thelist = thelist.filter(l=>{return l.name!='猜你喜欢'})
       // console.log(thelist)
       var tlength = this.data.pres.length;
@@ -48,8 +68,7 @@ Page({
     })
     var ids = "";
     if(!e.currentTarget){
-      // ids = e
-      ids = ''
+      ids = e
     }else{
       ids = e.currentTarget.dataset.id;
     }

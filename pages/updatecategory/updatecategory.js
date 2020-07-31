@@ -60,11 +60,22 @@ Page({
         success: res => {
           console.log('上传成功', res)
           if(res.fileID){
+            console.log(_this.data.catagoryList)
             let newpic = res.fileID
+            let index = _this.data.catagoryList.length+1
+            let newindex = Number(index)
+            console.log(index)
+            if(String(newindex).length > 3) {
+              newindex = newindex ;
+            }else{
+              newindex = (Array(3).join(0) +newindex).slice(-3);
+            }
+            console.log(newindex)
             app.globalData.db.collection('CATEGORY').add({
               data:{
                 name: _this.data.categoryName,
-                pic : newpic
+                pic : newpic,
+                seno: newindex
               }
             }).then((res)=>{
                 console.log(res)
@@ -123,7 +134,8 @@ Page({
                 collection:'CATEGORY',
                 data:{
                   name: _this.data.categoryName,
-                  pic : newpic
+                  pic : newpic,
+                  seno: _this.data.cateSeno
                 }
               }
             }).then((res)=>{
@@ -172,7 +184,8 @@ Page({
             collection:'CATEGORY',
             data:{
               name: _this.data.categoryName,
-              pic : _this.data.pathImgUrl
+              pic : _this.data.pathImgUrl,
+              seno: _this.data.cateSeno
             }
           }
         }).then((res)=>{
@@ -223,22 +236,75 @@ Page({
         },
         complete: res => {
           console.log(res)
-          wx.hideLoading()
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-            duration: 3000
-          });
-          var pages = getCurrentPages(); // 当前页面
-          var beforePage = pages[pages.length - 2]; // 前一个页面
-          wx.navigateBack({
-            delta: 1,  // 返回上一级页面。
-            complete: (res) => {
-              beforePage.updateCategory()
-            },
-          })
+          this.orderCategory()
         }
       })
+   },
+   orderCategory(){
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'CATEGORY',
+        data:{
+        },
+        order:('seno', 'desc')
+      }
+    }).then((res)=>{
+      let catagory = res.result.data
+      // console.log(res)
+      catagory.forEach((item,index)=>{
+        // console.log(index.toPrecision(3))
+        let newindex = Number(index)+1
+        if(String(newindex).length > 3) {
+          newindex = newindex ;
+        }else{
+          newindex = (Array(3).join(0) +newindex).slice(-3);
+        }
+        wx.cloud.callFunction({
+          name: "updateData",
+          data: {
+            id:item._id,
+            collection:'CATEGORY',
+            data:{
+              seno: newindex
+            }
+          }
+        }).then((res)=>{
+          
+        })
+      })
+      wx.hideLoading()
+      wx.showToast({
+        title: '删除成功',
+        icon: 'success',
+        duration: 3000
+      });
+      var pages = getCurrentPages(); // 当前页面
+      var beforePage = pages[pages.length - 2]; // 前一个页面
+      wx.navigateBack({
+        delta: 1,  // 返回上一级页面。
+        complete: (res) => {
+          beforePage.updateCategory()
+        },
+      })
+    }) 
+   },
+   getCategortList(){
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'CATEGORY',
+        data:{
+        },
+        order:('seno', 'desc')
+      }
+    }).then((res)=>{
+      let catagory = res.result.data
+      console.log(catagory)
+      this.setData({
+        catagoryList : catagory
+      })
+    })
    },
    turnPreview(){
     wx.navigateBack({
@@ -257,7 +323,8 @@ Page({
        console.log(res)
        _this.setData({
          categoryName : res.data[0].name,
-         pathImgUrl:res.data[0].pic
+         pathImgUrl:res.data[0].pic,
+         cateSeno:res.data[0].seno
        })
      })
    },
@@ -265,6 +332,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getCategortList()
     if(options.id != 'undefined'){
       this.setData({
         isUpdate : true,

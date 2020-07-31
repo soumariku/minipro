@@ -92,8 +92,16 @@ Page({
     const countResult =  db.collection('CATEGORY').count()
     var thelist = [];
     var prelist = this.data.classList;
-    db.collection('CATEGORY').get().then((res)=>{
-      thelist = res.data
+    wx.cloud.callFunction({
+      name: "searchData",
+      data: {
+        collection:'CATEGORY',
+        data:{
+        },
+        order:('seno', 'desc')
+      }
+    }).then((res)=>{
+      thelist = res.result.data
       thelist = thelist.filter(l=>{return l.name!='猜你喜欢'})
       // console.log(thelist)
       var tlength = this.data.classList.length;
